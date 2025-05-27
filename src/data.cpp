@@ -31,6 +31,18 @@ namespace DocReading {
         delete[] documents;
     };
 
+    void printDocs(Doc** documents, int numDocs) {
+        for (int i=0; i<numDocs; i++) {
+            // Para cada documento, imprime o id
+            cout << "Documento " << i << ": ";
+            for (int j=0; j<documents[i]->content->size(); j++) {
+                // Para cada palavra, imprime a palavra
+                cout << documents[i]->content->at(j) << " ";
+            }
+            cout << endl;
+        }
+    };
+
     bool wordInDocumentCheck(Doc* document, string word) {
         // Inicializa o boleano que indica se a palavra esta no documento
         bool wordInDocument = false;

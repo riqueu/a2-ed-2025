@@ -37,6 +37,16 @@ namespace DocReading {
     Doc* createDoc(int id);
 
     /**
+     * @brief Imprime o array de documentos
+     * 
+     * Essa funcao imprime o array de documentos, palavra por palavra
+     * 
+     * @param documents Array de documentos
+     * @param numDocs Numero de documentos
+     */
+    void printDocs(Doc** documents, int numDocs);
+
+    /**
      * @brief Deleta o array de documentos
      * 
      * Essa funcao deleta o array de documentos, cada documento, e o vetor de palavras
