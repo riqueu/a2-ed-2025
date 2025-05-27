@@ -21,7 +21,7 @@ namespace DocReading {
         /**
          * @brief Vetor com todas as palavras do documento
          */
-        std::vector<std::string> content;
+        std::vector<std::string>* content;
     };
 
     // Define as funcoes
