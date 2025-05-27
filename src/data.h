@@ -35,6 +35,17 @@ namespace DocReading {
      * @return Ponteiro do documento inicializado
      */
     Doc* createDoc(int id);
+
+    /**
+     * @brief Verifica se uma palavra esta em um documento
+     * 
+     * Retorna True se a palavra estiver no documento e False se nao estiver
+     * 
+     * @param document Documento
+     * @param word Palavra procurada
+     * @return Boleano que indica se a palavra esta ou nao no documento
+     */
+    bool wordInDocumentCheck(Doc* document, std::string word);
     
     /**
      * @brief Extrai as palavras da quantidade de documentos solicitada
