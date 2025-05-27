@@ -37,6 +37,16 @@ namespace DocReading {
     Doc* createDoc(int id);
 
     /**
+     * @brief Deleta o array de documentos
+     * 
+     * Essa funcao deleta o array de documentos, cada documento, e o vetor de palavras
+     * 
+     * @param documents Array de documentos
+     * @param numDocs Numero de documentos
+     */
+    void deleteDocs(Doc** documents, int numDocs);
+
+    /**
      * @brief Verifica se uma palavra esta em um documento
      * 
      * Retorna True se a palavra estiver no documento e False se nao estiver
@@ -55,7 +65,7 @@ namespace DocReading {
      * @param numDocs Numero de documentos a serem lidos
      * @return Array de documentos
      */
-    Doc* readDocuments(int numDocs);
+    Doc** readDocuments(int numDocs);
 
 };
 
