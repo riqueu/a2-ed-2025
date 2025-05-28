@@ -58,13 +58,22 @@ namespace BST {
     SearchResult search(BinaryTree* tree, const std::string& word);
 
     /**
-     * @brief Libera a memória ocupada por todos os nós da árvore.
+     * @brief Libera recursivamente a memória de todos os nós da subárvore.
+     * 
+     * Esta função percorre a árvore em pós-ordem e deleta todos os nós alocados dinamicamente.
+     * 
+     * @param root Ponteiro para a raiz da árvore a ter seus nós deletados.
+     */
+    void deleteNodes(Node* root);
+
+    /**
+     * @brief Libera a memória ocupada por toda a árvore.
      * 
      * Percorre a árvore e deleta todos os nós dinamicamente alocados.
      * 
      * @param tree Ponteiro para a árvore a ser deletada.
      */
-    void delet(BinaryTree* tree);
+    void deleteTree(BinaryTree* tree);
 }
 
 #endif

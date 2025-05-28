@@ -45,8 +45,31 @@ namespace BST {
     }
 
     void insert(BinaryTree* tree, const std::string& word, int documentId){
+        if (tree == nullptr){return;}
+
         // Chama a função recursiva, e caso o root da árvore tenha mudado atualiza na estrutura
         tree->root = InsertNode(tree->root, word, documentId);
+        return;
+    }
+
+    void deleteNodes(Node* root){
+        if (root == nullptr){return;}
+
+        // Recurção para deletar os nós, não tem necessidade de verificar se são nullptr, pois a recurção já faz isso
+        deleteNodes(root->left);
+        deleteNodes(root->right);
+
+        delete root;
+        return;
+    }
+
+    void deleteTree(BinaryTree* tree){
+        if (tree==nullptr){return;}
+
+        // Deleta todos os nós da árvore recursivamente
+        deleteNodes(tree->root);
+
+        delete tree;
         return;
     }
 }
