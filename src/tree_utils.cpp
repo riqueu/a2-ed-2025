@@ -10,7 +10,7 @@ void printIndexRec(Node* node){
     // Exibe a palavra e os IDs dos documentos em que ela aparece
     std::cout << node->word << ": ";
     int size = node->documentIds.size();
-    for (int i; i < size - 1; i++) {
+    for (int i=0; i < size - 1; i++) {
         std::cout << node->documentIds[i] << ", ";
     }
     std::cout << node->documentIds[size - 1];
@@ -28,7 +28,7 @@ void printIndex(BinaryTree* tree){
 }
 
 void printTreeRec(Node* node, std::string prefix = "", std::string linePrefix = "") {
-    if (node == nullptr) return;
+    if (node == nullptr){return;}
     
     // Exibe o nó atual na árvore
     std::cout << prefix << linePrefix;
