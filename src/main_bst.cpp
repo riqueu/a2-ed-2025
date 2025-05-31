@@ -1,5 +1,6 @@
 #include <iostream>
-#include "tmp_bst.h"
+#include <ostream>
+#include "bst.h"
 #include "data.h"
 
 using namespace std;
@@ -27,19 +28,33 @@ int main(int argc, char *argv[]) {
     // Itera sobre cada palavra no documento e insere ela na árvore
     for (size_t i = 0; i < n_docs; i++) {
       // cout << "Palavras do Documento com ID: " << docs[i]->docID << endl;
-
       for (size_t j = 0; j < docs[i]->content->size(); j++) {
         BST::insert(bst, docs[i]->content->at(j), docs[i]->docID); 
-        // cout << word << endl;
+        // cout << docs[i]->content->at(j) << endl;
        }
      }          
 
+    // printTree(bst);
+    
     string word;
     cout << "Indexação das palavras concluídas!" << endl << "Digite a que você quer buscar: ";
     cin >> word;
 
-    SearchResult searchRes = BST::search(bst, word);    
-    
+    SearchResult search = BST::search(bst, word);
+
+    cout << "Encontrou? ";
+    if (search.found == 1) {
+      cout << "SIM! ;)" << endl << "IDs dos documentos: { ";
+      for (int i = 0; i < search.documentIds.size(); i++) {
+        cout << search.documentIds[i] << ", ";
+      }
+      cout << " }" << endl;
+    } else {
+      cout << "NÃO! :/" << endl;
+    }
+        
+    cout << "Tempo de execução: " << search.executionTime << endl << "Número de comparações: " << search.numComparisons << endl;
+  
 
   }    
 
