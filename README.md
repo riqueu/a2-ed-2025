@@ -10,4 +10,8 @@ Este repositório é um refúgio para o projeto final da disciplina de Estrutura
 -> resumo do trabalho aqui
 
 ---
+### Instruções para Execução 
+-> instruções aqui
+
+---
 Leia também o [Relatório Completo](docs/relatorio.md).
