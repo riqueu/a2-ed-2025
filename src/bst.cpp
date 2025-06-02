@@ -67,7 +67,7 @@ namespace BST {
         return;
     }
 
-    void deleteTree(BinaryTree* tree){
+    void destroy(BinaryTree* tree){
         if (tree==nullptr){return;}
 
         // Deleta todos os nós da árvore recursivamente

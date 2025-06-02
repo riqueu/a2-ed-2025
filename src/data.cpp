@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <filesystem>
 #include <string>
 #include <vector>
 #include "data.h"
@@ -60,36 +61,47 @@ namespace DocReading {
         return wordInDocument;
     };
 
-    Doc** readDocuments(int numDocs) {
+    Doc** readDocuments(int numDocs, string dirPath) {
         // Inicializa o array de documentos
         Doc** Docs = new Doc*[numDocs];
 
+        // Cria o iterador do diretorio
+        filesystem::directory_iterator dir(dirPath);
+
         for(int i=0; i<numDocs; i++) {
-            // Constroi o caminho para o arquivo
-            string path = "..\\data\\" + to_string(i) + ".txt";
-            // Carrega o arquivo
-            ifstream file(path);
+            // Verifica se o iterador nao esta vazio
+            if (dir != filesystem::directory_iterator()) {
 
-            // Cria a estrutura do documento
-            Doc* document = createDoc(i);
+                // Coleta o caminho para o proximo arquivo
+                filesystem::path path = dir->path();
 
-            // Coleta palavra por palavra
-            std::string word;
-            while (file >> word) {
-                // Verifica se a palavra ja nao foi coletada
-                bool word_in_document = wordInDocumentCheck(document, word);
+                // Carrega o arquivo
+                ifstream file(path);
 
-                // Se a palavra nao for coletada, coloca ela na lista de palavras do documento
-                if(!word_in_document) {
-                    document->content->push_back(word);
+                // Cria a estrutura do documento
+                Doc* document = createDoc(i);
+
+                // Coleta palavra por palavra
+                std::string word;
+                while (file >> word) {
+                    // Verifica se a palavra ja nao foi coletada
+                    bool word_in_document = wordInDocumentCheck(document, word);
+
+                    // Se a palavra nao for coletada, coloca ela na lista de palavras do documento
+                    if(!word_in_document) {
+                        document->content->push_back(word);
+                    }
                 }
+
+                // Insere o documento no array de documentos
+                Docs[i] = document;
+
+                // Fecha o arquivo
+                file.close();
+
+                // Avanca um arquivo no diretorio
+                ++dir;
             }
-
-            // Insere o documento no array de documentos
-            Docs[i] = document;
-
-            // Fecha o arquivo
-            file.close();
         }
 
         // Retorna os documentos
