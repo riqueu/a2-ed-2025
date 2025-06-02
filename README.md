@@ -10,6 +10,10 @@ Este repositório é um refúgio para o projeto final da disciplina de Estrutura
 -> resumo do trabalho aqui
 
 ---
+### Relatório
+Leia também o [Relatório Completo](docs/relatorio.md).
+
+---
 ### Instruções para Execução 
 1. **Compilar todos os executáveis**:
    Execute o comando abaixo para compilar os programas para todas as árvores (BST, AVL, e RBT):
@@ -55,4 +59,3 @@ Este repositório é um refúgio para o projeto final da disciplina de Estrutura
     ```
 
 ---
-Leia também o [Relatório Completo](docs/relatorio.md).
