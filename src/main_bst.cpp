@@ -1,14 +1,16 @@
-#include <iostream>
-#include <ostream>
 #include "bst.h"
 #include "data.h"
+#include <iostream>
+#include <ostream>
 
 using namespace std;
 using namespace DocReading;
 
 int main(int argc, char *argv[]) {
   if (argc < 2) {
-    cout << "Erro: Nenhum comando fornecido. Estrutura esperada: ./<arvore> <comando> <n_docs> <diretório>" << endl;
+    cout << "Erro: Nenhum comando fornecido. Estrutura esperada: ./<arvore> "
+            "<comando> <n_docs> <diretório>"
+         << endl;
     return 1;
   }
 
@@ -17,7 +19,8 @@ int main(int argc, char *argv[]) {
   if (command == "search") {
 
     if (argc != 4) {
-      cout << "Erro, estrutura esperada: " << endl << "./<arvore> search <n_docs> <diretório>";
+      cout << "Erro, estrutura esperada: " << endl
+           << "./<arvore> search <n_docs> <diretório>";
       return 0;
     }
 
@@ -25,26 +28,26 @@ int main(int argc, char *argv[]) {
     int n_docs = stoi(n);
     string path = argv[3];
 
-    Doc** docs = readDocuments(n_docs, path);
-    BinaryTree* bst = BST::create();
-
+    Doc **docs = readDocuments(n_docs, path);
+    BinaryTree *bst = BST::create();
 
     // Itera sobre cada palavra no documento e insere ela na árvore
     for (int i = 0; i < n_docs; i++) {
       // cout << "Palavras do Documento com ID: " << docs[i]->docID << endl;
       for (size_t j = 0; j < docs[i]->content->size(); j++) {
-        BST::insert(bst, docs[i]->content->at(j), docs[i]->docID); 
+        BST::insert(bst, docs[i]->content->at(j), docs[i]->docID);
         // cout << docs[i]->content->at(j) << endl;
-       }
-     }          
+      }
+    }
 
-    //printTree(bst);
+    // printTree(bst);
 
     string repeat = "s";
-    while(repeat == "s") {
 
+    while (repeat == "s") {
       string word;
-      cout << "Indexação das palavras concluídas!" << endl << "Digite a que você quer buscar: ";
+      cout << "Indexação das palavras concluídas!" << endl
+           << "Digite a que você quer buscar: ";
       cin >> word;
 
       SearchResult search = BST::search(bst, word);
@@ -54,17 +57,79 @@ int main(int argc, char *argv[]) {
         cout << "SIM! ;)" << endl << "IDs dos documentos: { ";
         for (size_t i = 0; i < search.documentIds.size(); i++) {
           cout << search.documentIds[i];
-          if (i < search.documentIds.size() - 1) cout << ", ";
+          if (i < search.documentIds.size() - 1)
+            cout << ", ";
         }
         cout << " }" << endl;
       } else {
         cout << "NÃO! :/" << endl;
       }
 
-      cout << "Tempo de execução: " << search.executionTime << endl << "Número de comparações: " << search.numComparisons << endl;
+      cout << "Tempo de execução: " << search.executionTime << endl
+           << "Número de comparações: " << search.numComparisons << endl;
 
-      cout << "Deseja continuar buscando? digite: 's' para sim ou 'n' para sair: " << endl;
+      cout << "Deseja continuar buscando? digite: 's' para sim ou 'n' para "
+              "sair: "
+           << endl;
       cin >> repeat;
     }
+
+    // free memory
+    BST::destroy(bst);
+    for (int i = 0; i < n_docs; i++) {
+      delete docs[i];
+    }
+    delete[] docs;
+  }
+
+  if (command == "stats") {
+    if (argc != 4) {
+      cout << "Erro, estrutura esperada: " << endl
+           << "./<arvore> stats <n_docs> <diretório>" << endl;
+      return 0;
+    }
+
+    string n = argv[2];
+    int n_docs = stoi(n);
+    string path = argv[3];
+
+    // mede o tempo de leitura dos documentos
+    auto startRead = std::chrono::high_resolution_clock::now();
+    Doc **docs = readDocuments(n_docs, path);
+    auto endRead = std::chrono::high_resolution_clock::now();
+    double readTime =
+        std::chrono::duration<double, std::milli>(endRead - startRead).count();
+    cout << "Tempo de leitura dos documentos: " << readTime << " ms" << endl;
+
+    BinaryTree *bst = BST::create();
+
+    // perform insertions
+    InsertResult totalResult;
+    totalResult.numComparisons = 0;
+    totalResult.executionTime = 0.0;
+
+    for (int i = 0; i < n_docs; i++) {
+      for (size_t j = 0; j < docs[i]->content->size(); j++) {
+        InsertResult result =
+            BST::insert(bst, docs[i]->content->at(j), docs[i]->docID);
+        totalResult.numComparisons += result.numComparisons;
+        totalResult.executionTime += result.executionTime;
+      }
+    }
+
+    cout << "Tempo total de inserção: " << totalResult.executionTime << " ms"
+         << endl;
+    cout << "Número total de comparações: " << totalResult.numComparisons
+         << endl;
+
+    // free memory
+    BST::destroy(bst);
+    for (int i = 0; i < n_docs; i++) {
+      delete docs[i];
+    }
+    delete[] docs;
+  } else {
+    cout << "Comando inválido. Comandos válidos: search, stats" << endl;
+    return 1;
   }
 }

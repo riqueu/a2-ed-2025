@@ -49,23 +49,22 @@ namespace BST {
     }
 
     InsertResult insert(BinaryTree *tree, const std::string &word, int documentId) {
-        if (tree == nullptr) {
-            return {0, 0};
-        }
-        
         InsertResult result;
         result.numComparisons = 0;
         result.executionTime = 0;
 
-        // chama função recursiva de inserção e mede o tempo de execução
-        const auto start = std::chrono::high_resolution_clock::now();
-        tree->root = insertNode(tree->root, word, documentId, result.numComparisons);
-        const auto end = std::chrono::high_resolution_clock::now();
+        if (tree == nullptr) {
+            return result;
+        }
 
-        // Calcula o tempo gasto para inserir o nó (em millisegundos)
-        result.executionTime = 
-            std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-        
+        // Mede o tempo de execução da inserção
+        auto start = std::chrono::high_resolution_clock::now();
+        tree->root = insertNode(tree->root, word, documentId, result.numComparisons);
+        auto end = std::chrono::high_resolution_clock::now();
+
+        // Calcula o tempo gasto para inserir o nó (em milissegundos)
+        result.executionTime = std::chrono::duration<double, std::milli>(end - start).count();
+
         return result;
     }
  
@@ -73,8 +72,8 @@ namespace BST {
         if (tree == nullptr || tree->root == nullptr) {
             return {0, {}, 0.0, 0};
         }
-
-        auto start = std::chrono::high_resolution_clock::now();                
+        
+        auto start = std::chrono::high_resolution_clock::now();
         int numComparisons = 0;
         Node* current = tree->root;
         SearchResult result;
@@ -93,9 +92,9 @@ namespace BST {
             }          
         }
 
-        result.numComparisons = numComparisons;        
+        result.numComparisons = numComparisons;
         auto end = std::chrono::high_resolution_clock::now();
-        result.executionTime = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+        result.executionTime = std::chrono::duration<double, std::milli>(end - start).count();
     
         return result;
     }
