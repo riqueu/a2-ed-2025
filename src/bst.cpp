@@ -1,5 +1,9 @@
 #include "bst.h"
+#include "tree_utils.h"
 #include <iostream>
+#include <vector>
+#include <chrono>
+#include <memory_resource>
 
 namespace BST {
     BinaryTree* create(){
@@ -71,5 +75,35 @@ namespace BST {
 
         delete tree;
         return;
+    }
+ 
+    SearchResult search(BinaryTree* tree, const std::string& word) {
+        // std::cout << word << "\n";
+        // printTree(tree);
+
+        auto start = std::chrono::high_resolution_clock::now();                
+        int numComparisons = 0;
+        Node* current = tree->root;
+        SearchResult* result = new SearchResult;
+        result->found = 0;
+ 
+        while (current != nullptr) {
+            numComparisons++;
+            if (word == current->word) {
+                result->documentIds = current->documentIds;
+                result->found = 1;
+                break;                
+            } else if (word > current->word) {
+                current = current->right;
+            } else {
+                current = current->left;
+            }          
+        }
+
+        result->numComparisons = numComparisons;        
+        auto end = std::chrono::high_resolution_clock::now();
+        result->executionTime = std::chrono::duration<double>(end - start).count();
+       
+        return *result;
     }
 }
