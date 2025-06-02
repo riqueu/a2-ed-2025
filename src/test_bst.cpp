@@ -21,7 +21,7 @@ int main() {
     printIndex(tree);
 
     // Limpando a memória
-    BST::deleteTree(tree);
+    BST::destroy(tree);
 
     return 0;
 }

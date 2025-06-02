@@ -66,6 +66,7 @@ namespace DocReading {
 
         for(int i=0; i<numDocs; i++) {
             // Constroi o caminho para o arquivo
+            // TODO: linux 
             string path = "..\\data\\" + to_string(i) + ".txt";
             // Carrega o arquivo
             ifstream file(path);
