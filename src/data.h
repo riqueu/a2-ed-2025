@@ -73,9 +73,10 @@ namespace DocReading {
      * Essa funcao processa cada um dos documentos, coloca seu conteudo na estrutura Doc e retorna um array com o conteudo de todos os documentos solicitados
      * 
      * @param numDocs Numero de documentos a serem lidos
+     * @param dirPath Caminho para a pasta com os arquivos
      * @return Array de documentos
      */
-    Doc** readDocuments(int numDocs);
+    Doc** readDocuments(int numDocs, std::string dirPath);
 
 };
 
