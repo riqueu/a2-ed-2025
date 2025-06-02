@@ -73,7 +73,7 @@ namespace BST {
      * 
      * @param tree Ponteiro para a árvore a ser deletada.
      */
-    void deleteTree(BinaryTree* tree);
+    void destroy(BinaryTree* tree);
 }
 
 #endif
