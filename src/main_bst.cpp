@@ -128,8 +128,5 @@ int main(int argc, char *argv[]) {
       delete docs[i];
     }
     delete[] docs;
-  } else {
-    cout << "Comando inválido. Comandos válidos: search, stats" << endl;
-    return 1;
   }
 }
