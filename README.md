@@ -54,8 +54,13 @@ Leia também o [Relatório Completo](docs/relatorio.md).
     ```
 
 5. **Exemplo de execução:** Para buscar palavras em 10 documentos localizados no diretório `data/` usando a árvore BST:
+   - UNIX-like systems:
     ```bash
     ./src/output/main_bst search 10 data/
+    ```
+    - Windows:
+    ```bash
+    ./src/output/main_bst.exe search 10 data/
     ```
 
 ---
