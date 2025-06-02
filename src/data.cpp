@@ -36,7 +36,7 @@ namespace DocReading {
         for (int i=0; i<numDocs; i++) {
             // Para cada documento, imprime o id
             cout << "Documento " << i << ": ";
-            for (int j=0; j<documents[i]->content->size(); j++) {
+            for (size_t j=0; j<documents[i]->content->size(); j++) {
                 // Para cada palavra, imprime a palavra
                 cout << documents[i]->content->at(j) << " ";
             }
@@ -49,7 +49,7 @@ namespace DocReading {
         bool wordInDocument = false;
 
         // Para cada palavra no documento, verifica se ela e a palavra procurada
-        for (int i=0; i<document->content->size(); i++) {
+        for (size_t i=0; i<document->content->size(); i++) {
             if (document->content->at(i) == word) {
                 // Se encontrar a palavra para o loop
                 wordInDocument = true;

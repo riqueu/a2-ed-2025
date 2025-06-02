@@ -1,8 +1,8 @@
-#include <vector>
-#include <string>
-
 #ifndef DATA_H
 #define DATA_H
+
+#include <vector>
+#include <string>
 
 namespace DocReading {
     // Define as estruturas

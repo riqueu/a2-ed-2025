@@ -7,6 +7,10 @@ using namespace std;
 using namespace DocReading;
 
 int main(int argc, char *argv[]) {
+  if (argc < 2) {
+    cout << "Erro: Nenhum comando fornecido. Estrutura esperada: ./<arvore> <comando> <n_docs> <diretório>" << endl;
+    return 1;
+  }
 
   string command = argv[1];
 
@@ -26,7 +30,7 @@ int main(int argc, char *argv[]) {
 
 
     // Itera sobre cada palavra no documento e insere ela na árvore
-    for (size_t i = 0; i < n_docs; i++) {
+    for (int i = 0; i < n_docs; i++) {
       // cout << "Palavras do Documento com ID: " << docs[i]->docID << endl;
       for (size_t j = 0; j < docs[i]->content->size(); j++) {
         BST::insert(bst, docs[i]->content->at(j), docs[i]->docID); 
@@ -34,11 +38,11 @@ int main(int argc, char *argv[]) {
        }
      }          
 
-    // printTree(bst);
+    //printTree(bst);
 
     string repeat = "s";
     while(repeat == "s") {
-        
+
       string word;
       cout << "Indexação das palavras concluídas!" << endl << "Digite a que você quer buscar: ";
       cin >> word;
@@ -48,7 +52,7 @@ int main(int argc, char *argv[]) {
       cout << "Encontrou? ";
       if (search.found == 1) {
         cout << "SIM! ;)" << endl << "IDs dos documentos: { ";
-        for (int i = 0; i < search.documentIds.size(); i++) {
+        for (size_t i = 0; i < search.documentIds.size(); i++) {
           cout << search.documentIds[i];
           if (i < search.documentIds.size() - 1) cout << ", ";
         }
@@ -56,14 +60,11 @@ int main(int argc, char *argv[]) {
       } else {
         cout << "NÃO! :/" << endl;
       }
-        
+
       cout << "Tempo de execução: " << search.executionTime << endl << "Número de comparações: " << search.numComparisons << endl;
-          
+
       cout << "Deseja continuar buscando? digite: 's' para sim ou 'n' para sair: " << endl;
       cin >> repeat;
-
-    }  
-
-  }    
-
+    }
+  }
 }
