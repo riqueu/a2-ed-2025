@@ -119,7 +119,7 @@ Após a implementação das três estruturas de dados para aplicacação do índ
 
 ### 8.1 Entrega 1
 * **Bruno Ferreira Salvi:** Implementação da função de busca para BST e da CLI para BST;
-* **Henrique Coelho Beltrão:** Adiantamente da implementação de funções para estatísticas e redação do relatório;
+* **Henrique Coelho Beltrão:** Adiantamente da implementação de funções para estatísticas, ajustes na CLI para estatísticas, e construção do Makefile;
 * **Henrique Gabriel Gasparelo:** Implementação das funções de inserção e de remoção para BST;
 * **José Thevez Gomes Guedes:**  Implementação das funções para manipulção dos arquivos, como leitura, impressão e remoção, além de outras funções úteis;
 * **Luiz Eduardo Bravin:** Adiantamente da implementação da CLI para estatísticas e redação do relatório.
