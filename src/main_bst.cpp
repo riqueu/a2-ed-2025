@@ -35,26 +35,34 @@ int main(int argc, char *argv[]) {
      }          
 
     // printTree(bst);
-    
-    string word;
-    cout << "Indexação das palavras concluídas!" << endl << "Digite a que você quer buscar: ";
-    cin >> word;
 
-    SearchResult search = BST::search(bst, word);
-
-    cout << "Encontrou? ";
-    if (search.found == 1) {
-      cout << "SIM! ;)" << endl << "IDs dos documentos: { ";
-      for (int i = 0; i < search.documentIds.size(); i++) {
-        cout << search.documentIds[i] << ", ";
-      }
-      cout << " }" << endl;
-    } else {
-      cout << "NÃO! :/" << endl;
-    }
+    string repeat = "s";
+    while(repeat == "s") {
         
-    cout << "Tempo de execução: " << search.executionTime << endl << "Número de comparações: " << search.numComparisons << endl;
-  
+      string word;
+      cout << "Indexação das palavras concluídas!" << endl << "Digite a que você quer buscar: ";
+      cin >> word;
+
+      SearchResult search = BST::search(bst, word);
+
+      cout << "Encontrou? ";
+      if (search.found == 1) {
+        cout << "SIM! ;)" << endl << "IDs dos documentos: { ";
+        for (int i = 0; i < search.documentIds.size(); i++) {
+          cout << search.documentIds[i];
+          if (i < search.documentIds.size() - 1) cout << ", ";
+        }
+        cout << " }" << endl;
+      } else {
+        cout << "NÃO! :/" << endl;
+      }
+        
+      cout << "Tempo de execução: " << search.executionTime << endl << "Número de comparações: " << search.numComparisons << endl;
+          
+      cout << "Deseja continuar buscando? digite: 's' para sim ou 'n' para sair: " << endl;
+      cin >> repeat;
+
+    }  
 
   }    
 
