@@ -1,5 +1,6 @@
 #ifndef BST_H
 #define BST_H
+
 #include "tree_utils.h"
 
 namespace BST {
@@ -31,20 +32,20 @@ namespace BST {
      * @param documentId ID do documento associado.
      * @return Nova raiz da árvore após a inserção.
      */
-    Node* InsertNode(Node* root, const std::string& word, int documentId);
+    Node* insertNode(Node* root, const std::string& word, int documentId);
 
     
-    // TODO: Trocar o void por InsertResult
     /**
      * @brief Insere uma palavra na árvore binária de busca.
      * 
-     * Atualiza a raiz da árvore caso seja a primeira inserção.
+     * Atualiza a raiz da árvore caso seja a primeira inserção (e returna estatísticas sobre a performance).
      * 
      * @param tree Ponteiro para a árvore.
      * @param word Palavra a ser inserida.
      * @param documentId ID do documento associado.
+     * @return Estrutura InsertResult contendo tempo de inserção e comparações realizadas.
      */
-    void insert(BinaryTree* tree, const std::string& word, int documentId);
+    InsertResult insert(BinaryTree* tree, const std::string& word, int documentId);
 
     /**
      * @brief Busca uma palavra na árvore binária.
