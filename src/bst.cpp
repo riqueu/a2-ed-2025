@@ -1,109 +1,131 @@
 #include "bst.h"
 #include "tree_utils.h"
-#include <iostream>
 #include <vector>
-#include <chrono>
-#include <memory_resource>
 
 namespace BST {
-    BinaryTree* create(){
-        // Criação da árvore
-        BinaryTree * NewBinaryTree = new BinaryTree;
-        NewBinaryTree->root = nullptr;
-        return NewBinaryTree;
-    }
-
-    Node* createNode(const std::string& word, int documentId){
-        // Criação e definições iniciais de um nó
-        Node * NewNode = new Node;
-        NewNode->word = word;
-        NewNode->documentIds.push_back(documentId);
-        NewNode->parent = nullptr;
-        NewNode->left = nullptr;
-        NewNode->right = nullptr;
-        NewNode->height = 0;
-
-        return NewNode;
-    }
-
-    Node* InsertNode(Node* root, const std::string& word, int documentId){
-        // Caso ainda não haja um nó com a palavra
-        if (root == nullptr){
-            return createNode(word, documentId);
-        }
-
-        // Caso onde se encontra o nó com a palavra
-        if (root->word == word){
-            root->documentIds.push_back(documentId);
-        } else if (root->word > word){ // Caso onde a palavra a ser inserida esta a esquerda do nó atual
-            Node * left = InsertNode(root->left, word, documentId);
-            root->left = left;
-            left->parent = root;
-        } else { // Caso análogo, só que para a direita
-            Node * right = InsertNode(root->right, word, documentId);
-            root->right = right;
-            right->parent = root;
-        }
-
-        return root;
-    }
-
-    void insert(BinaryTree* tree, const std::string& word, int documentId){
-        if (tree == nullptr){return;}
-
-        // Chama a função recursiva, e caso o root da árvore tenha mudado atualiza na estrutura
-        tree->root = InsertNode(tree->root, word, documentId);
-        return;
-    }
-
-    void deleteNodes(Node* root){
-        if (root == nullptr){return;}
-
-        // Recurção para deletar os nós, não tem necessidade de verificar se são nullptr, pois a recurção já faz isso
-        deleteNodes(root->left);
-        deleteNodes(root->right);
-
-        delete root;
-        return;
-    }
-
-    void destroy(BinaryTree* tree){
-        if (tree==nullptr){return;}
-
-        // Deleta todos os nós da árvore recursivamente
-        deleteNodes(tree->root);
-
-        delete tree;
-        return;
-    }
- 
-    SearchResult search(BinaryTree* tree, const std::string& word) {
-        // std::cout << word << "\n";
-        // printTree(tree);
-
-        auto start = std::chrono::high_resolution_clock::now();                
-        int numComparisons = 0;
-        Node* current = tree->root;
-        SearchResult* result = new SearchResult;
-        result->found = 0;
- 
-        while (current != nullptr) {
-            numComparisons++;
-            if (word == current->word) {
-                result->documentIds = current->documentIds;
-                result->found = 1;
-                break;                
-            } else if (word > current->word) {
-                current = current->right;
-            } else {
-                current = current->left;
-            }          
-        }
-
-        result->numComparisons = numComparisons;        
-        auto end = std::chrono::high_resolution_clock::now();
-        result->executionTime = std::chrono::duration<double>(end - start).count();
-       
-        return *result;
-    }
+BinaryTree *create() {
+  // Criação da árvore
+  BinaryTree *binaryTree = new BinaryTree;
+  binaryTree->root = nullptr;
+  return binaryTree;
 }
+
+Node *createNode(const std::string &word, int documentId) {
+  // Criação e definições iniciais de um nó
+  Node *node = new Node;
+  node->word = word;
+  node->documentIds.push_back(documentId);
+  node->parent = nullptr;
+  node->left = nullptr;
+  node->right = nullptr;
+  node->height = 0;
+
+  return node;
+}
+
+Node *insertNode(Node *root, const std::string &word, int documentId,
+                 int &numComparisons) {
+  // Caso ainda não haja um nó com a palavra
+  if (root == nullptr) {
+    return createNode(word, documentId);
+  }
+
+  // Incrementa o número de comparações
+  numComparisons++;
+
+  // Caso onde se encontra o nó com a palavra
+  if (root->word == word) {
+    root->documentIds.push_back(documentId);
+  } else if (root->word > word) { // Caso onde a palavra a ser inserida esta a
+                                  // esquerda do nó atual
+    Node *left = insertNode(root->left, word, documentId, numComparisons);
+    root->left = left;
+    left->parent = root;
+  } else { // Caso análogo, só que para a direita
+    Node *right = insertNode(root->right, word, documentId, numComparisons);
+    root->right = right;
+    right->parent = root;
+  }
+
+  return root;
+}
+
+InsertResult insert(BinaryTree *tree, const std::string &word, int documentId) {
+  InsertResult result;
+  result.numComparisons = 0;
+  result.executionTime = 0;
+
+  if (tree == nullptr) {
+    return result;
+  }
+
+  // Mede o tempo de execução da inserção
+  auto start = std::chrono::high_resolution_clock::now();
+  tree->root = insertNode(tree->root, word, documentId, result.numComparisons);
+  auto end = std::chrono::high_resolution_clock::now();
+
+  // Calcula o tempo gasto para inserir o nó (em milissegundos)
+  result.executionTime =
+      std::chrono::duration<double, std::milli>(end - start).count();
+
+  return result;
+}
+
+SearchResult search(BinaryTree *tree, const std::string &word) {
+  if (tree == nullptr || tree->root == nullptr) {
+    return {0, {}, 0.0, 0};
+  }
+
+  auto start = std::chrono::high_resolution_clock::now();
+  int numComparisons = 0;
+  Node *current = tree->root;
+  SearchResult result;
+  result.found = 0;
+
+  while (current != nullptr) {
+    numComparisons++;
+    if (word == current->word) {
+      result.documentIds = current->documentIds;
+      result.found = 1;
+      break;
+    } else if (word > current->word) {
+      current = current->right;
+    } else {
+      current = current->left;
+    }
+  }
+
+  result.numComparisons = numComparisons;
+  auto end = std::chrono::high_resolution_clock::now();
+  result.executionTime =
+      std::chrono::duration<double, std::milli>(end - start).count();
+
+  return result;
+}
+
+void deleteNodes(Node *root) {
+  if (root == nullptr) {
+    return;
+  }
+
+  // Recurção para deletar os nós, não tem necessidade de verificar se são
+  // nullptr, pois a recurção já faz isso
+  deleteNodes(root->left);
+  deleteNodes(root->right);
+
+  delete root;
+  return;
+}
+
+void destroy(BinaryTree *tree) {
+  if (tree == nullptr) {
+    return;
+  }
+
+  // Deleta todos os nós da árvore recursivamente
+  deleteNodes(tree->root);
+
+  delete tree;
+  return;
+}
+} // namespace BST
