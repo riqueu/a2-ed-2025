@@ -14,53 +14,90 @@ Este repositório é um refúgio para o projeto final da disciplina de Estrutura
 Leia também o [Relatório Completo](docs/relatorio.md).
 
 ---
-### Instruções para Execução 
-1. **Compilar todos os executáveis**:
-   Execute o comando abaixo para compilar os programas para todas as árvores (BST, AVL, e RBT):
-   ```bash
-   make
-   ```
-2. **Compilar apenas uma árvore específica:**
-    Para compilar apenas o programa de uma árvore específica, use:
-    - Binary Search Tree (BST)
-        ```bash
-        make src/output/main_bst
-        ```
-    - AVL Tree
-        ```bash
-        make src/output/main_avl
-        ```
-    - Red-Black Tree (RBT)
-        ```bash
-        make src/output/main_rbt
-        ```
-3. **Executar o programa para uma árvore específica:**
-    Após a compilação, você pode executar o programa correspondente a cada árvore:
-    - Binary Search Tree (BST)
-        ```bash
-        ./src/output/main_bst <comando> <n_docs> <diretório>
-        ```
-    - AVL Tree
-        ```bash
-        ./src/output/main_avl <comando> <n_docs> <diretório>
-        ```
-    - Red-Black Tree (RBT)
-        ```bash
-        ./src/output/main_rbt <comando> <n_docs> <diretório>
-        ```
-    4. **Limpar arquivos gerados:** Para remover os executáveis e limpar o diretório de saída, execute:
-    ```
-    make clean
-    ```
+### Instruções para Execução
 
-5. **Exemplo de execução:** Para buscar palavras em 10 documentos localizados no diretório `data/` usando a árvore BST:
-   - UNIX-like systems:
+#### Linux/UNIX-like
+
+1. **Compilar todos os executáveis:**
     ```bash
-    ./src/output/main_bst search 10 data/
+    make
     ```
-    - Windows:
-    ```bash
-    ./src/output/main_bst.exe search 10 data/
+2. **Compilar apenas uma árvore específica:**
+     - Binary Search Tree (BST)
+          ```bash
+          make src/output/main_bst
+          ```
+     - AVL Tree
+          ```bash
+          make src/output/main_avl
+          ```
+     - Red-Black Tree (RBT)
+          ```bash
+          make src/output/main_rbt
+          ```
+3. **Executar o programa para uma árvore específica:**
+     - Binary Search Tree (BST)
+          ```bash
+          ./src/output/main_bst <comando> <n_docs> <diretório>
+          ```
+     - AVL Tree
+          ```bash
+          ./src/output/main_avl <comando> <n_docs> <diretório>
+          ```
+     - Red-Black Tree (RBT)
+          ```bash
+          ./src/output/main_rbt <comando> <n_docs> <diretório>
+          ```
+4. **Limpar arquivos gerados:**
+     ```bash
+     make clean
+     ```
+5. **Exemplo de execução:**
+     ```bash
+     ./src/output/main_bst search 10 data/
+     ```
+
+---
+
+#### Windows
+
+1. **Compilar todos os executáveis:**
+    ```cmd
+    make
     ```
+2. **Compilar apenas uma árvore específica:**
+     - Binary Search Tree (BST)
+          ```cmd
+          make src/output/main_bst.exe
+          ```
+     - AVL Tree
+          ```cmd
+          make src/output/main_avl.exe
+          ```
+     - Red-Black Tree (RBT)
+          ```cmd
+          make src/output/main_rbt.exe
+          ```
+3. **Executar o programa para uma árvore específica:**
+     - Binary Search Tree (BST)
+          ```cmd
+          src\output\main_bst.exe <comando> <n_docs> <diretório>
+          ```
+     - AVL Tree
+          ```cmd
+          src\output\main_avl.exe <comando> <n_docs> <diretório>
+          ```
+     - Red-Black Tree (RBT)
+          ```cmd
+          src\output\main_rbt.exe <comando> <n_docs> <diretório>
+          ```
+4. **Limpar arquivos gerados:**
+     ```cmd
+     make clean
+     ```
+5. **Exemplo de execução:**
+     ```cmd
+     src\output\main_bst.exe search 10 data\
+     ```
 
 ---
