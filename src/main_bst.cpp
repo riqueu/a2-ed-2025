@@ -7,51 +7,54 @@ using namespace std;
 using namespace DocReading;
 
 int main(int argc, char *argv[]) {
+
+  // verifica se foi passado um número suficiente de parâmetros
   if (argc < 2) {
     cout << "Erro: Nenhum comando fornecido. Estrutura esperada: ./<arvore> "
             "<comando> <n_docs> <diretório>"
          << endl;
     return 1;
   }
-
   string command = argv[1];
-
+  
+  // se o comando for o search
   if (command == "search") {
 
+    // se a estrutura não for a esperada para search
     if (argc != 4) {
       cout << "Erro, estrutura esperada: " << endl
            << "./<arvore> search <n_docs> <diretório>";
       return 0;
     }
 
+    // parâmetros -> variáveis de entrada
     string n = argv[2];
     int n_docs = stoi(n);
     string path = argv[3];
 
+    // ler os documentos e cria a árvore
     Doc **docs = readDocuments(n_docs, path);
     BinaryTree *bst = BST::create();
 
     // Itera sobre cada palavra no documento e insere ela na árvore
     for (int i = 0; i < n_docs; i++) {
-      // cout << "Palavras do Documento com ID: " << docs[i]->docID << endl;
       for (size_t j = 0; j < docs[i]->content->size(); j++) {
         BST::insert(bst, docs[i]->content->at(j), docs[i]->docID);
-        // cout << docs[i]->content->at(j) << endl;
       }
     }
 
-    // printTree(bst);
-
+    // loop para iterar por mais palavras na mesma indexação
     string repeat = "s";
-
     while (repeat == "s") {
       string word;
       cout << "Indexacao das palavras concluida!" << endl
            << "Digite a que você quer buscar: ";
       cin >> word;
 
+      // chama a função de busca
       SearchResult search = BST::search(bst, word);
 
+      // exibe os dados do result
       cout << "Encontrou? ";
       if (search.found == 1) {
         cout << "SIM! ;)" << endl << "IDs dos documentos: { ";
@@ -82,6 +85,8 @@ int main(int argc, char *argv[]) {
     delete[] docs;
   }
 
+  
+  // se o comando for stats
   if (command == "stats") {
     if (argc != 4) {
       cout << "Erro, estrutura esperada: " << endl
