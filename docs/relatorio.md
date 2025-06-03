@@ -1,6 +1,6 @@
 # Relatório do Projeto: Índice Invertido e Análise Comparativa de Estruturas de Dados  
 
-* **Alunos integrantes**: Bruno Ferreira Salvi, Henrique Gabriel Gasparelo, Henrique Coelho Beltrão, José Thevez Gomes Guedes e Luiz Eduardo Bravin.
+* **Alunos integrantes**: Bruno Ferreira Salvi, Henrique Coelho Beltrão, Henrique Gabriel Gasparelo, José Thevez Gomes Guedes e Luiz Eduardo Bravin.
 * **Professor orientador**: Matheus Telles Werner.
 * **Repositório**: https://github.com/riqueu/a2-ed-2025/
 
