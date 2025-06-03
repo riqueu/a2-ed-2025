@@ -16,6 +16,8 @@ Leia também o [Relatório Completo](docs/relatorio.md).
 ---
 ### Instruções para Execução
 
+- Use C++17 ou uma versão superior
+
 #### Linux/UNIX-like
 
 1. **Compilar todos os executáveis:**
