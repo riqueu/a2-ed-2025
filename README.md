@@ -105,3 +105,17 @@ Leia também o [Relatório Completo](docs/relatorio.md).
      ```
 
 ---
+### Instruções para Rodar os teste unitários
+
+1. **Compile os arquivos necessários:**
+     ```bash
+     g++ src/test_bst.cpp src/bst.cpp src/tree_utils.cpp -o program
+     ```
+2. **Execute o arquivo executável:**
+     ```bash
+     ./program
+     ```
+3. **Remove o arquivo executável:**
+     ```bash
+     rm program
+     ```
