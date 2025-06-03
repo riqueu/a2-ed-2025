@@ -33,7 +33,7 @@ Node *createNode(const std::string &word, int documentId);
  * @param documentId ID do documento associado.
  * @return Nova raiz da árvore após a inserção.
  */
-Node *insertNode(Node *root, const std::string &word, int documentId);
+Node *insertNode(Node *root, const std::string &word, int documentId, int &numComparisons);
 
 /**
  * @brief Insere uma palavra na árvore binária de busca.

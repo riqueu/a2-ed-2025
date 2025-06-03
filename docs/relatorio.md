@@ -122,6 +122,7 @@ Após a implementação das três estruturas de dados para aplicacação do índ
 * **Henrique Coelho Beltrão:** Adiantamente da implementação de funções para estatísticas, ajustes na CLI para estatísticas e construção do Makefile;
 * **Henrique Gabriel Gasparelo:** Implementação das funções de print da árvore, de inserção na BST e de destroy da BST;
 * **José Thevez Gomes Guedes:** Implementação das funções para leitura dos arquivos e construção do índice invertido;
-* **Luiz Eduardo Bravin:** Inicialização da redação do relatório.
+* **Luiz Eduardo Bravin:** Inicialização da redação do relatório e implementação dos teste unitários das funções feitas nessa entrega.
+
 ### 8.2 Entrega 2
 ### 8.3 Entrega 3
