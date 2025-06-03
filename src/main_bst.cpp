@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
   // verifica se foi passado um número suficiente de parâmetros
   if (argc < 2) {
     cout << "Erro: Nenhum comando fornecido. Estrutura esperada: ./<arvore> "
-            "<comando> <n_docs> <diretório>"
+            "<comando> <n_docs> <diretorio>"
          << endl;
     return 1;
   }
@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
     // se a estrutura não for a esperada para search
     if (argc != 4) {
       cout << "Erro, estrutura esperada: " << endl
-           << "./<arvore> search <n_docs> <diretório>";
+           << "./<arvore> search <n_docs> <diretorio>";
       return 0;
     }
 
@@ -48,7 +48,7 @@ int main(int argc, char *argv[]) {
     while (repeat == "s") {
       string word;
       cout << "Indexacao das palavras concluida!" << endl
-           << "Digite a que você quer buscar: ";
+           << "Digite a que voce quer buscar: ";
       cin >> word;
 
       // chama a função de busca
@@ -65,11 +65,11 @@ int main(int argc, char *argv[]) {
         }
         cout << " }" << endl;
       } else {
-        cout << "NÃO! :/" << endl;
+        cout << "NAO! :/" << endl;
       }
 
-      cout << "Tempo de execucaoo: " << search.executionTime << endl
-           << "Número de comparacoes: " << search.numComparisons << endl;
+      cout << "Tempo de execucao: " << search.executionTime << " ms"<< endl
+           << "Numero de comparacoes: " << search.numComparisons << endl;
 
       cout << "Deseja continuar buscando? digite: 's' para sim ou 'n' para "
               "sair: "
@@ -90,7 +90,7 @@ int main(int argc, char *argv[]) {
   if (command == "stats") {
     if (argc != 4) {
       cout << "Erro, estrutura esperada: " << endl
-           << "./<arvore> stats <n_docs> <diretório>" << endl;
+           << "./<arvore> stats <n_docs> <diretorio>" << endl;
       return 0;
     }
 
@@ -122,9 +122,9 @@ int main(int argc, char *argv[]) {
       }
     }
 
-    cout << "Tempo total de insercaoo: " << totalResult.executionTime << " ms"
+    cout << "Tempo total de insercao: " << totalResult.executionTime << " ms"
          << endl;
-    cout << "Número total de comparacoes: " << totalResult.numComparisons
+    cout << "Numero total de comparacoes: " << totalResult.numComparisons
          << endl;
 
     // free memory
