@@ -76,12 +76,15 @@ SearchResult search(BinaryTree *tree, const std::string &word) {
     return {0, {}, 0.0, 0};
   }
 
+  // inicializa as variáveis
   auto start = std::chrono::high_resolution_clock::now();
   int numComparisons = 0;
   Node *current = tree->root;
   SearchResult result;
   result.found = 0;
 
+  // verifica se o nó atual é a palavra que busco
+  // se não é, atualiza o current
   while (current != nullptr) {
     numComparisons++;
     if (word == current->word) {
@@ -95,6 +98,7 @@ SearchResult search(BinaryTree *tree, const std::string &word) {
     }
   }
 
+  // insere os resultados obtidos
   result.numComparisons = numComparisons;
   auto end = std::chrono::high_resolution_clock::now();
   result.executionTime =
