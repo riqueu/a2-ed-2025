@@ -23,7 +23,8 @@ Node *createNode(const std::string &word, int documentId) {
   return node;
 }
 
-Node *insertNode(Node *root, const std::string &word, int documentId, int &numComparisons) {
+Node *insertNode(Node *root, const std::string &word, int documentId,
+                 int &numComparisons) {
   // Caso ainda não haja um nó com a palavra
   if (root == nullptr) {
     return createNode(word, documentId);

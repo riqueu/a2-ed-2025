@@ -70,10 +70,10 @@ Doc **readDocuments(int numDocs, string dirPath) {
   filesystem::directory_iterator endIt;
 
   for (int i = 0; i < numDocs; i++) {
-    // Se o diretório acabar antes de lermos numDocs arquivos, encerra o programa
+    // diretório acabar antes de lermos numDocs arquivos -> encerra programa
     if (dir == endIt) {
       cerr << "Erro: menos documentos no diretorio do que o esperado." << endl;
-      exit(EXIT_FAILURE); 
+      exit(EXIT_FAILURE);
     }
 
     // Coleta o caminho para o proximo arquivo
