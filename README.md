@@ -57,6 +57,7 @@ Leia também o [Relatório Completo](docs/relatorio.md).
 5. **Exemplo de execução:**
      ```bash
      ./src/output/main_bst search 10 data/
+     ./src/output/main_bst stats 10 data/
      ```
 
 ---
@@ -100,6 +101,7 @@ Leia também o [Relatório Completo](docs/relatorio.md).
 5. **Exemplo de execução:**
      ```cmd
      src\output\main_bst.exe search 10 data\
+     src\output\main_bst.exe stats 10 data\
      ```
 
 ---
