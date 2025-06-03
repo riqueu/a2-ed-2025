@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
 
     while (repeat == "s") {
       string word;
-      cout << "Indexação das palavras concluídas!" << endl
+      cout << "Indexacao das palavras concluida!" << endl
            << "Digite a que você quer buscar: ";
       cin >> word;
 
@@ -65,8 +65,8 @@ int main(int argc, char *argv[]) {
         cout << "NÃO! :/" << endl;
       }
 
-      cout << "Tempo de execução: " << search.executionTime << endl
-           << "Número de comparações: " << search.numComparisons << endl;
+      cout << "Tempo de execucaoo: " << search.executionTime << endl
+           << "Número de comparacoes: " << search.numComparisons << endl;
 
       cout << "Deseja continuar buscando? digite: 's' para sim ou 'n' para "
               "sair: "
@@ -117,9 +117,9 @@ int main(int argc, char *argv[]) {
       }
     }
 
-    cout << "Tempo total de inserção: " << totalResult.executionTime << " ms"
+    cout << "Tempo total de insercaoo: " << totalResult.executionTime << " ms"
          << endl;
-    cout << "Número total de comparações: " << totalResult.numComparisons
+    cout << "Número total de comparacoes: " << totalResult.numComparisons
          << endl;
 
     // free memory

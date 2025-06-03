@@ -13,39 +13,50 @@ RBT_SOURCES = $(SRC_DIR)/main_rbt.cpp $(SRC_DIR)/rbt.cpp $(SRC_DIR)/data.cpp $(S
 
 # detecta o sistema operacional
 ifeq ($(OS),Windows_NT)
-    RM = del /Q
-    EXE_EXT = .exe
+	EXE_EXT = .exe
+	MKDIR = if not exist "$(subst /,\,$(OUTPUT_DIR))" mkdir "$(subst /,\,$(OUTPUT_DIR))"
+	RM = del /Q
+	RMDIR = rmdir /S /Q
+	SEP = \\
 else
-    RM = rm -f
-    EXE_EXT =
+	EXE_EXT =
+	MKDIR = mkdir -p $(OUTPUT_DIR)
+	RM = rm -f
+	RMDIR = rm -rf
+	SEP = /
 endif
 
 # executáveis
-BST_EXEC = $(OUTPUT_DIR)/main_bst$(EXE_EXT)
-AVL_EXEC = $(OUTPUT_DIR)/main_avl$(EXE_EXT)
-RBT_EXEC = $(OUTPUT_DIR)/main_rbt$(EXE_EXT)
+BST_EXEC = $(OUTPUT_DIR)$(SEP)main_bst$(EXE_EXT)
+AVL_EXEC = $(OUTPUT_DIR)$(SEP)main_avl$(EXE_EXT)
+RBT_EXEC = $(OUTPUT_DIR)$(SEP)main_rbt$(EXE_EXT)
 
 # Targets para construir os executáveis
 all: $(BST_EXEC) $(AVL_EXEC) $(RBT_EXEC)
 
 # executaveis Binary Search Tree
 $(BST_EXEC): $(BST_SOURCES)
-	@mkdir -p $(OUTPUT_DIR)
+	@$(MKDIR)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 # executaveis AVL Tree
 $(AVL_EXEC): $(AVL_SOURCES)
-	@mkdir -p $(OUTPUT_DIR)
+	@$(MKDIR)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 # executaveis Red-Black Tree
 $(RBT_EXEC): $(RBT_SOURCES)
-	@mkdir -p $(OUTPUT_DIR)
+	@$(MKDIR)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 # limpa arquivos gerados
 clean:
-	$(RM) $(BST_EXEC) $(AVL_EXEC) $(RBT_EXEC)
-	$(RM) -r $(OUTPUT_DIR)
+ifeq ($(OS),Windows_NT)
+	-$(RM) "$(subst /,\,$(BST_EXEC))" "$(subst /,\,$(AVL_EXEC))" "$(subst /,\,$(RBT_EXEC))"
+	-$(RMDIR) "$(subst /,\,$(OUTPUT_DIR))"
+else
+	-$(RM) $(BST_EXEC) $(AVL_EXEC) $(RBT_EXEC)
+	-$(RMDIR) $(OUTPUT_DIR)
+endif
 
 .PHONY: all clean
