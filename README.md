@@ -22,7 +22,7 @@ Leia também o [Relatório Completo](docs/relatorio.md).
     ```bash
     make
     ```
-2. **Compilar apenas uma árvore específica:**
+2. **Alternativa: Compilar apenas uma árvore específica:**
      - Binary Search Tree (BST)
           ```bash
           make src/output/main_bst
@@ -65,7 +65,7 @@ Leia também o [Relatório Completo](docs/relatorio.md).
     ```cmd
     make
     ```
-2. **Compilar apenas uma árvore específica:**
+2. **Alternativa: Compilar apenas uma árvore específica:**
      - Binary Search Tree (BST)
           ```cmd
           make src/output/main_bst.exe
