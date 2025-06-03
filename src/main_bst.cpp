@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
     return 1;
   }
   string command = argv[1];
-  
+
   // se o comando for o search
   if (command == "search") {
 
@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
         cout << "NAO! :/" << endl;
       }
 
-      cout << "Tempo de execucao: " << search.executionTime << " ms"<< endl
+      cout << "Tempo de execucao: " << search.executionTime << " ms" << endl
            << "Numero de comparacoes: " << search.numComparisons << endl;
 
       cout << "Deseja continuar buscando? digite: 's' para sim ou 'n' para "
@@ -85,7 +85,6 @@ int main(int argc, char *argv[]) {
     delete[] docs;
   }
 
-  
   // se o comando for stats
   if (command == "stats") {
     if (argc != 4) {
