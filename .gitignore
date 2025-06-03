@@ -33,3 +33,6 @@
 *.exe
 *.out
 *.app
+
+# Ignore output directories
+src/output/
