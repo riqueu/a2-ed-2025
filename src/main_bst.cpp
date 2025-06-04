@@ -79,10 +79,7 @@ int main(int argc, char *argv[]) {
 
     // free memory
     BST::destroy(bst);
-    for (int i = 0; i < n_docs; i++) {
-      delete docs[i];
-    }
-    delete[] docs;
+    deleteDocs(docs, n_docs);
   }
 
   // se o comando for stats
@@ -128,9 +125,6 @@ int main(int argc, char *argv[]) {
 
     // free memory
     BST::destroy(bst);
-    for (int i = 0; i < n_docs; i++) {
-      delete docs[i];
-    }
-    delete[] docs;
+    deleteDocs(docs, n_docs);
   }
 }
