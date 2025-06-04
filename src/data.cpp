@@ -87,7 +87,9 @@ Doc **readDocuments(int numDocs, string dirPath) {
     }
 
     // Cria a estrutura do documento
-    Doc *document = createDoc(i);
+    std::string nome_arquivo = path.filename().string();
+    int id = std::stoi(nome_arquivo);
+    Doc *document = createDoc(id);
 
     // Coleta palavra por palavra
     std::string word;
