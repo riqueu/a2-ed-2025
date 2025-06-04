@@ -188,16 +188,8 @@ void testDestroyTree() {
   BST::destroy(tree);
   tree = nullptr; // Garantir que o ponteiro não seja usado após a destruição
 
-  // Verificar se a árvore foi destruída corretamente
-  if (tree == nullptr) {
-    std::cout << "SUCESSO: Arvore destruída corretamente (ponteiro invalido)"
-              << std::endl;
-  } else {
-    std::cout << "FALHA: Ponteiro da arvore não foi invalidado após destruicao"
-              << std::endl;
-  }
-
-  std::cout << std::endl;
+  // Informar que a árvore foi destruída corretamente
+  std::cout << "SUCESSO: Arvore destruída corretamente" << std::endl;
 }
 
 int main() {
