@@ -45,7 +45,7 @@ struct SearchResult {
 void printIndexRec(Node *node);
 
 /**
- * @brief Imprime todos o índice invertido da árvore fornecida.
+ * @brief Imprime todo o índice invertido da árvore fornecida.
  *
  * Esta função chama printIndexRec a partir da raiz da árvore, imprimindo todas
  * as palavras e seus respectivos documentos.
