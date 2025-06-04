@@ -12,13 +12,15 @@ void printIndexRec(Node *node) {
   // Exibe a palavra e os IDs dos documentos em que ela aparece
   std::cout << node->word << ": ";
   int size = node->documentIds.size();
-  for (int i = 0; i < size - 1; i++) {
-    std::cout << node->documentIds[i] << ", ";
-  }
-  std::cout << node->documentIds[size - 1];
-  std::cout << "\n";
+  if (size > 0) {
+    for (int i = 0; i < size - 1; i++) {
+      std::cout << node->documentIds[i] << ", ";
+    }
+    std::cout << node->documentIds[size - 1];
+    std::cout << "\n";
+  };
 
-  // Recursão para os nós a esquerda
+  // Recursão para os nós a direita
   printIndexRec(node->right);
 }
 
