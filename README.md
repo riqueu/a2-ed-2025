@@ -9,7 +9,7 @@ Este repositório é um refúgio para o projeto final da disciplina de Estrutura
 
 ---
 ### Resumo
--> resumo do trabalho aqui
+Optou-se por remover palavras duplicadas durante a leitura dos documentos, garantindo que cada palavra fosse inserida apenas uma vez na árvore BST por documento. Como resultado, a lista de palavras que serão inseridas na árvore contém apenas palavras únicas por documento.
 
 ---
 ### Relatório
