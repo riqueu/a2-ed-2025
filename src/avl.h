@@ -23,6 +23,60 @@ BinaryTree *create();
 Node *createNode(const std::string &word, int documentId);
 
 /**
+ * @brief Obtém a altura de um nó.
+ *
+ * Retorna -1 se o nó for nulo, caso contrário, retorna a altura do nó.
+ *
+ * @param node Ponteiro para o nó cuja altura será obtida.
+ * @return Altura do nó ou -1 se o nó for nulo.
+ */
+int getHeight(Node *node);
+
+/**
+ * @brief Calcula o fator de balanceamento de um nó.
+ *
+ * O fator de balanceamento é a diferença entre a altura da subárvore esquerda
+ * e a altura da subárvore direita.
+ *
+ * @param node Ponteiro para o nó cujo fator de balanceamento será calculado.
+ * @return Fator de balanceamento do nó.
+ */
+int getBalanceFactor(Node *node);
+
+/**
+ * @brief Realiza uma rotação à direita em um nó.
+ *
+ * Função auxiliar usada para balancear a árvore quando ocorre um
+ * desbalanceamento à esquerda.
+ *
+ * @param node Ponteiro para o nó que será rotacionado.
+ * @return Novo nó que se torna a raiz da subárvore após a rotação.
+ */
+Node *rotateRight(Node *node);
+
+/**
+ * @brief Realiza uma rotação à esquerda em um nó.
+ *
+ * Função auxiliar usada para balancear a árvore quando ocorre um
+ * desbalanceamento à direita.
+ *
+ * @param node Ponteiro para o nó que será rotacionado.
+ * @return Novo nó que se torna a raiz da subárvore após a rotação.
+ */
+Node *rotateLeft(Node *node);
+
+/**
+ * @brief Balanceia um nó da árvore AVL.
+ *
+ * Verifica o fator de balanceamento do nó e realiza rotações para garantir que
+ * a árvore permaneça balanceada. Pode realizar rotações simples ou duplas.
+ *
+ * @param node Ponteiro para o nó que será balanceado.
+ * @return Novo nó que se torna a raiz da subárvore após o balanceamento.
+ */
+Node *balance(Node *node);
+
+/**
  * @brief Insere uma palavra na árvore AVL recursivamente.
  *
  * Adiciona a palavra na árvore; se já existir, insere o ID no vetor, se não,
