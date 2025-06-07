@@ -2,7 +2,6 @@
 #include "tree_utils.h"
 #include <vector>
 
-// TODO: VERIFICAR TODAS AS FUNÇÕES E SEUS RETORNOS E VER SE ESTÃO DE ACORDO COM O ENUNCIADO E A ÁRVORE AVL
 namespace AVL {
 BinaryTree *create() {
   // Criação da árvore
@@ -24,9 +23,7 @@ Node *createNode(const std::string &word, int documentId) {
   return node;
 }
 
-int getHeight(Node *node) {
-  return node == nullptr ? -1 : node->height;
-}
+int getHeight(Node *node) { return node == nullptr ? -1 : node->height; }
 
 int getBalanceFactor(Node *node) {
   return node == nullptr ? 0 : getHeight(node->left) - getHeight(node->right);
@@ -39,8 +36,9 @@ Node *rotateRight(Node *node) {
 
   // atualizar alturas dos nós
   node->height = std::max(getHeight(node->left), getHeight(node->right)) + 1;
-  newRoot->height = std::max(getHeight(newRoot->left), getHeight(newRoot->right)) + 1;
-  
+  newRoot->height =
+      std::max(getHeight(newRoot->left), getHeight(newRoot->right)) + 1;
+
   return newRoot;
 }
 
@@ -51,7 +49,8 @@ Node *rotateLeft(Node *node) {
 
   // atualizar alturas dos nós
   node->height = std::max(getHeight(node->left), getHeight(node->right)) + 1;
-  newRoot->height = std::max(getHeight(newRoot->left), getHeight(newRoot->right)) + 1;
+  newRoot->height =
+      std::max(getHeight(newRoot->left), getHeight(newRoot->right)) + 1;
 
   return newRoot;
 }
@@ -63,7 +62,8 @@ Node *balance(Node *node) {
   if (balanceFactor > 1) {
     // verifica desbalanceamento no filho esquerdo
     if (getBalanceFactor(node->left) < 0) {
-      node->left = rotateLeft(node->left); // rotação dupla (esquerda-direita)
+      // rotação dupla (esquerda-direita)
+      node->left = rotateLeft(node->left);
     }
     return rotateRight(node); // rotação simples
   }
@@ -72,7 +72,8 @@ Node *balance(Node *node) {
   if (balanceFactor < -1) {
     // verifica desbalanceamento no filho direito
     if (getBalanceFactor(node->right) > 0) {
-      node->right = rotateRight(node->right); // rotação dupla (direita-esquerda)
+      // rotação dupla (direita-esquerda)
+      node->right = rotateRight(node->right);
     }
     return rotateLeft(node); // rotação simples
   }
