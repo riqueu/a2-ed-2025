@@ -168,8 +168,8 @@ void deleteNodes(Node *root) {
     return;
   }
 
-  // Recurção para deletar os nós, não tem necessidade de verificar se são
-  // nullptr, pois a recurção já faz isso
+  // Recursão para deletar os nós, não tem necessidade de verificar se são
+  // nullptr, pois a recursão já faz isso
   deleteNodes(root->left);
   deleteNodes(root->right);
 
