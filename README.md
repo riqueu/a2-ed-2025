@@ -16,106 +16,73 @@ Leia também o [Relatório Completo](docs/relatorio.md).
 ---
 ### Instruções para Execução
 
-- Use C++17 ou uma versão superior
+- Certifique-se de que o compilador **g++** está instalado e configurado no sistema.
+- Use **C++17** ou uma versão superior.
+- O [Makefile](Makefile) detecta automaticamente o sistema operacional e ajusta os comandos de criação e limpeza de executáveis e diretórios.
 
-#### Linux/UNIX-like
 
-1. **Compilar todos os executáveis:**
-    ```bash
-    make
-    ```
-2. **Alternativa: Compilar apenas uma árvore específica:**
-     - Binary Search Tree (BST)
-          ```bash
-          make src/output/main_bst
-          ```
-     - AVL Tree
-          ```bash
-          make src/output/main_avl
-          ```
-     - Red-Black Tree (RBT)
-          ```bash
-          make src/output/main_rbt
-          ```
-3. **Executar o programa para uma árvore específica:**
-     - Binary Search Tree (BST)
-          ```bash
-          ./src/output/main_bst <comando> <n_docs> <diretório>
-          ```
-     - AVL Tree
-          ```bash
-          ./src/output/main_avl <comando> <n_docs> <diretório>
-          ```
-     - Red-Black Tree (RBT)
-          ```bash
-          ./src/output/main_rbt <comando> <n_docs> <diretório>
-          ```
-4. **Limpar arquivos gerados:**
-     ```bash
-     make clean
-     ```
-5. **Exemplo de execução:**
-     ```bash
-     ./src/output/main_bst search 10 data/
-     ./src/output/main_bst stats 10 data/
-     ```
+#### 1. Compilação:
+#### Compilar todos os executáveis (mains e testes)
+```sh
+# Linux/macOS
+make
 
----
+# Windows (cmd)
+make
+```
 
-#### Windows
+#### Compilar apenas os arquivos principais (mains)
+```sh
+make run_main
+```
 
-1. **Compilar todos os executáveis:**
-    ```cmd
-    make
-    ```
-2. **Alternativa: Compilar apenas uma árvore específica:**
-     - Binary Search Tree (BST)
-          ```cmd
-          make src/output/main_bst.exe
-          ```
-     - AVL Tree
-          ```cmd
-          make src/output/main_avl.exe
-          ```
-     - Red-Black Tree (RBT)
-          ```cmd
-          make src/output/main_rbt.exe
-          ```
-3. **Executar o programa para uma árvore específica:**
-     - Binary Search Tree (BST)
-          ```cmd
-          src\output\main_bst.exe <comando> <n_docs> <diretório>
-          ```
-     - AVL Tree
-          ```cmd
-          src\output\main_avl.exe <comando> <n_docs> <diretório>
-          ```
-     - Red-Black Tree (RBT)
-          ```cmd
-          src\output\main_rbt.exe <comando> <n_docs> <diretório>
-          ```
-4. **Limpar arquivos gerados:**
-     ```cmd
-     make clean
-     ```
-5. **Exemplo de execução:**
-     ```cmd
-     src\output\main_bst.exe search 10 data\
-     src\output\main_bst.exe stats 10 data\
-     ```
+#### Compilar apenas os arquivos de teste
+```sh
+make run_test
+```
 
----
-### Instruções para Rodar os teste unitários
+#### Compilar um arquivo específico (exemplo: main_bst)
+```sh
+# Linux/macOS
+make src/output/main_bst
 
-1. **Compile os arquivos necessários:**
-     ```bash
-     g++ src/test_bst.cpp src/bst.cpp src/tree_utils.cpp -o program
-     ```
-2. **Execute o arquivo executável:**
-     ```bash
-     ./program
-     ```
-3. **Remove o arquivo executável:**
-     ```bash
-     rm program
-     ```
+# Windows (cmd)
+make src\output\main_bst.exe
+```
+
+#### 2. Execução:
+#### Executar um dos programas compilados (exemplo: main_bst)
+```sh
+# Linux/macOS
+./src/output/main_bst <comando> <n_docs> <diretório>
+
+# Windows (cmd)
+src\output\main_bst.exe <comando> <n_docs> <diretório>
+```
+
+#### 3. Limpeza:
+#### Limpar todos os arquivos gerados
+```sh
+make clean
+```
+
+#### 4. Exemplo de Fluxos de compilação e execução:
+#### Exemplo de fluxo completo (Linux/macOS)
+```sh
+make clean
+make
+# busca com 100 arquivos no diretório data/ com a AVL
+./src/output/main_avl search 100 data/
+... # execução/output do programa
+make clean
+```
+
+#### Exemplo de fluxo completo (Windows)
+```sh
+make clean
+make
+# stats com 1000 arquivos no diretório data\ com a BST
+src\output\main_bst.exe stats 1000 data\
+... # execução/output do programa
+make clean
+```
