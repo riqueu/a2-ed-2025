@@ -99,30 +99,66 @@ int main(int argc, char *argv[]) {
     auto startRead = std::chrono::high_resolution_clock::now();
     Doc **docs = readDocuments(n_docs, path);
     auto endRead = std::chrono::high_resolution_clock::now();
-    double readTime =
-        std::chrono::duration<double, std::milli>(endRead - startRead).count();
-    cout << "Tempo de leitura dos documentos: " << readTime << " ms" << endl;
+    double readTime = std::chrono::duration<double, std::milli>(endRead - startRead).count();
 
     BinaryTree *bst = BST::create();
 
-    // perform insertions
-    InsertResult totalResult;
-    totalResult.numComparisons = 0;
-    totalResult.executionTime = 0.0;
+    stats::TreeStats s = {1, 0, 0.0, 0.0, 0, 0, 0.0, 0.0, 0};
+
+    int numWords = 0; // Inicializa o contador de palavras
 
     for (int i = 0; i < n_docs; i++) {
       for (size_t j = 0; j < docs[i]->content->size(); j++) {
         InsertResult result =
             BST::insert(bst, docs[i]->content->at(j), docs[i]->docID);
-        totalResult.numComparisons += result.numComparisons;
-        totalResult.executionTime += result.executionTime;
+        s.numComparisonsInsertion += result.numComparisons;
+        s.executionTimeInsertion += result.executionTime;
+        numWords += 1; // Incrementa o contador de palavras inseridas
       }
     }
 
-    cout << "Tempo total de insercao: " << totalResult.executionTime << " ms"
+    s.executionTimeInsertionMean = s.executionTimeInsertion / numWords; // Calcula o tempo médio de inserção
+
+
+    vector<string> search_words = {"exemplo", "palavra", "busca", "arvore", "documento"}; // Palavras a serem buscadas
+    // Busca cada palavra do vetor search_words na árvore
+    for (const string& word : search_words) {
+      SearchResult search = BST::search(bst, word);
+      s.numComparisonsSearchMean += search.numComparisons;
+      s.executionTimeSearchMean += search.executionTime;
+
+      // Atualiza o número máximo de comparações
+      if (search.numComparisons > s.numComparisonsSearchMax) {
+        s.numComparisonsSearchMax = search.numComparisons;
+      }
+      // Atualiza o tempo máximo de execução
+      if (search.executionTime > s.executionTimeSearchMax) {
+        s.executionTimeSearchMax = search.executionTime;
+      }
+    }
+    s.numComparisonsSearchMean = s.numComparisonsSearchMean / search_words.size(); // Calcula o número médio de comparações
+    s.executionTimeSearchMean = s.executionTimeSearchMean / search_words.size(); // Calcula o tempo médio de busca
+
+    // Print das estatísticas
+    cout << "=========Estatisticas=========" << endl;
+    cout << "Tempo de leitura dos documentos: " << readTime << " ms" << endl;
+    cout << "==========Insercao==========" << endl;
+    cout << "Tempo total de insercao: " << s.executionTimeInsertion << " ms"
          << endl;
-    cout << "Numero total de comparacoes: " << totalResult.numComparisons
+    cout << "Tempo medio de insercao: " << s.executionTimeInsertionMean << " ms" 
          << endl;
+    cout << "Numero total de comparacoes para insercao: " << s.numComparisonsInsertion
+         << endl;
+    cout << "===========Busca===========" << endl;
+    cout << "Numero medio de comparacoes para busca: " << s.numComparisonsSearchMean
+         << endl;
+    cout << "Numero maximo de comparacoes para busca: " << s.numComparisonsSearchMax
+         << endl;
+    cout << "Tempo medio de busca: " << s.executionTimeSearchMean << " ms" 
+         << endl;
+    cout << "Tempo maximo de busca: " << s.executionTimeSearchMax << " ms" 
+         << endl;
+    cout << "===========Outros===========" << endl;
     cout << "Altura da arvore: " << stats::get_tree_height(bst->root) << endl;
 
     // free memory
