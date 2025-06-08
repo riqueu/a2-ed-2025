@@ -1,6 +1,7 @@
 #ifndef TREEUTILS_H
 #define TREEUTILS_H
 
+#include "data.h"
 #include <chrono>
 #include <string>
 #include <vector>
@@ -103,6 +104,23 @@ struct TreeStats {
  * @return Altura da árvore a partir do nó raiz.
  */
 int get_tree_height(Node *root);
+
+/**
+ * @brief Obtém estatísticas de uma árvore binária de busca.
+ *
+ * Esta função cria uma árvore do tipo especificado (BST ou AVL), insere palavras
+ * de documentos nela, realiza buscas por palavras e coleta estatísticas sobre
+ * inserções e buscas.
+ *
+ * @param tree_type Tipo da árvore ("bst" ou "avl").
+ * @param n_docs Número de documentos a serem processados.
+ * @param n_max_doc Número máximo de documentos a serem processados.
+ * @param docs Vetor de ponteiros para os documentos a serem processados.
+ * @param search_words Vetor de palavras a serem buscadas na árvore.
+ * @return Estrutura TreeStats contendo as estatísticas coletadas.
+ */
+TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc, const std::vector<DocReading::Doc*>& docs, const std::vector<std::string>& search_words);
+
 }
 
 #endif
