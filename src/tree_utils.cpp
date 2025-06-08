@@ -62,3 +62,18 @@ void printTree(BinaryTree *tree) {
   // Chamada da função recursiva
   printTreeRec(tree->root);
 }
+
+namespace stats {
+int get_tree_height(Node *root){
+    if (root == nullptr) {
+        return 0; // A altura de uma árvore vazia é 0
+    }
+
+    // Calcula a altura das subárvores esquerda e direita
+    int leftHeight = get_tree_height(root->left);
+    int rightHeight = get_tree_height(root->right);
+
+    // A altura da árvore é o máximo entre as alturas das subárvores, mais 1 para o nó atual
+    return std::max(leftHeight, rightHeight) + 1;
+}
+} // namespace stats
