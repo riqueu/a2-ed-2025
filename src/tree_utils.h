@@ -77,6 +77,23 @@ void printTreeRec(Node *node, std::string prefix, std::string linePrefix);
 void printTree(BinaryTree *tree);
 
 namespace stats {
+struct TreeStats {
+    int n_docs; // Número de documentos inseridos na árvore
+
+    int numComparisonsInsertion; // Número total de comparações realizadas durante as inserções
+
+    double executionTimeInsertionMean; // Tempo médio de execução das inserções em milissegundos
+    double executionTimeInsertion; // Tempo total de execução das inserções em milissegundos
+
+    int numComparisonsSearchMean; // Número médio de comparações realizadas durante as buscas
+    int numComparisonsSearchMax; // Número máximo de comparações realizadas durante as buscas
+
+    double executionTimeSearchMean; // Tempo médio de execução das buscas em milissegundos
+    double executionTimeSearchMax; // Tempo máximo de execução das buscas em milissegundos
+
+    int treeHeight; // Altura da árvore após as inserções
+};
+
 /**
  * @brief Obtém a altura da árvore binária de busca.
  *

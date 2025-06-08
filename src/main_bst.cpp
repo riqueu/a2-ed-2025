@@ -1,6 +1,6 @@
 #include "bst.h"
 #include "data.h"
-#include "tree_stats.h"
+#include "tree_utils.h"
 #include <iostream>
 #include <ostream>
 
