@@ -1,7 +1,7 @@
 #ifndef EXPORT_STATS_H
 #define EXPORT_STATS_H
 
-#include "tree_stats.h"
+#include "tree_utils.h"
 #include <vector>
 #include <string>
 
@@ -11,6 +11,6 @@
  * @param stats Dados a serem exportados
  * @param title Titulo do arquivo CSV
  */
-void exportToCSV(const std::vector<TreeStats>& stats, std::string title);
+void exportToCSV(const std::vector<stats::TreeStats>& stats, std::string title);
 
 #endif

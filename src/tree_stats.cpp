@@ -1,4 +1,3 @@
-#include "tree_stats.h"
 #include "data.h"
 #include "tree_utils.h"
 #include "bst.h"
@@ -36,7 +35,7 @@ int main(int argc, char *argv[]) {
     // Vetor para armazenar o número de documentos a serem inseridos
     std::vector<int> n_docs;
     // Vetor para armazenar estatísticas das árvores
-    std::vector<TreeStats> stats;
+    std::vector<stats::TreeStats> stats;
 
     // Gera os números de documentos que serão inseridos, distribuindo-os uniformemente, tendo um total de 25 
     int step = std::max(1, n_max_docs / n_points); // Define o passo
@@ -57,28 +56,45 @@ int main(int argc, char *argv[]) {
         cout << "Criando arvore binaria de busca (BST)..." << endl;
         for (int n : n_docs) {
             tree = BST::create();
-            InsertResult totalResult;
-            totalResult.numComparisons = 0;
-            totalResult.executionTime = 0.0;
+
+            stats::TreeStats s = {n, 0, 0.0, 0.0, 0, 0, 0.0, 0.0, 0};
 
             // Insere palavras dos documentos na árvore
             for (int i = 0; i < n && i < n_max_docs; i++) {
                 for (size_t j = 0; j < docs[i]->content->size(); j++) {
                     InsertResult result = BST::insert(tree, docs[i]->content->at(j), docs[i]->docID);
-                    totalResult.numComparisons += result.numComparisons;
-                    totalResult.executionTime += result.executionTime;
+                    s.numComparisonsInsertion += result.numComparisons;
+                    s.executionTimeInsertion += result.executionTime;
                 }
             }
 
+            s.executionTimeInsertionMean = s.executionTimeInsertion / n; // Calcula o tempo médio de inserção
+
+            vector<string> search_words = {"exemplo", "palavra", "busca", "arvore", "documento"}; // Palavras a serem buscadas
+            // Busca cada palavra do vetor search_words na árvore
+            for (const string& word : search_words) {
+                SearchResult search = BST::search(tree, word);
+                s.numComparisonsSearchMean += search.numComparisons;
+                s.executionTimeSearchMean += search.executionTime;
+
+                // Atualiza o número máximo de comparações
+                if (search.numComparisons > s.numComparisonsSearchMax) {
+                    s.numComparisonsSearchMax = search.numComparisons;
+                }
+                // Atualiza o tempo máximo de execução
+                if (search.executionTime > s.executionTimeSearchMax) {
+                    s.executionTimeSearchMax = search.executionTime;
+                }
+            }
+            
+            s.numComparisonsSearchMean = s.numComparisonsSearchMean / search_words.size(); // Calcula o número médio de comparações
+            s.executionTimeSearchMean = s.executionTimeSearchMean / search_words.size(); // Calcula o tempo médio de busca
+
             // Pega a altura da árvore
             int tree_height = stats::get_tree_height(tree->root);
+            s.treeHeight = tree_height; // Armazena a altura da árvore
 
             // Armazena as estatísticas da árvore
-            TreeStats s;
-            s.n_docs = n;
-            s.numComparisons = totalResult.numComparisons;
-            s.executionTime = totalResult.executionTime;
-            s.treeHeight = tree_height;
             stats.push_back(s); // Adiciona as estatísticas ao vetor
             
             // Libera a memória da árvore atual
@@ -89,28 +105,44 @@ int main(int argc, char *argv[]) {
         cout << "Criando arvore binaria de busca (AVL)..." << endl;
         for (int n : n_docs) {
             tree = AVL::create();
-            InsertResult totalResult;
-            totalResult.numComparisons = 0;
-            totalResult.executionTime = 0.0;
+
+            stats::TreeStats s = {n, 0, 0.0, 0.0, 0, 0, 0.0, 0.0, 0};
 
             // Insere palavras dos documentos na árvore
             for (int i = 0; i < n && i < n_max_docs; i++) {
                 for (size_t j = 0; j < docs[i]->content->size(); j++) {
                     InsertResult result = AVL::insert(tree, docs[i]->content->at(j), docs[i]->docID);
-                    totalResult.numComparisons += result.numComparisons;
-                    totalResult.executionTime += result.executionTime;
+                    s.numComparisonsInsertion += result.numComparisons;
+                    s.executionTimeInsertion += result.executionTime;
                 }
             }
 
+            s.executionTimeInsertionMean = s.executionTimeInsertion / n; // Calcula o tempo médio de inserção
+
+            vector<string> search_words = {"exemplo", "palavra", "busca", "arvore", "documento"}; // Palavras a serem buscadas
+            // Busca cada palavra do vetor search_words na árvore
+            for (const string& word : search_words) {
+                SearchResult search = AVL::search(tree, word);
+                s.numComparisonsSearchMean += search.numComparisons;
+                s.executionTimeSearchMean += search.executionTime;
+
+                // Atualiza o número máximo de comparações
+                if (search.numComparisons > s.numComparisonsSearchMax) {
+                    s.numComparisonsSearchMax = search.numComparisons;
+                }
+                // Atualiza o tempo máximo de execução
+                if (search.executionTime > s.executionTimeSearchMax) {
+                    s.executionTimeSearchMax = search.executionTime;
+                }
+            }
+            
+            s.numComparisonsSearchMean = s.numComparisonsSearchMean / search_words.size(); // Calcula o número médio de comparações
+            s.executionTimeSearchMean = s.executionTimeSearchMean / search_words.size(); // Calcula o tempo médio de busca
+
             // Pega a altura da árvore
-            int tree_height = tree->root->height;
+            s.treeHeight = tree->root->height; // Armazena a altura da árvore
 
             // Armazena as estatísticas da árvore
-            TreeStats s;
-            s.n_docs = n;
-            s.numComparisons = totalResult.numComparisons;
-            s.executionTime = totalResult.executionTime;
-            s.treeHeight = tree_height;
             stats.push_back(s); // Adiciona as estatísticas ao vetor
             
             // Libera a memória da árvore atual
