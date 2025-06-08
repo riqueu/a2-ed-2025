@@ -60,19 +60,35 @@ make src\output\main_bst.exe
 src\output\main_bst.exe <comando> <n_docs> <diretório>
 ```
 
-#### 3. Limpeza:
+#### 3. Geração de Estatísticas (CSV):
+#### Geração dos arquivos CSV com as estatísticas para cada árvore
+```sh
+# Linux/macOS
+./src/output/tree_stats <tipoArvore> <n_docs> <n_pontos> <diretório>
+
+# Windows (cmd)
+src\output\tree_stats <tipoArvore> <n_docs> <n_pontos> <diretório>
+```
+
+#### 4. Limpeza:
 #### Limpar todos os arquivos gerados
 ```sh
 make clean
 ```
 
-#### 4. Exemplo de Fluxos de compilação e execução:
+#### 5. Exemplo de Fluxos de compilação e execução:
 #### Exemplo de fluxo completo (Linux/macOS)
 ```sh
 make clean
 make
 # busca com 100 arquivos no diretório data/ com a AVL
 ./src/output/main_avl search 100 data/
+... # execução/output do programa
+# geração do CSV de estatísticas usando a BST para a leitura de 1000 arquivos, com 25 pontos igualmente espaçados
+./src/output/tree_stats bst 1000 25 data/
+... # execução/output do programa
+# geração do CSV de estatísticas usando a AVL para a leitura de 1000 arquivos, com 25 pontos igualmente espaçados
+./src/output/tree_stats avl 1000 25 data/
 ... # execução/output do programa
 make clean
 ```
@@ -83,6 +99,12 @@ make clean
 make
 # stats com 1000 arquivos no diretório data\ com a BST
 src\output\main_bst.exe stats 1000 data\
+... # execução/output do programa
+# geração do CSV de estatísticas usando a BST para a leitura de 1000 arquivos, com 25 pontos igualmente espaçados
+src\output\tree_stats bst 1000 25 data\
+... # execução/output do programa
+# geração do CSV de estatísticas usando a AVL para a leitura de 1000 arquivos, com 25 pontos igualmente espaçados
+src\output\tree_stats avl 1000 25 data\
 ... # execução/output do programa
 make clean
 ```
