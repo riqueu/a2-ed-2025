@@ -1,6 +1,7 @@
 #ifndef EXPORT_STATS_H
 #define EXPORT_STATS_H
 
+#include "tree_stats.h"
 #include <vector>
 
 /**
@@ -8,6 +9,6 @@
  * 
  * @param data Dados a serem exportados
  */
-void exportToCSV(std::vector<std::vector<float>> data);
+void exportToCSV(const std::vector<TreeStats>& stats);
 
 #endif
