@@ -2,6 +2,7 @@
 #include "data.h"
 #include "tree_utils.h"
 #include "bst.h"
+#include "avl.h"
 #include "export_stats.h"
 #include <vector>
 #include <iostream>
@@ -52,7 +53,7 @@ int main(int argc, char *argv[]) {
 
     // Seleciona o tipo de árvore
     if (treeType == "bst") {
-        // Cria as 25 árvores binária de busca
+        // Cria as n_points árvores binária de busca
         cout << "Criando arvore binaria de busca (BST)..." << endl;
         for (int n : n_docs) {
             tree = BST::create();
@@ -83,8 +84,40 @@ int main(int argc, char *argv[]) {
             // Libera a memória da árvore atual
             BST::destroy(tree);
         }
+    } else if (treeType == "avl") {
+        // Cria as n_points árvores binária de busca
+        cout << "Criando arvore binaria de busca (AVL)..." << endl;
+        for (int n : n_docs) {
+            tree = AVL::create();
+            InsertResult totalResult;
+            totalResult.numComparisons = 0;
+            totalResult.executionTime = 0.0;
+
+            // Insere palavras dos documentos na árvore
+            for (int i = 0; i < n && i < n_max_docs; i++) {
+                for (size_t j = 0; j < docs[i]->content->size(); j++) {
+                    InsertResult result = AVL::insert(tree, docs[i]->content->at(j), docs[i]->docID);
+                    totalResult.numComparisons += result.numComparisons;
+                    totalResult.executionTime += result.executionTime;
+                }
+            }
+
+            // Pega a altura da árvore
+            int tree_height = tree->root->height;
+
+            // Armazena as estatísticas da árvore
+            TreeStats s;
+            s.n_docs = n;
+            s.numComparisons = totalResult.numComparisons;
+            s.executionTime = totalResult.executionTime;
+            s.treeHeight = tree_height;
+            stats.push_back(s); // Adiciona as estatísticas ao vetor
+            
+            // Libera a memória da árvore atual
+            AVL::destroy(tree);
+        }
     } else {
-        cout << "Erro: Tipo de arvore invalido. Use 'bst'." << endl;
+        cout << "Erro: Tipo de arvore invalido. Use 'bst' ou 'avl'." << endl;
         return 1;
     }
 
@@ -110,3 +143,7 @@ int get_tree_height(Node *root){
     return std::max(leftHeight, rightHeight) + 1;
 }
 
+// TODO: Fazer a criação do .exe desse arquivo no Makefile: g++ -Wall -Wextra -g3 src/tree_stats.cpp src/bst.cpp src/avl.cpp src/data.cpp src/tree_utils.cpp src/export_stats.cpp -o src/output/tree_stats.exe
+// lembrando que falta a rbt
+// Comando para rodar o programa: ./src/output/tree_stats avl 1000 25 data/
+// Comando para rodar o programa: ./src/output/tree_stats bst 1000 25 data/
