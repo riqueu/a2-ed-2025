@@ -10,9 +10,9 @@ void testCreateTree() {
 
   // Verifica se a árvore foi criada corretamente
   if (tree != nullptr && tree->root == nullptr) {
-    std::cout << "SUCESSO: Árvore AVL criada corretamente" << std::endl;
+    std::cout << "SUCESSO: Arvore AVL criada corretamente" << std::endl;
   } else {
-    std::cout << "FALHA: Problema ao criar árvore AVL" << std::endl;
+    std::cout << "FALHA: Problema ao criar arvore AVL" << std::endl;
   }
 
   AVL::destroy(tree);
@@ -31,9 +31,9 @@ void testCreateNode() {
   if (node != nullptr && node->word == word && node->documentIds.size() == 1 &&
       node->documentIds[0] == docId && node->parent == nullptr &&
       node->left == nullptr && node->right == nullptr && node->height == 0) {
-    std::cout << "SUCESSO: Nó AVL criado corretamente" << std::endl;
+    std::cout << "SUCESSO: Node AVL criado corretamente" << std::endl;
   } else {
-    std::cout << "FALHA: Problema ao criar nó AVL" << std::endl;
+    std::cout << "FALHA: Problema ao criar node AVL" << std::endl;
   }
 
   delete node;
@@ -57,24 +57,24 @@ void testInsertAndBalance() {
   AVL::insert(tree, "ameixa", 10);
   AVL::insert(tree, "figo", 11);
   AVL::insert(tree, "goiaba", 12);
-  AVL::insert(tree, "limão", 13);
+  AVL::insert(tree, "limao", 13);
   AVL::insert(tree, "melancia", 14);
-  AVL::insert(tree, "pêssego", 15);
+  AVL::insert(tree, "pessego", 15);
 
-  std::cout << "Estrutura da árvore AVL após inserções:\n";
+  std::cout << "Estrutura da arvore AVL apos insercoes:\n";
   printTree(tree);
 
   bool success = true;
   Node *root = tree->root;
   // Verifica se a árvore está balanceada (|fator de balanceamento| <= 1)
   if (root == nullptr || std::abs(AVL::getBalanceFactor(root)) > 1) {
-    std::cout << "FALHA: Árvore AVL não está balanceada" << std::endl;
+    std::cout << "FALHA: Arvore AVL nao esta balanceada" << std::endl;
     success = false;
   }
 
   // Printa caso a árvore esteja balanceada
   if (success) {
-    std::cout << "SUCESSO: Árvore AVL balanceada corretamente após inserções"
+    std::cout << "SUCESSO: Arvore AVL balanceada corretamente apos insercoes"
               << std::endl;
   }
 
@@ -142,11 +142,11 @@ void testDestroyTree() {
   tree = nullptr;
 
   // Informar que a árvore foi destruída corretamente
-  std::cout << "SUCESSO: Árvore AVL destruída corretamente" << std::endl;
+  std::cout << "SUCESSO: Arvore AVL destruida corretamente" << std::endl;
 }
 
 int main() {
-  std::cout << "INICIANDO TESTES UNITÁRIOS PARA AVL\n" << std::endl;
+  std::cout << "INICIANDO TESTES UNITARIOS PARA AVL\n" << std::endl;
 
   // Chama as funções de teste
   testCreateTree();
@@ -155,6 +155,6 @@ int main() {
   testSearch();
   testDestroyTree();
 
-  std::cout << "TESTES CONCLUÍDOS" << std::endl;
+  std::cout << "TESTES CONCLUIDOS" << std::endl;
   return 0;
 }
