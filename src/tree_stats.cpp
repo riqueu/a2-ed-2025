@@ -30,8 +30,6 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    // Inicializa a árvore
-    BinaryTree *tree = nullptr;
     // Vetor para armazenar o número de documentos a serem inseridos
     std::vector<int> n_docs;
     // Vetor para armazenar estatísticas das árvores
@@ -50,109 +48,18 @@ int main(int argc, char *argv[]) {
         n_docs.push_back(n_max_docs); // Garante que o último ponto seja exatamente n_max_docs
     };
 
+    // Palavras a serem buscadas nos documentos
+    vector<string> search_words = {"exemplo", "palavra", "busca", "arvore", "documento"};
+
     // Seleciona o tipo de árvore
-    if (treeType == "bst") {
+    if (treeType == "bst" || treeType == "avl") {
         // Cria as n_points árvores binária de busca
-        cout << "Criando arvores binaria de busca (BST)..." << endl;
+        cout << "Criando arvores binaria de busca (" << treeType << ")..." << endl;
         for (int n : n_docs) {
-            tree = BST::create();
-
-            stats::TreeStats s = {n, 0, 0.0, 0.0, 0, 0, 0.0, 0.0, 0};
-
-            int numWords = 0; // Inicializa o contador de palavras
-
-            // Insere palavras dos documentos na árvore
-            for (int i = 0; i < n && i < n_max_docs; i++) {
-                for (size_t j = 0; j < docs[i]->content->size(); j++) {
-                    InsertResult result = BST::insert(tree, docs[i]->content->at(j), docs[i]->docID);
-                    s.numComparisonsInsertion += result.numComparisons;
-                    s.executionTimeInsertion += result.executionTime;
-                    numWords += 1; // Incrementa o contador de palavras inseridas
-                }
-            }
-
-            s.executionTimeInsertionMean = s.executionTimeInsertion / numWords; // Calcula o tempo médio de inserção
-
-            vector<string> search_words = {"exemplo", "palavra", "busca", "arvore", "documento"}; // Palavras a serem buscadas
-            // Busca cada palavra do vetor search_words na árvore
-            for (const string& word : search_words) {
-                SearchResult search = BST::search(tree, word);
-                s.numComparisonsSearchMean += search.numComparisons;
-                s.executionTimeSearchMean += search.executionTime;
-
-                // Atualiza o número máximo de comparações
-                if (search.numComparisons > s.numComparisonsSearchMax) {
-                    s.numComparisonsSearchMax = search.numComparisons;
-                }
-                // Atualiza o tempo máximo de execução
-                if (search.executionTime > s.executionTimeSearchMax) {
-                    s.executionTimeSearchMax = search.executionTime;
-                }
-            }
-            
-            s.numComparisonsSearchMean = s.numComparisonsSearchMean / search_words.size(); // Calcula o número médio de comparações
-            s.executionTimeSearchMean = s.executionTimeSearchMean / search_words.size(); // Calcula o tempo médio de busca
-
-            // Pega a altura da árvore
-            int tree_height = stats::get_tree_height(tree->root);
-            s.treeHeight = tree_height; // Armazena a altura da árvore
-
+            // Cria a árvore de busca e gera as estatísticas
+            stats::TreeStats s = stats::get_tree_stats(treeType, n, n_max_docs, vector<Doc*>(docs, docs + n), search_words);
             // Armazena as estatísticas da árvore
-            stats.push_back(s); // Adiciona as estatísticas ao vetor
-            
-            // Libera a memória da árvore atual
-            BST::destroy(tree);
-        }
-    } else if (treeType == "avl") {
-        // Cria as n_points árvores binária de busca
-        cout << "Criando arvores binaria de busca (AVL)..." << endl;
-        for (int n : n_docs) {
-            tree = AVL::create();
-
-            stats::TreeStats s = {n, 0, 0.0, 0.0, 0, 0, 0.0, 0.0, 0};
-
-            int numWords = 0; // Inicializa o contador de palavras
-
-            // Insere palavras dos documentos na árvore
-            for (int i = 0; i < n && i < n_max_docs; i++) {
-                for (size_t j = 0; j < docs[i]->content->size(); j++) {
-                    InsertResult result = AVL::insert(tree, docs[i]->content->at(j), docs[i]->docID);
-                    s.numComparisonsInsertion += result.numComparisons;
-                    s.executionTimeInsertion += result.executionTime;
-                    numWords += 1; // Incrementa o contador de palavras inseridas
-                }
-            }
-
-            s.executionTimeInsertionMean = s.executionTimeInsertion / numWords; // Calcula o tempo médio de inserção
-
-            vector<string> search_words = {"exemplo", "palavra", "busca", "arvore", "documento"}; // Palavras a serem buscadas
-            // Busca cada palavra do vetor search_words na árvore
-            for (const string& word : search_words) {
-                SearchResult search = AVL::search(tree, word);
-                s.numComparisonsSearchMean += search.numComparisons;
-                s.executionTimeSearchMean += search.executionTime;
-
-                // Atualiza o número máximo de comparações
-                if (search.numComparisons > s.numComparisonsSearchMax) {
-                    s.numComparisonsSearchMax = search.numComparisons;
-                }
-                // Atualiza o tempo máximo de execução
-                if (search.executionTime > s.executionTimeSearchMax) {
-                    s.executionTimeSearchMax = search.executionTime;
-                }
-            }
-            
-            s.numComparisonsSearchMean = s.numComparisonsSearchMean / search_words.size(); // Calcula o número médio de comparações
-            s.executionTimeSearchMean = s.executionTimeSearchMean / search_words.size(); // Calcula o tempo médio de busca
-
-            // Pega a altura da árvore
-            s.treeHeight = tree->root->height; // Armazena a altura da árvore
-
-            // Armazena as estatísticas da árvore
-            stats.push_back(s); // Adiciona as estatísticas ao vetor
-            
-            // Libera a memória da árvore atual
-            AVL::destroy(tree);
+            stats.push_back(s);
         }
     } else {
         cout << "Erro: Tipo de arvore invalido. Use 'bst' ou 'avl'." << endl;
