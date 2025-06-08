@@ -3,12 +3,14 @@
 
 #include "tree_stats.h"
 #include <vector>
+#include <string>
 
 /**
  * @brief Cria e exporta o csv
  * 
- * @param data Dados a serem exportados
+ * @param stats Dados a serem exportados
+ * @param title Titulo do arquivo CSV
  */
-void exportToCSV(const std::vector<TreeStats>& stats);
+void exportToCSV(const std::vector<TreeStats>& stats, std::string title);
 
 #endif
