@@ -71,7 +71,7 @@ int main(int argc, char *argv[]) {
             }
 
             // Pega a altura da árvore
-            int tree_height = get_tree_height(tree->root);
+            int tree_height = stats::get_tree_height(tree->root);
 
             // Armazena as estatísticas da árvore
             TreeStats s;
@@ -131,20 +131,5 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-int get_tree_height(Node *root){
-    if (root == nullptr) {
-        return 0; // A altura de uma árvore vazia é 0
-    }
-
-    // Calcula a altura das subárvores esquerda e direita
-    int leftHeight = get_tree_height(root->left);
-    int rightHeight = get_tree_height(root->right);
-
-    // A altura da árvore é o máximo entre as alturas das subárvores, mais 1 para o nó atual
-    return std::max(leftHeight, rightHeight) + 1;
-}
-
-// TODO: Fazer a criação do .exe desse arquivo no Makefile: g++ -Wall -Wextra -g3 src/tree_stats.cpp src/bst.cpp src/avl.cpp src/data.cpp src/tree_utils.cpp src/export_stats.cpp -o src/output/tree_stats.exe
-// lembrando que falta a rbt
 // Comando para rodar o programa: ./src/output/tree_stats avl 1000 25 data/
 // Comando para rodar o programa: ./src/output/tree_stats bst 1000 25 data/

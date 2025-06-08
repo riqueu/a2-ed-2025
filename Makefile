@@ -16,6 +16,8 @@ TEST_BST_SOURCES = $(SRC_DIR)/test_bst.cpp $(SRC_DIR)/bst.cpp $(SRC_DIR)/data.cp
 TEST_AVL_SOURCES = $(SRC_DIR)/test_avl.cpp $(SRC_DIR)/avl.cpp $(SRC_DIR)/data.cpp $(SRC_DIR)/tree_utils.cpp
 TEST_RBT_SOURCES = $(SRC_DIR)/test_rbt.cpp $(SRC_DIR)/rbt.cpp $(SRC_DIR)/data.cpp $(SRC_DIR)/tree_utils.cpp
 
+TREE_STATS_SOURCES = $(SRC_DIR)/tree_stats.cpp $(SRC_DIR)/bst.cpp $(SRC_DIR)/avl.cpp $(SRC_DIR)/data.cpp $(SRC_DIR)/tree_utils.cpp $(SRC_DIR)/export_stats.cpp
+
 # detecta o sistema operacional
 ifeq ($(OS),Windows_NT)
 	EXE_EXT = .exe
@@ -41,6 +43,8 @@ TEST_BST_EXEC = $(OUTPUT_DIR)$(SEP)test_bst$(EXE_EXT)
 TEST_AVL_EXEC = $(OUTPUT_DIR)$(SEP)test_avl$(EXE_EXT)
 TEST_RBT_EXEC = $(OUTPUT_DIR)$(SEP)test_rbt$(EXE_EXT)
 
+TREE_STATS_EXEC = $(OUTPUT_DIR)$(SEP)tree_stats$(EXE_EXT)
+
 # listas de targets (main e test)
 MAIN_TARGETS =
 TEST_TARGETS =
@@ -63,6 +67,9 @@ ifneq ($(wildcard $(SRC_DIR)/test_avl.cpp),)
 endif
 ifneq ($(wildcard $(SRC_DIR)/test_rbt.cpp),)
     TEST_TARGETS += $(TEST_RBT_EXEC)
+endif
+ifneq ($(wildcard $(SRC_DIR)/tree_stats.cpp),)
+    MAIN_TARGETS += $(TREE_STATS_EXEC)
 endif
 
 # targets para construção dos executáveis
@@ -103,6 +110,12 @@ endif
 
 ifneq ($(wildcard $(SRC_DIR)/test_rbt.cpp),)
 $(TEST_RBT_EXEC): $(TEST_RBT_SOURCES)
+	@$(MKDIR)
+	$(CXX) $(CXXFLAGS) $^ -o $@
+endif
+
+ifneq ($(wildcard $(SRC_DIR)/tree_stats.cpp),)
+$(TREE_STATS_EXEC): $(TREE_STATS_SOURCES)
 	@$(MKDIR)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 endif

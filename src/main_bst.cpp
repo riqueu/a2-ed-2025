@@ -1,5 +1,6 @@
 #include "bst.h"
 #include "data.h"
+#include "tree_stats.h"
 #include <iostream>
 #include <ostream>
 
@@ -122,6 +123,7 @@ int main(int argc, char *argv[]) {
          << endl;
     cout << "Numero total de comparacoes: " << totalResult.numComparisons
          << endl;
+    cout << "Altura da arvore: " << stats::get_tree_height(bst->root) << endl;
 
     // free memory
     BST::destroy(bst);
