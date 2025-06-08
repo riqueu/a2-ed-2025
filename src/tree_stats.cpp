@@ -53,11 +53,13 @@ int main(int argc, char *argv[]) {
     // Seleciona o tipo de árvore
     if (treeType == "bst") {
         // Cria as n_points árvores binária de busca
-        cout << "Criando arvore binaria de busca (BST)..." << endl;
+        cout << "Criando arvores binaria de busca (BST)..." << endl;
         for (int n : n_docs) {
             tree = BST::create();
 
             stats::TreeStats s = {n, 0, 0.0, 0.0, 0, 0, 0.0, 0.0, 0};
+
+            int numWords = 0; // Inicializa o contador de palavras
 
             // Insere palavras dos documentos na árvore
             for (int i = 0; i < n && i < n_max_docs; i++) {
@@ -65,10 +67,11 @@ int main(int argc, char *argv[]) {
                     InsertResult result = BST::insert(tree, docs[i]->content->at(j), docs[i]->docID);
                     s.numComparisonsInsertion += result.numComparisons;
                     s.executionTimeInsertion += result.executionTime;
+                    numWords += 1; // Incrementa o contador de palavras inseridas
                 }
             }
 
-            s.executionTimeInsertionMean = s.executionTimeInsertion / n; // Calcula o tempo médio de inserção
+            s.executionTimeInsertionMean = s.executionTimeInsertion / numWords; // Calcula o tempo médio de inserção
 
             vector<string> search_words = {"exemplo", "palavra", "busca", "arvore", "documento"}; // Palavras a serem buscadas
             // Busca cada palavra do vetor search_words na árvore
@@ -102,11 +105,13 @@ int main(int argc, char *argv[]) {
         }
     } else if (treeType == "avl") {
         // Cria as n_points árvores binária de busca
-        cout << "Criando arvore binaria de busca (AVL)..." << endl;
+        cout << "Criando arvores binaria de busca (AVL)..." << endl;
         for (int n : n_docs) {
             tree = AVL::create();
 
             stats::TreeStats s = {n, 0, 0.0, 0.0, 0, 0, 0.0, 0.0, 0};
+
+            int numWords = 0; // Inicializa o contador de palavras
 
             // Insere palavras dos documentos na árvore
             for (int i = 0; i < n && i < n_max_docs; i++) {
@@ -114,10 +119,11 @@ int main(int argc, char *argv[]) {
                     InsertResult result = AVL::insert(tree, docs[i]->content->at(j), docs[i]->docID);
                     s.numComparisonsInsertion += result.numComparisons;
                     s.executionTimeInsertion += result.executionTime;
+                    numWords += 1; // Incrementa o contador de palavras inseridas
                 }
             }
 
-            s.executionTimeInsertionMean = s.executionTimeInsertion / n; // Calcula o tempo médio de inserção
+            s.executionTimeInsertionMean = s.executionTimeInsertion / numWords; // Calcula o tempo médio de inserção
 
             vector<string> search_words = {"exemplo", "palavra", "busca", "arvore", "documento"}; // Palavras a serem buscadas
             // Busca cada palavra do vetor search_words na árvore
