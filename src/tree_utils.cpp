@@ -90,7 +90,7 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc
     } else if (tree_type == "avl") {
         tree = AVL::create();
     } else {
-        return s;
+        return s; // Retorna estatísticas vazias se o tipo de árvore não for válido
     }
 
     int numWords = 0;
@@ -117,8 +117,10 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc
         SearchResult search;
         if (tree_type == "bst") {
             search = BST::search(tree, word);
-        } else {
+        } else if (tree_type == "avl") {
             search = AVL::search(tree, word);
+        } else {
+            return s; // Retorna estatísticas vazias se o tipo de árvore não for válido
         }
         s.numComparisonsSearchMean += search.numComparisons;
         s.executionTimeSearchMean += search.executionTime;
