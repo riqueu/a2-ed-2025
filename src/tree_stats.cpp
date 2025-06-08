@@ -125,7 +125,8 @@ int main(int argc, char *argv[]) {
     deleteDocs(docs, n_max_docs);
 
     // Gera o arquivo CSV com as estatísticas
-    exportToCSV(stats);
+    string title = "dados_" + treeType + ".csv";
+    exportToCSV(stats, title);
 
     return 0;
 }
