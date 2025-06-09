@@ -68,22 +68,37 @@ void printTree(BinaryTree *tree) {
 }
 
 namespace stats {
-int get_tree_height(Node *root){
-    if (root == nullptr) {
+int get_tree_height(Node *node){
+    if (node == nullptr) {
         return 0; // A altura de uma árvore vazia é 0
     }
 
     // Calcula a altura das subárvores esquerda e direita
-    int leftHeight = get_tree_height(root->left);
-    int rightHeight = get_tree_height(root->right);
+    int leftHeight = get_tree_height(node->left);
+    int rightHeight = get_tree_height(node->right);
 
     // A altura da árvore é o máximo entre as alturas das subárvores, mais 1 para o nó atual
     return std::max(leftHeight, rightHeight) + 1;
 }
 
-TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc, const std::vector<DocReading::Doc*>& docs, const std::vector<std::string>& search_words) {
+int collect_words_and_get_num_nodes(Node* node, std::vector<std::string>& words) {
+    if (node==nullptr) {
+      return 0; // Se o nó for nulo, retorna 0
+    }
+    // Recursão para os nós a esquerda
+    int left = collect_words_and_get_num_nodes(node->left, words);
+    // Adiciona a palavra do nó atual à lista de palavras
+    words.push_back(node->word);
+    // Recursão para os nós a direita
+    int right = collect_words_and_get_num_nodes(node->right, words);
+    // Conta o nó atual e soma com o número de nós a esquerda e a direita
+    return 1 + left + right;
+}
+
+
+TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc, const std::vector<DocReading::Doc*>& docs) {
     BinaryTree* tree = nullptr;
-    TreeStats s = {n_docs, 0, 0.0, 0.0, 0, 0, 0.0, 0.0, 0};
+    TreeStats s = {n_docs, 0, 0.0, 0.0, 0, 0, 0.0, 0.0, 0, 0}; // Inicializa as estatísticas
 
     if (tree_type == "bst") {
         tree = BST::create();
@@ -93,7 +108,7 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc
         return s; // Retorna estatísticas vazias se o tipo de árvore não for válido
     }
 
-    int numWords = 0;
+    int numInsertion = 0;
 
     // Insere palavras dos documentos na árvore
     for (int i = 0; i < n_docs && i < n_max_doc; i++) {
@@ -106,12 +121,17 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc
             }
             s.numComparisonsInsertion += result.numComparisons;
             s.executionTimeInsertion += result.executionTime;
-            numWords += 1;
+            numInsertion += 1;
         }
     }
 
-    s.executionTimeInsertionMean = s.executionTimeInsertion / numWords; // Calcula o tempo médio de inserção
+    s.executionTimeInsertionMean = s.executionTimeInsertion / numInsertion; // Calcula o tempo médio de inserção
 
+    // Pega as palavras inseridas na árvore
+    std::vector<std::string> search_words;
+    // Conta o número de nós na árvore e coleta as palavras
+    s.numNodes = collect_words_and_get_num_nodes(tree->root, search_words);
+  
     // Busca cada palavra do vetor search_words na árvore
     for (const std::string& word : search_words) {
         SearchResult search;
@@ -138,6 +158,7 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc
 
     // Pega a altura da árvore
     if (tree_type == "avl") {
+        // TODO: Verifica se a árvore AVL está com altura correta
         s.treeHeight = tree->root->height; // Armazena a altura da árvore AVL
     } else {
         // Para as outras, calcula a altura usando a função auxiliar

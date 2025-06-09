@@ -93,6 +93,7 @@ struct TreeStats {
     double executionTimeSearchMax; // Tempo máximo de execução das buscas em milissegundos
 
     int treeHeight; // Altura da árvore após as inserções
+    int numNodes; // Número total de nós na árvore
 };
 
 /**
@@ -104,6 +105,18 @@ struct TreeStats {
  * @return Altura da árvore a partir do nó raiz.
  */
 int get_tree_height(Node *root);
+
+/**
+ * @brief Coleta palavras de uma árvore binária de busca, armazena em um vetor e conta a quantidade.
+ *
+ * Esta função percorre a árvore em ordem (in-order) e coleta todas as palavras
+ * presentes nos nós, armazenando-as no vetor fornecido e contado a quantidade.
+ *
+ * @param node Ponteiro para o nó atual da árvore.
+ * @param words Vetor onde as palavras coletadas serão armazenadas.
+ * @return Número total de palavras.
+ */
+int collect_words_and_get_num_nodes(Node* node, std::vector<std::string>& words);
 
 /**
  * @brief Obtém estatísticas de uma árvore binária de busca.
@@ -119,8 +132,9 @@ int get_tree_height(Node *root);
  * @param search_words Vetor de palavras a serem buscadas na árvore.
  * @return Estrutura TreeStats contendo as estatísticas coletadas.
  */
-TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc, const std::vector<DocReading::Doc*>& docs, const std::vector<std::string>& search_words);
+TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc, const std::vector<DocReading::Doc*>& docs);
 
 }
+
 
 #endif

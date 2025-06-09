@@ -24,6 +24,7 @@ int main(int argc, char *argv[]) {
     string path = argv[4];
 
     // Lê documentos do diretório especificado
+    cout << "Leitura dos documentos iniciada..." << endl;
     Doc **docs = readDocuments(n_max_docs, path);
     if (docs == nullptr) {
         cout << "Erro ao ler documentos do diretório: " << path << endl;
@@ -48,16 +49,13 @@ int main(int argc, char *argv[]) {
         n_docs.push_back(n_max_docs); // Garante que o último ponto seja exatamente n_max_docs
     };
 
-    // Palavras a serem buscadas nos documentos
-    vector<string> search_words = {"exemplo", "palavra", "busca", "arvore", "documento"};
-
     // Seleciona o tipo de árvore
     if (treeType == "bst" || treeType == "avl") {
         // Cria as n_points árvores binária de busca
         cout << "Criando arvores binaria de busca (" << treeType << ")..." << endl;
         for (int n : n_docs) {
             // Cria a árvore de busca e gera as estatísticas
-            stats::TreeStats s = stats::get_tree_stats(treeType, n, n_max_docs, vector<Doc*>(docs, docs + n), search_words);
+            stats::TreeStats s = stats::get_tree_stats(treeType, n, n_max_docs, vector<Doc*>(docs, docs + n));
             // Armazena as estatísticas da árvore
             stats.push_back(s);
         }
