@@ -1,6 +1,5 @@
-#include "bst.h"
+#include "avl.h"
 #include "data.h"
-#include "tree_utils.h"
 #include <iostream>
 #include <ostream>
 
@@ -35,12 +34,12 @@ int main(int argc, char *argv[]) {
 
     // ler os documentos e cria a árvore
     Doc **docs = readDocuments(n_docs, path);
-    BinaryTree *bst = BST::create();
+    BinaryTree *bst = AVL::create();
 
     // Itera sobre cada palavra no documento e insere ela na árvore
     for (int i = 0; i < n_docs; i++) {
       for (size_t j = 0; j < docs[i]->content->size(); j++) {
-        BST::insert(bst, docs[i]->content->at(j), docs[i]->docID);
+        AVL::insert(bst, docs[i]->content->at(j), docs[i]->docID);
       }
     }
 
@@ -53,7 +52,7 @@ int main(int argc, char *argv[]) {
       cin >> word;
 
       // chama a função de busca
-      SearchResult search = BST::search(bst, word);
+      SearchResult search = AVL::search(bst, word);
 
       // exibe os dados do result
       cout << "Encontrou? ";
@@ -79,7 +78,7 @@ int main(int argc, char *argv[]) {
     }
 
     // free memory
-    BST::destroy(bst);
+    AVL::destroy(bst);
     deleteDocs(docs, n_docs);
   }
 
@@ -100,10 +99,14 @@ int main(int argc, char *argv[]) {
     auto startRead = std::chrono::high_resolution_clock::now();
     Doc **docs = readDocuments(n_docs, path);
     auto endRead = std::chrono::high_resolution_clock::now();
-    double readTime = std::chrono::duration<double, std::milli>(endRead - startRead).count();
+    double readTime =
+        std::chrono::duration<double, std::milli>(endRead - startRead).count();
+    cout << "Tempo de leitura dos documentos: " << readTime << " ms" << endl;
+
+
 
     // Cria a árvore binária de busca e obtém as estatísticas
-    stats::TreeStats s = stats::get_tree_stats("bst", n_docs, n_docs, vector<Doc*>(docs, docs + n_docs));
+    stats::TreeStats s = stats::get_tree_stats("avl", n_docs, n_docs, vector<Doc*>(docs, docs + n_docs));
 
     // Print das estatísticas
     cout << "=========Estatisticas=========" << endl;
