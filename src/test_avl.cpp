@@ -139,9 +139,18 @@ void testInsertAndBalance() {
   AVL::insert(tree, "limao", 13);
   AVL::insert(tree, "melancia", 14);
   AVL::insert(tree, "pessego", 15);
+  AVL::insert(tree, "tangerina", 16);
+
+  std::vector<std::string> words;
 
   std::cout << "Estrutura da arvore AVL apos insercoes:\n";
   printTree(tree);
+  std::cout << "Altura da Arvore AVL: " << tree->root->height << std::endl;
+  std::cout << "Numero de nodes: "
+            << stats::collect_words_and_get_num_nodes(tree->root, words)
+            << std::endl;
+
+  std::cout << std::endl;
 
   bool success = true;
   Node *root = tree->root;
