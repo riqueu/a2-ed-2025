@@ -126,6 +126,8 @@ int main(int argc, char *argv[]) {
          << endl;
     cout << "===========Outros===========" << endl;
     cout << "Altura da arvore: " << s.treeHeight << endl;
+    cout << "Comprimento do maior galho: "  << s.treeHeight << endl;
+    cout << "Comprimento do menor galho: "  << s.minBranch << endl;
     cout << "Quantidade de palavras/nodes: " << s.numNodes << endl;
 
     // free memory

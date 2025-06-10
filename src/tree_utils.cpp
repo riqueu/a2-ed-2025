@@ -70,7 +70,7 @@ void printTree(BinaryTree *tree) {
 namespace stats {
 int get_tree_height(Node *node){
     if (node == nullptr) {
-        return 0; // A altura de uma árvore vazia é 0
+        return -1; // A altura de uma árvore vazia é -1
     }
 
     // Calcula a altura das subárvores esquerda e direita
@@ -79,6 +79,22 @@ int get_tree_height(Node *node){
 
     // A altura da árvore é o máximo entre as alturas das subárvores, mais 1 para o nó atual
     return std::max(leftHeight, rightHeight) + 1;
+}
+
+void get_min_branch(Node *node, int currentLen, int* minBranch) {
+    // Verifica se o node atual e nullptr
+    if (node == nullptr) {
+        return;
+    }
+    // Se chegar em uma folha, verifica se o caminho ate essa folha e o menor caminho
+    if (node->left == nullptr && node->right == nullptr) {
+        *minBranch = std::min(currentLen, *minBranch);
+        return;
+    }
+
+    // Verifica os menores caminhos dos filhos
+    get_min_branch(node->left, currentLen+1, minBranch);
+    get_min_branch(node->right, currentLen+1, minBranch);
 }
 
 int collect_words_and_get_num_nodes(Node* node, std::vector<std::string>& words) {
@@ -97,7 +113,7 @@ int collect_words_and_get_num_nodes(Node* node, std::vector<std::string>& words)
 
 TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc, const std::vector<DocReading::Doc*>& docs) {
     BinaryTree* tree = nullptr;
-    TreeStats s = {n_docs, 0, 0.0, 0.0, 0, 0, 0.0, 0.0, 0, 0}; // Inicializa as estatísticas
+    TreeStats s = {n_docs, 0, 0.0, 0.0, 0, 0, 0.0, 0.0, 0, 0, 0}; // Inicializa as estatísticas
 
     if (tree_type == "bst") {
         tree = BST::create();
@@ -182,6 +198,13 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc
         // Para as outras, calcula a altura usando a função auxiliar
         s.treeHeight = get_tree_height(tree->root);
     }
+
+    // Inicializa o comprimento do menor galho como a altura da arvore + 1
+    int minBranch = s.treeHeight + 1;
+
+    // Calcula o comprimento do menor galho e coloca na estrutura
+    get_min_branch(tree->root, 0, &minBranch);
+    s.minBranch = minBranch;
 
     // Libera a memória da árvore atual
     if (tree_type == "bst") {
