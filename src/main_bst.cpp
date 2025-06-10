@@ -1,5 +1,6 @@
 #include "bst.h"
 #include "data.h"
+#include "tree_utils.h"
 #include <iostream>
 #include <ostream>
 
@@ -95,36 +96,41 @@ int main(int argc, char *argv[]) {
     string path = argv[3];
 
     // mede o tempo de leitura dos documentos
+    cout << "Leitura dos documentos iniciada..." << endl;
     auto startRead = std::chrono::high_resolution_clock::now();
     Doc **docs = readDocuments(n_docs, path);
     auto endRead = std::chrono::high_resolution_clock::now();
-    double readTime =
-        std::chrono::duration<double, std::milli>(endRead - startRead).count();
+    double readTime = std::chrono::duration<double, std::milli>(endRead - startRead).count();
+
+    // Cria a árvore binária de busca e obtém as estatísticas
+    stats::TreeStats s = stats::get_tree_stats("bst", n_docs, n_docs, vector<Doc*>(docs, docs + n_docs));
+
+    // Print das estatísticas
+    cout << "=========Estatisticas=========" << endl;
     cout << "Tempo de leitura dos documentos: " << readTime << " ms" << endl;
-
-    BinaryTree *bst = BST::create();
-
-    // perform insertions
-    InsertResult totalResult;
-    totalResult.numComparisons = 0;
-    totalResult.executionTime = 0.0;
-
-    for (int i = 0; i < n_docs; i++) {
-      for (size_t j = 0; j < docs[i]->content->size(); j++) {
-        InsertResult result =
-            BST::insert(bst, docs[i]->content->at(j), docs[i]->docID);
-        totalResult.numComparisons += result.numComparisons;
-        totalResult.executionTime += result.executionTime;
-      }
-    }
-
-    cout << "Tempo total de insercao: " << totalResult.executionTime << " ms"
+    cout << "==========Insercao==========" << endl;
+    cout << "Tempo total de insercao: " << s.executionTimeInsertion << " ms"
          << endl;
-    cout << "Numero total de comparacoes: " << totalResult.numComparisons
+    cout << "Tempo medio de insercao: " << s.executionTimeInsertionMean << " ms" 
          << endl;
+    cout << "Numero total de comparacoes para insercao: " << s.numComparisonsInsertion
+         << endl;
+    cout << "===========Busca===========" << endl;
+    cout << "Numero medio de comparacoes para busca: " << s.numComparisonsSearchMean
+         << endl;
+    cout << "Numero maximo de comparacoes para busca: " << s.numComparisonsSearchMax
+         << endl;
+    cout << "Tempo medio de busca: " << s.executionTimeSearchMean << " ms" 
+         << endl;
+    cout << "Tempo maximo de busca: " << s.executionTimeSearchMax << " ms" 
+         << endl;
+    cout << "===========Outros===========" << endl;
+    cout << "Altura da arvore: " << s.treeHeight << endl;
+    cout << "Comprimento do maior galho: "  << s.treeHeight << endl;
+    cout << "Comprimento do menor galho: "  << s.minBranch << endl;
+    cout << "Quantidade de palavras/nodes: " << s.numNodes << endl;
 
     // free memory
-    BST::destroy(bst);
     deleteDocs(docs, n_docs);
   }
 }
