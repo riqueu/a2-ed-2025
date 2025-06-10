@@ -96,14 +96,14 @@ int main(int argc, char *argv[]) {
     string path = argv[3];
 
     // mede o tempo de leitura dos documentos
+    cout << "Leitura dos documentos iniciada..." << endl;
     auto startRead = std::chrono::high_resolution_clock::now();
     Doc **docs = readDocuments(n_docs, path);
     auto endRead = std::chrono::high_resolution_clock::now();
     double readTime = std::chrono::duration<double, std::milli>(endRead - startRead).count();
 
-    vector<string> search_words = {"exemplo", "palavra", "busca", "arvore", "documento"}; // Palavras a serem buscadas
     // Cria a árvore binária de busca e obtém as estatísticas
-    stats::TreeStats s = stats::get_tree_stats("bst", n_docs, n_docs, vector<Doc*>(docs, docs + n_docs), search_words);
+    stats::TreeStats s = stats::get_tree_stats("bst", n_docs, n_docs, vector<Doc*>(docs, docs + n_docs));
 
     // Print das estatísticas
     cout << "=========Estatisticas=========" << endl;
@@ -126,6 +126,9 @@ int main(int argc, char *argv[]) {
          << endl;
     cout << "===========Outros===========" << endl;
     cout << "Altura da arvore: " << s.treeHeight << endl;
+    cout << "Comprimento do maior galho: "  << s.treeHeight << endl;
+    cout << "Comprimento do menor galho: "  << s.minBranch << endl;
+    cout << "Quantidade de palavras/nodes: " << s.numNodes << endl;
 
     // free memory
     deleteDocs(docs, n_docs);
