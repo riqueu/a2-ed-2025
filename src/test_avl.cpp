@@ -40,6 +40,85 @@ void testCreateNode() {
   std::cout << std::endl;
 }
 
+void testRotateLeft() {
+  std::cout << "=== Teste AVL::rotateLeft() ===" << std::endl;
+
+  // Cria manualmente uma árvore desbalanceada para a rotação à esquerda
+  Node *root = AVL::createNode("banana", 1);
+  root->right = AVL::createNode("morango", 2);
+  root->right->parent = root;
+
+  // Realiza a rotação à esquerda
+  Node *newRoot = AVL::rotateLeft(root);
+
+  // Verifica se a rotação foi realizada corretamente
+  if (newRoot->word == "morango" && newRoot->left->word == "banana" &&
+      newRoot->left->parent == newRoot && newRoot->right == nullptr) {
+    std::cout << "SUCESSO: Rotação à esquerda realizada corretamente"
+              << std::endl;
+  } else {
+    std::cout << "FALHA: Problema na rotação à esquerda" << std::endl;
+  }
+
+  // Libera memória
+  delete newRoot->left;
+  delete newRoot;
+  std::cout << std::endl;
+}
+
+void testRotateRight() {
+  std::cout << "=== Teste AVL::rotateRight() ===" << std::endl;
+
+  // Cria manualmente uma árvore desbalanceada para a rotação à direita
+  Node *root = AVL::createNode("morango", 1);
+  root->left = AVL::createNode("banana", 2);
+  root->left->parent = root;
+
+  // Realiza a rotação à direita
+  Node *newRoot = AVL::rotateRight(root);
+
+  // Verifica se a rotação foi realizada corretamente
+  if (newRoot->word == "banana" && newRoot->right->word == "morango" &&
+      newRoot->right->parent == newRoot && newRoot->left == nullptr) {
+    std::cout << "SUCESSO: Rotação à direita realizada corretamente"
+              << std::endl;
+  } else {
+    std::cout << "FALHA: Problema na rotação à direita" << std::endl;
+  }
+
+  // Libera memória
+  delete newRoot->right;
+  delete newRoot;
+  std::cout << std::endl;
+}
+
+void testBalanceFactor() {
+  std::cout << "=== Teste AVL::getBalanceFactor() ===" << std::endl;
+
+  // Cria manualmente uma árvore para testar o fator de balanceamento
+  Node *root = AVL::createNode("banana", 1);
+  root->left = AVL::createNode("abacaxi", 2);
+  root->right = AVL::createNode("morango", 3);
+
+  // Calcula o fator de balanceamento
+  int balanceFactor = AVL::getBalanceFactor(root);
+
+  // Verifica se o fator de balanceamento está correto
+  if (balanceFactor == 0) {
+    std::cout << "SUCESSO: Fator de balanceamento calculado corretamente"
+              << std::endl;
+  } else {
+    std::cout << "FALHA: Problema no cálculo do fator de balanceamento"
+              << std::endl;
+  }
+
+  // Libera memória
+  delete root->left;
+  delete root->right;
+  delete root;
+  std::cout << std::endl;
+}
+
 void testInsertAndBalance() {
   std::cout << "=== Teste AVL::insert() e balanceamento ===" << std::endl;
   BinaryTree *tree = AVL::create();
@@ -60,9 +139,18 @@ void testInsertAndBalance() {
   AVL::insert(tree, "limao", 13);
   AVL::insert(tree, "melancia", 14);
   AVL::insert(tree, "pessego", 15);
+  AVL::insert(tree, "tangerina", 16);
+
+  std::vector<std::string> words;
 
   std::cout << "Estrutura da arvore AVL apos insercoes:\n";
   printTree(tree);
+  std::cout << "Altura da Arvore AVL: " << tree->root->height << std::endl;
+  std::cout << "Numero de nodes: "
+            << stats::collect_words_and_get_num_nodes(tree->root, words)
+            << std::endl;
+
+  std::cout << std::endl;
 
   bool success = true;
   Node *root = tree->root;
@@ -151,6 +239,9 @@ int main() {
   // Chama as funções de teste
   testCreateTree();
   testCreateNode();
+  testRotateLeft();
+  testRotateRight();
+  testBalanceFactor();
   testInsertAndBalance();
   testSearch();
   testDestroyTree();
