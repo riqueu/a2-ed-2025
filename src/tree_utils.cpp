@@ -95,7 +95,6 @@ int collect_words_and_get_num_nodes(Node* node, std::vector<std::string>& words)
     return 1 + left + right;
 }
 
-
 TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc, const std::vector<DocReading::Doc*>& docs) {
     BinaryTree* tree = nullptr;
     TreeStats s = {n_docs, 0, 0.0, 0.0, 0, 0, 0.0, 0.0, 0, 0}; // Inicializa as estatísticas
@@ -134,14 +133,33 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc
   
     // Busca cada palavra do vetor search_words na árvore
     for (const std::string& word : search_words) {
-        SearchResult search;
-        if (tree_type == "bst") {
-            search = BST::search(tree, word);
-        } else if (tree_type == "avl") {
-            search = AVL::search(tree, word);
-        } else {
-            return s; // Retorna estatísticas vazias se o tipo de árvore não for válido
+        SearchResult search; // Inicializa a estrutura de busca
+
+        int j = 0; // Contador de tentativas
+        int j_max = (n_docs < 800) ? 50 : 1; // Se o número de documentos for menor que 700, repete a busca 10 vezes, caso contrário, apenas uma vez
+        
+        int totalComparisons = 0;
+        double totalTime = 0.0;
+        
+        // Realiza a busca na árvore, repetindo até 10 vezes para cada palavra com menos 700 documentos
+        for (int i = 0; i < j_max; ++i) {
+            // Realiza a busca na árvore, dependendo do tipo de árvore
+            if (tree_type == "bst") {
+                search = BST::search(tree, word);
+            } else if (tree_type == "avl") {
+                search = AVL::search(tree, word);
+            } else {
+                return s; // Retorna estatísticas vazias se o tipo de árvore não for válido
+            }
+            totalComparisons += search.numComparisons;
+            totalTime += search.executionTime;
+            j++;
         }
+        
+        search.numComparisons = totalComparisons / j; // Calcula o número médio de comparações
+        search.executionTime = totalTime / j; // Calcula o tempo médio de execução
+
+        // Atualiza as estatísticas de busca
         s.numComparisonsSearchMean += search.numComparisons;
         s.executionTimeSearchMean += search.executionTime;
         // Atualiza o número máximo de comparações
