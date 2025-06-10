@@ -32,9 +32,16 @@ int getBalanceFactor(Node *node) {
 Node *rotateRight(Node *node) {
   Node *newRoot = node->left;
   node->left = newRoot->right;
-  newRoot->right = node;
 
-  // atualizar alturas dos nós
+  if (newRoot->right != nullptr) {
+    newRoot->right->parent = node;
+  }
+
+  newRoot->right = node;
+  newRoot->parent = node->parent;
+  node->parent = newRoot;
+
+  // Atualizar alturas dos nós
   node->height = std::max(getHeight(node->left), getHeight(node->right)) + 1;
   newRoot->height =
       std::max(getHeight(newRoot->left), getHeight(newRoot->right)) + 1;
@@ -45,9 +52,16 @@ Node *rotateRight(Node *node) {
 Node *rotateLeft(Node *node) {
   Node *newRoot = node->right;
   node->right = newRoot->left;
-  newRoot->left = node;
 
-  // atualizar alturas dos nós
+  if (newRoot->left != nullptr) {
+    newRoot->left->parent = node;
+  }
+
+  newRoot->left = node;
+  newRoot->parent = node->parent;
+  node->parent = newRoot;
+
+  // Atualizar alturas dos nós
   node->height = std::max(getHeight(node->left), getHeight(node->right)) + 1;
   newRoot->height =
       std::max(getHeight(newRoot->left), getHeight(newRoot->right)) + 1;
