@@ -1,0 +1,55 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+bst = pd.read_csv("docs/tables/dados_bst.csv")
+avl = pd.read_csv("docs/tables/dados_avl.csv")
+# rbt = pd.read_csv("docs/tables/dados_rbt.csv")
+
+col_names = bst.columns[1:]
+
+def save_graph(col_name, title):
+    plt.figure()
+    plt.plot(bst["N_docs"], bst[col_name], label="BST")
+    plt.plot(avl["N_docs"], avl[col_name], label="AVL")
+    # plt.plot(rbt["N_docs"], rbt[col_name], label="RBT")
+    plt.xlabel("Número de documentos")
+    plt.ylabel(col_name)
+    plt.title(title)
+    plt.legend()
+    plt.grid()
+    plt.savefig(f'docs/graphs/grafico_{col_name}.png')
+    plt.close()
+
+save_graph(col_names[0], title="Número de comparações para inserção")
+save_graph(col_names[1], title="Tempo Médio de Inserção de Palavra")
+save_graph(col_names[2], title="Tempo Total de Inserção de Palavra")
+save_graph(col_names[3], title="Número MÉDIO de comparações (Search)")
+save_graph(col_names[4], title="Número MÁXIMO de comparações (Search)")
+save_graph(col_names[5], title="Tempo MÉDIO de execução (Search)")
+save_graph(col_names[6], title="Tempo MÁXIMO de execução (Search)")
+save_graph(col_names[7], title="Altura da Árvore")
+save_graph(col_names[8], title="Número de nós")
+
+plt.figure()
+plt.plot(bst['TreeHeight'], 2**(bst['TreeHeight'] + 1) -1, label="max", linestyle="--", color="darkorange")
+plt.plot(bst['TreeHeight'], bst['NumNodes'], label="BST", color="green")
+plt.plot(bst['TreeHeight'], bst['TreeHeight'] + 1, label="min", linestyle="--", color="blue")
+plt.title("Comparação de número de nós pela altura da árvore BST")
+plt.xlabel("Altura da árvore")
+plt.ylabel("Número de nós")
+plt.yscale("log")
+plt.legend()
+plt.savefig(f'docs/graphs/grafico_height_node_bst.png')
+plt.close()
+    
+plt.figure()
+plt.plot(avl['TreeHeight'], 2**(avl['TreeHeight'] + 1) -1, label="max", linestyle="--", color="darkorange")
+plt.plot(avl['TreeHeight'], avl['NumNodes'], label="AVL", color="green")
+plt.plot(avl['TreeHeight'], 2**(avl['TreeHeight']/2), label="min", linestyle="--", color="blue")
+plt.title("Comparação de número de nós pela altura da árvore AVL")
+plt.xlabel("Altura da árvore")
+plt.ylabel("Número de nós")
+plt.yscale("log")
+plt.legend()
+plt.savefig(f'docs/graphs/grafico_height_node_avl.png')
+plt.close()
