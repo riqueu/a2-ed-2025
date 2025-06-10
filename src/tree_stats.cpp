@@ -3,6 +3,7 @@
 #include "bst.h"
 #include "avl.h"
 #include "export_stats.h"
+#include <cstddef>
 #include <vector>
 #include <iostream>
 #include <string>
@@ -70,7 +71,6 @@ int main(int argc, char *argv[]) {
     // Gera o arquivo CSV com as estatísticas
     string title = "dados_" + treeType + ".csv";
     exportToCSV(stats, title);
-
     return 0;
 }
 
