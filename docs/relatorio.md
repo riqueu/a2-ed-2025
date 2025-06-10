@@ -17,7 +17,7 @@ Este projeto foca na implementação de um índice invertido — estrutura de da
 ### 2.1. Árvore Binária de Busca (BST)
 * **Descrição:** Uma árvore binária onde cada nó possui um valor (neste caso, uma palavra). Para qualquer nó, todos os valores na subárvore esquerda são menores, e os da direita são maiores (neste caso, se refere à ordem alfabética).
 * **Por que usar?** É a estrutura de árvore de busca mais fundamental e simples de implementar. Sua performance é de $O(n)$ para busca e inserção no pior caso.
-* **Principais Diferenças (vs AVL/RBT):** Não garante balanceamento, podendo degenerar em uma lista encadeada (pior caso O(n)). Menos complexa que AVL e RBT, mas sem otimizações para manter o balanceamento automático.
+* **Principais Diferenças (vs AVL/RBT):** Não garante balanceamento, podendo degenerar em uma lista encadeada (pior caso $O(n)$). Menos complexa que AVL e RBT, mas sem otimizações para manter o balanceamento automático.
 
 ### 2.2. Árvore AVL (Adelson-Velsky e Landis)
 * **Descrição:** É uma árvore binária de busca auto-balanceada. Para cada nó, a diferença de altura entre suas subárvores esquerda e direita (fator de balanceamento) é no máximo 1. O balanceamento é mantido através de rotações simples ou duplas após inserções.
@@ -60,36 +60,48 @@ struct Node {
 Nesta seção, apresentamos os resultados numéricos obtidos e uma discussão sobre o desempenho comparativo das estruturas.
 
 ### 4.1. Tempo de Inserção
-* **Tabela 1: Tempo Médio de Inserção de Palavra**
-* **Tabela 2: Tempo Total de Inserção de Palavra**
-* **Discussão (Inserção):**
+#### **Gráfico 1: Tempo Médio de Inserção de Palavra**
+![Gráfico 1](graphs/grafico_ExecutionTimeInsertionMean.png)
+#### **Gráfico 2: Tempo Total de Inserção de Palavra**
+![Gráfico 2](graphs/grafico_ExecutionTimeInsertion.png)
+#### **Discussão (Inserção):**
 
 ### 4.2. Tempo de Busca
-* **Tabela 3: Tempo Médio de Busca de Palavra**
-* **Tabela 4: Tempo Total de Busca de Palavra**
-* **Discussão (Busca):**
+#### **Gráfico 3: Tempo Médio de Busca de Palavra**
+![Gráfico 3](graphs/grafico_ExecutionTimeSearchMax.png)
+#### **Gráfico 4: Tempo Total de Busca de Palavra**
+![Gráfico 4](graphs/grafico_ExecutionTimeSearchMean.png)
+#### **Discussão (Busca):**
 
 ### 4.3. Número de Comparações
-* **Tabela 5: Número Médio de Comparações por Inserção de Palavra**
-* **Tabela 6: Número Médio de Comparações por Busca de Palavra**
-* **Discussão (Comparações):**
+#### **Gráfico 5: Número Médio de Comparações por Inserção de Palavra**
+#### **Gráfico 6: Número Total de Comparações por Inserção de Palavra**
+![Gráfico 6](graphs/grafico_NumComparisonsInsertion.png)
+#### **Gráfico 7: Número Médio de Comparações por Busca de Palavra**
+![Gráfico 7](graphs/grafico_NumComparisonsSearchMean.png)
+#### **Gráfico 8: Número Total de Comparações por Busca de Palavra**
+![Gráfico 8](graphs/grafico_NumComparisonsSearchMax.png)
+#### **Discussão (Comparações):**
 
 ### 4.4. Altura da Árvore
-* **Tabela 7: Altura da Árvore**
-* **Discussão (Altura):**
+#### **Gráfico 9: Altura da Árvore**
+![Gráfico 9](graphs/grafico_TreeHeight.png)
+#### **Discussão (Altura):** Nota-se que a altura da árvore não cresce tanto conforme se aumenta o número de documentos, pois nos primeiros 40 documentos acessados já são computadas e criados os respectivos nós para mais de 4 mil palavras distintas, com os outros documentos apenas acrescentando unidades a esses nós, sem criar novos. As árvores BST tem em média o dobro da altura das árvores AVL, visto que aquelas podem vir a degenerar, enquanto que estas — por serem balanceadas — organizam melhor os nós pelas camadas, reduzindo a altura.
 
 ### 4.5. Tamanho dos Galhos (Menor e Maior Caminho)
-* **Tabela 8: Tamanho do Menor e Maior Galho**
-* **Discussão (Galhos):**
+#### **Gráfico 10: Tamanho do Menor e Maior Galho**
+#### **Discussão (Galhos):**
 
-### 4.6. Outros critérios que julgarem relevantes
-* **Tabela 9: ...**
-* **Discussão (...):**
+### 4.6. Números de nós
+#### **Gráfico 11: ...**
+![Gráfico 11](graphs/grafico_NumNodes.png)
+#### **Discussão (Nós):** Nota-se que para as três árvores os os números de nós é o mesmo, óbvio, pois todas possuem a mesma natureza de adicionar um nó para cada palavra única encontrada nos documentos e como ambas estão analisando os mesmos documentos. Nota-se algo mais interessante, no entanto, a quantidade de nós adicionados vai diminuindo conforme se aumenta a quantidade de documentos. Isso acontece pois as 4 mil palavras adicionadas nos primerios 40 arquivos são provavelmente as palavras mais utilizadas no idioma, os arquivos seguintes, portanto, estarão repletos dessas palavras que serão adicionadas aos nós já existentes e de algumas outras menos utilizadas que constituirão os novos nós. Desse modo, a cada arquivo analisado aumenta a probabilidade de uma palavra que já foi computada aparecer novamente, o que diminui a criação de novos nós pelos últimos documentos, podendo inclusive um documento não adicionar nenhum novo nó.
 
 ## 5. Gráficos e Estatísticas
-* **Gráfico 1: Tempo Total de Inserção vs. Número de Documentos**
-* **Gráfico 2: Tempo Médio de Busca vs. Número de Documentos Indexados**
-* **Gráfico 3: Altura da Árvore vs. Número de Palavras Únicas (ou Documentos)**
+
+#### **Gráfico 12: Altura da Árvore vs. Número de nós**
+![Gráfico 12](graphs/grafico_height_node_bst.png)
+![Gráfico 13](graphs/grafico_height_node_avl.png)
 
 ## 6. Conclusão
 
@@ -130,6 +142,6 @@ Após a implementação das três estruturas de dados para aplicacação do índ
 * **Henrique Coelho Beltrão:** Implementação das funções da AVL, testes unitários da AVL, refatoração do código;
 * **Henrique Gabriel Gasparelo:** Implementação das estatísticas para árvores;
 * **José Thevez Gomes Guedes:** Implementação das estatísticas para árvores e transição para CSV;
-* **Luiz Eduardo Bravin:** Atualização do relatório e implementação da análise compartiva dos CSV em pyhton.
+* **Luiz Eduardo Bravin:** Implementação da análise comparativa das árvores em Pyhton e atualização do relatório.
 
 ### 8.3 Entrega 3
