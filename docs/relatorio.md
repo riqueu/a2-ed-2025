@@ -125,4 +125,11 @@ Após a implementação das três estruturas de dados para aplicacação do índ
 * **Luiz Eduardo Bravin:** Inicialização da redação do relatório e implementação dos teste unitários das funções feitas nessa entrega.
 
 ### 8.2 Entrega 2
+
+* **Bruno Ferreira Salvi:** Implementação da CLI para AVL e estatísticas extras;
+* **Henrique Coelho Beltrão:** Implementação das funções da AVL, testes unitários da AVL, refatoração do código;
+* **Henrique Gabriel Gasparelo:** Implementação das estatísticas para árvores;
+* **José Thevez Gomes Guedes:** Implementação das estatísticas para árvores e transição para CSV;
+* **Luiz Eduardo Bravin:** Atualização do relatório e implementação da análise compartiva dos CSV em pyhton.
+
 ### 8.3 Entrega 3
