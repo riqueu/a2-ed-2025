@@ -67,7 +67,7 @@ void printIndex(BinaryTree *tree);
  */
 void printTreeRec(Node *node, std::string prefix, std::string linePrefix);
 
-/**
+/**    total += node->word.capacity() * sizeof(char);
  * @brief Imprime a estrutura visual da árvore fornecida.
  *
  * Esta função chama printTreeRec a partir da raiz da árvore, imprimindo a
@@ -95,6 +95,8 @@ struct TreeStats {
     int treeHeight; // Altura da árvore após as inserções
     int minBranch; // Comprimento do menor galho
     int numNodes; // Número total de nós na árvore
+
+    int size; // tamanho em KBytes da árvore
 };
 
 /**
