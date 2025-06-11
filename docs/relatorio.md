@@ -17,9 +17,9 @@ Este projeto foca na implementação de um índice invertido — estrutura de da
 ### 2.1. Árvore Binária de Busca (BST)
 * **Descrição:** Uma árvore binária onde cada nó possui um valor (neste caso, uma palavra). Para qualquer nó, todos os valores na subárvore esquerda são menores, e os da direita são maiores (neste caso, se refere à ordem alfabética).
 * **Por que usar?** É a estrutura de árvore de busca mais fundamental e simples de implementar. Sua performance é de $O(n)$ para busca e inserção no pior caso.
-* **Principais Diferenças (vs AVL/RBT):** Não garante balanceamento, podendo degenerar em uma lista encadeada (pior caso O(n)). Menos complexa que AVL e RBT, mas sem otimizações para manter o balanceamento automático.
+* **Principais Diferenças (vs AVL/RBT):** Não garante balanceamento, podendo degenerar em uma lista encadeada (pior caso $O(n)$). Menos complexa que AVL e RBT, mas sem otimizações para manter o balanceamento automático.
 
-### 2.2. Árvore AVL (Adelson-Velsky e Landis)
+### 2.2. Árvore Adelson-Velsky e Landis (AVL)
 * **Descrição:** É uma árvore binária de busca auto-balanceada. Para cada nó, a diferença de altura entre suas subárvores esquerda e direita (fator de balanceamento) é no máximo 1. O balanceamento é mantido através de rotações simples ou duplas após inserções.
 * **Por que usar?** Garante que as operações de busca, inserção e remoção tenham complexidade de tempo de pior caso $O(\log n)$. É ideal para aplicações onde buscas frequentes são realizadas, mesmo que isso implique um custo maior nas inserções devido às rotações.
 * **Principais Diferenças (vs BST/RBT):** É estritamente balanceada, o que garante o melhor desempenho para buscas. No entanto, pode realizar mais rotações durante a inserção em comparação com a RBT, o que pode torná-la mais lenta nessa operação.
@@ -52,7 +52,7 @@ struct Node {
     * Número de comparações por operação
     * Altura da árvore
     * Tamanho dos galhos (menor e maior caminho)
-    * Outros critérios que julgarem relevantes
+    * Número de nós
 4.  **Ferramentas:** A implementação das árvores e coleta de métricas foram realizadas por programas em C++. Os gráficos e análises estatísticas foram feitos utilizando a biblioteca Matplotlib de Python e também Excel.
 
 ## 4. Resultados e Discussões
@@ -60,36 +60,47 @@ struct Node {
 Nesta seção, apresentamos os resultados numéricos obtidos e uma discussão sobre o desempenho comparativo das estruturas.
 
 ### 4.1. Tempo de Inserção
-* **Tabela 1: Tempo Médio de Inserção de Palavra**
-* **Tabela 2: Tempo Total de Inserção de Palavra**
-* **Discussão (Inserção):**
+#### **Figura 1: Tempo de Inserção de Palavra**
+![Figura 1](graphs/grafico_ExecutionTimeInsertion.png)
+#### **Discussão:** Nota-se que em nossa implementação das árvores BST e AVL, ambas levam tempos parecidos para fazer a inserção.
 
 ### 4.2. Tempo de Busca
-* **Tabela 3: Tempo Médio de Busca de Palavra**
-* **Tabela 4: Tempo Total de Busca de Palavra**
-* **Discussão (Busca):**
+#### **Figura 2: Tempo de Busca de Palavra**
+![Figura 2](graphs/grafico_ExecutionTimeSearch.png)
+#### **Discussão:** Nota-se que em nossa implementação das árvores BST e AVL, esta reduz consideravelmente o tempo de busca em relação àquela.
 
 ### 4.3. Número de Comparações
-* **Tabela 5: Número Médio de Comparações por Inserção de Palavra**
-* **Tabela 6: Número Médio de Comparações por Busca de Palavra**
-* **Discussão (Comparações):**
+#### **Figura 3: Número de Comparações por Inserção de Palavra**
+![Figura 3](graphs/grafico_NumComparisonsInsertion.png)
+#### **Discussão:**
+#### **Figura 4: Número de Comparações por Busca de Palavra**
+![Figura 4](graphs/grafico_NumComparisonsSearch.png)
+#### **Discussão:**
 
 ### 4.4. Altura da Árvore
-* **Tabela 7: Altura da Árvore**
-* **Discussão (Altura):**
+#### **Figura 5: Altura da Árvore**
+![Figura 5](graphs/grafico_TreeHeight.png)
+#### **Discussão:** Nota-se que a altura da árvore não cresce tanto conforme se aumenta o número de documentos, pois nos primeiros 40 documentos acessados já são computadas e criados os respectivos nós para mais de 4 mil palavras distintas, com os outros documentos apenas acrescentando unidades a esses nós, sem criar novos. As árvores BST tem em média o dobro da altura das árvores AVL, visto que aquelas podem vir a degenerar, enquanto que estas — por serem balanceadas — organizam melhor os nós pelas camadas, reduzindo a altura.
 
 ### 4.5. Tamanho dos Galhos (Menor e Maior Caminho)
-* **Tabela 8: Tamanho do Menor e Maior Galho**
-* **Discussão (Galhos):**
+#### **Figura 6: Tamanho do Maior e Menor Galho**
+![Figura 6](graphs/grafico_branchs.png)
+#### **Discussão:** Nota-se que a distância entre o maior e menor galho da AVL é bem curta, enquanto na BST essa distância é exageradamente longa. Isso ocorre devido a natureza da AVL que é projetada para evitar degenerações e manter a árvore balanceada, com isso balanceia-se também o tamanho dos galhos, enquanto que alguns galhos da BST podem degenerar e se tornar longos demais.
 
-### 4.6. Outros critérios que julgarem relevantes
-* **Tabela 9: ...**
-* **Discussão (...):**
+### 4.6. Números de nós
+#### **Figura 7: Número de nós**
+![Figura 7](graphs/grafico_NumNodes.png)
+#### **Discussão:** Nota-se que para as três árvores os os números de nós é o mesmo, óbvio, pois todas possuem a mesma natureza de adicionar um nó para cada palavra única encontrada nos documentos e como ambas estão analisando os mesmos documentos. Nota-se algo mais interessante, no entanto, a quantidade de nós adicionados vai diminuindo conforme se aumenta a quantidade de documentos. Isso acontece pois as 4 mil palavras adicionadas nos primerios 40 arquivos são provavelmente as palavras mais utilizadas no idioma, os arquivos seguintes, portanto, estarão repletos dessas palavras que serão adicionadas aos nós já existentes e de algumas outras menos utilizadas que constituirão os novos nós. Desse modo, a cada arquivo analisado aumenta a probabilidade de uma palavra que já foi computada aparecer novamente, o que diminui a criação de novos nós pelos últimos documentos, podendo inclusive um documento não adicionar nenhum novo nó.
 
 ## 5. Gráficos e Estatísticas
-* **Gráfico 1: Tempo Total de Inserção vs. Número de Documentos**
-* **Gráfico 2: Tempo Médio de Busca vs. Número de Documentos Indexados**
-* **Gráfico 3: Altura da Árvore vs. Número de Palavras Únicas (ou Documentos)**
+
+#### **Figura 8: Altura da Árvore vs. Número de nós BST**
+![Figura 8](graphs/grafico_height_node_bst.png)
+#### **Discussão:** Nesse gráfico verifica-se que o número de nós computados está dentro do aceitável, entre o máximo e mínimo teórico da BST. O mínimo número de nós se dá quando a BST degenera, isto é, há um nó por camada, logo $ n \geq h + 1 $. O número máximo de nós se dá quando a BST está completa, isto é, há $2^{m}$ nós na camada de altura $m$, logo $ n \leq 2^{n+1} -1 $.
+
+#### **Figura 9: Altura da Árvore vs. Número de nós AVL**
+![Figura 9](graphs/grafico_height_node_avl.png)
+#### **Discussão:** Nesse gráfico verifica-se que o número de nós computados está dentro do aceitável, entre o máximo e mínimo teórico da AVL. O mínimo número de nós se dá quando se cumpre minimamente as restrições de balanceamento da AVL, logo $ n \geq 2^{\frac{h}{2}} $. O número máximo de nós se dá quando a AVL está completa, isto é, há $2^{m}$ nós na camada de altura $m$, logo $ n \leq 2^{n+1} -1 $.
 
 ## 6. Conclusão
 
@@ -125,4 +136,11 @@ Após a implementação das três estruturas de dados para aplicacação do índ
 * **Luiz Eduardo Bravin:** Inicialização da redação do relatório e implementação dos teste unitários das funções feitas nessa entrega.
 
 ### 8.2 Entrega 2
+
+* **Bruno Ferreira Salvi:** Implementação da CLI para AVL e estatísticas extras;
+* **Henrique Coelho Beltrão:** Implementação das funções da AVL, testes unitários da AVL, refatoração do código;
+* **Henrique Gabriel Gasparelo:** Implementação das estatísticas para árvores;
+* **José Thevez Gomes Guedes:** Implementação das estatísticas para árvores e transição para CSV;
+* **Luiz Eduardo Bravin:** Implementação da análise comparativa das árvores e geração dos gráficos em Python e continuação da redação do relatório.
+
 ### 8.3 Entrega 3
