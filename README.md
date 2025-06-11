@@ -70,13 +70,28 @@ src\output\main_bst.exe <comando> <n_docs> <diretório>
 src\output\tree_stats <tipoArvore> <n_docs> <n_pontos> <diretório>
 ```
 
-#### 4. Limpeza:
+#### 4. Geração dos gráficos
+#### Instale as bibliotecas Python necessárias:
+```sh
+pip install matplotlib pandas
+```
+
+#### Gere os gráficos a partir desse arquivo:
+```sh
+# Linux/macOS
+python3 docs/visualizations.py
+
+# Windows (cmd)
+python docs\visualizations.py
+```
+
+#### 5. Limpeza:
 #### Limpar todos os arquivos gerados
 ```sh
 make clean
 ```
 
-#### 5. Exemplo de Fluxos de compilação e execução:
+#### 6. Exemplo de Fluxos de compilação e execução:
 #### Exemplo de fluxo completo (Linux/macOS)
 ```sh
 make clean
