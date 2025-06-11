@@ -13,14 +13,14 @@ void exportToCSV(const std::vector<stats::TreeStats> &stats,
   ofstream arquivo(title);
 
   // Cabeçalho
-  arquivo << "N_docs,NumComparisonsInsertion,ExecutionTimeInsertionMean,"
+  arquivo << "N_docs,NumComparisonsInsertion,NumComparisonsInsertionMean,ExecutionTimeInsertionMean,"
              "ExecutionTimeInsertion,NumComparisonsSearchMean,"
              "NumComparisonsSearchMax,ExecutionTimeSearchMean,"
              "ExecutionTimeSearchMax,TreeHeight,MaxBranch,MinBranch,NumNodes\n";
 
   // Preenche as linhas
   for (const auto &s : stats) {
-    arquivo << s.n_docs << "," << s.numComparisonsInsertion << ","
+    arquivo << s.n_docs << "," << s.numComparisonsInsertion << "," << s.numComparisonsInsertionMean << ","
             << s.executionTimeInsertionMean << "," << s.executionTimeInsertion
             << "," << s.numComparisonsSearchMean << ","
             << s.numComparisonsSearchMax << "," << s.executionTimeSearchMean

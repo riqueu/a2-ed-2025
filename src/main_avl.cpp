@@ -101,9 +101,6 @@ int main(int argc, char *argv[]) {
     auto endRead = std::chrono::high_resolution_clock::now();
     double readTime =
         std::chrono::duration<double, std::milli>(endRead - startRead).count();
-    cout << "Tempo de leitura dos documentos: " << readTime << " ms" << endl;
-
-
 
     // Cria a árvore binária de busca e obtém as estatísticas
     stats::TreeStats s = stats::get_tree_stats("avl", n_docs, n_docs, vector<Doc*>(docs, docs + n_docs));
@@ -117,6 +114,8 @@ int main(int argc, char *argv[]) {
     cout << "Tempo medio de insercao: " << s.executionTimeInsertionMean << " ms" 
          << endl;
     cout << "Numero total de comparacoes para insercao: " << s.numComparisonsInsertion
+         << endl;
+    cout << "Numero medio de comparacoes para insercao: " << s.numComparisonsInsertionMean
          << endl;
     cout << "===========Busca===========" << endl;
     cout << "Numero medio de comparacoes para busca: " << s.numComparisonsSearchMean
