@@ -159,6 +159,16 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs,
                          int n_max_doc,
                          const std::vector<DocReading::Doc *> &docs);
 
+/**
+ * @brief Verifica se todos os nós da árvore estão balanceados.
+ *
+ * @param root Raiz da árvore a ser verificada.
+ * @return true se todos os nós estão balanceados, ou seja, se o fator de
+ * balanceamento de cada nó está entre -1 e 1.
+ * @return false se algum nó não está balanceado.
+ */
+bool all_balanced(Node *root);
+
 } // namespace stats
 
 #endif

@@ -205,7 +205,6 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs,
 
   // Pega a altura da árvore
   if (tree_type == "avl") {
-    // TODO: Verifica se a árvore AVL está com altura correta
     s.treeHeight = tree->root->height; // Armazena a altura da árvore AVL
   } else {
     // Para as outras, calcula a altura usando a função auxiliar
@@ -227,5 +226,23 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs,
   }
 
   return s;
+}
+
+bool all_balanced(Node *root) {
+  if (root == nullptr) {
+    return true;
+  }
+
+  int leftHeight = get_tree_height(root->left);
+  int rightHeight = get_tree_height(root->right);
+  int balanceFactor = leftHeight - rightHeight;
+
+  // Verifica se o fator de balanceamento está entre -1 e 1
+  if (balanceFactor < -1 || balanceFactor > 1) {
+    return false;
+  }
+
+  // Verifica recursivamente os subárvores esquerda e direita
+  return all_balanced(root->left) && all_balanced(root->right);
 }
 } // namespace stats
