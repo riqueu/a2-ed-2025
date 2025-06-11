@@ -115,6 +115,8 @@ int main(int argc, char *argv[]) {
          << endl;
     cout << "Numero total de comparacoes para insercao: " << s.numComparisonsInsertion
          << endl;
+    cout << "Numero medio de comparacoes para insercao: " << s.numComparisonsInsertionMean
+         << endl;
     cout << "===========Busca===========" << endl;
     cout << "Numero medio de comparacoes para busca: " << s.numComparisonsSearchMean
          << endl;
