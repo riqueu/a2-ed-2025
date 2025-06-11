@@ -72,10 +72,9 @@ Nesta seção, apresentamos os resultados numéricos obtidos e uma discussão so
 ### 4.3. Número de Comparações
 #### **Figura 3: Número de Comparações por Inserção de Palavra**
 ![Figura 3](graphs/grafico_NumComparisonsInsertion.png)
-#### **Discussão:**
 #### **Figura 4: Número de Comparações por Busca de Palavra**
 ![Figura 4](graphs/grafico_NumComparisonsSearch.png)
-#### **Discussão:**
+#### **Discussão:** Nota-se que tanto na inserção, quanto na busca, a AVL faz menos comparações que a BST.
 
 ### 4.4. Altura da Árvore
 #### **Figura 5: Altura da Árvore**
@@ -108,15 +107,15 @@ Após a implementação das três estruturas de dados para aplicacação do índ
 
 ### 6.1. Árvore Binária de Busca (BST)
 
-* **Vantagens:**
-* **Desvantagens:**
-* **Observado:** 
+* **Vantagens:** Simplicidade de implementação, constituindo uma base para o entendimento de estruturas mais complexas.
+* **Desvantagens:** Suscetível à degeneração, onde a altura da árvore aproxima-se do número de nós, análogo a uma lista encadeada.
+* **Observado:** Os resultados confirmaram a tendência da BST ao desbalanceamento (Figuras 5 e 6), com uma altura significativamente maior e uma grande disparidade entre os galhos. Isso impactou diretamente seu tempo de busca (Figura 2), que foi o mais lento entre as estruturas.
 
-### 6.2. Árvore AVL (Adelson-Velsky e Landis)
+### 6.2. Árvore Adelson-Velsky e Landis (AVL)
 
-* **Vantagens:**
-* **Desvantagens:**
-* **Observado:** 
+* **Vantagens:** Garante um tempo de busca logarítmico, mantem a altura da árvore próxima do mínimo teórico.
+* **Desvantagens:** A manutenção do balanceamento estrito pode exigir rotações mais frequentes durante as inserções, o que pode aumentar o custo dessa operação.
+* **Observado:** A AVL manteve uma altura controlada e muito menor (Figura 5), resultando em número de comparações e tempo de busca (Figuras 2 e 4) consideravelmente inferiores aos da BST, provando sua eficácia para aplicações focadas em consulta.
 
 ### 6.3. Árvore Rubro-Negra (RBT)
 
@@ -126,6 +125,9 @@ Após a implementação das três estruturas de dados para aplicacação do índ
 
 ### 6.4. Recomendação Final 
 ## 7. Dificuldades Encontradas
+* **Complexidade de Implementação:** A lógica de auto-balanceamento, especialmente as rotações simples e duplas da AVL, foi desafiadora e exigiu depuração extensiva. 
+* **Trabalho em Equipe:** Coordenar a integração dos diferentes branchs desenvolvidas pelos membros e manter a consistência do código demandou comunicação eficaz e uso disciplinado do Git.
+
 ## 8. Divisão de Tarefas
 
 ### 8.1 Entrega 1
@@ -141,6 +143,6 @@ Após a implementação das três estruturas de dados para aplicacação do índ
 * **Henrique Coelho Beltrão:** Implementação das funções da AVL, testes unitários da AVL, refatoração do código;
 * **Henrique Gabriel Gasparelo:** Implementação das estatísticas para árvores;
 * **José Thevez Gomes Guedes:** Implementação das estatísticas para árvores e transição para CSV;
-* **Luiz Eduardo Bravin:** Implementação da análise comparativa das árvores e geração dos gráficos em Python e continuação da redação do relatório.
+* **Luiz Eduardo Bravin:** Implementação da análise comparativa das árvores, geração dos gráficos em Python e redação do relatório.
 
 ### 8.3 Entrega 3
