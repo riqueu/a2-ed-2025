@@ -154,8 +154,15 @@ void testInsertAndBalance() {
 
   bool success = true;
   Node *root = tree->root;
-  // Verifica se a árvore está balanceada (|fator de balanceamento| <= 1)
-  if (root == nullptr || std::abs(AVL::getBalanceFactor(root)) > 1) {
+
+  // Verifica se o root está balanceado (|fator de balanceamento| <= 1)
+  /*if (root == nullptr || std::abs(AVL::getBalanceFactor(root)) > 1) {
+    std::cout << "FALHA: Arvore AVL nao esta balanceada" << std::endl;
+    success = false;
+  }*/
+
+  // Verifica se todos os nós estão balanceados
+  if (!stats::all_balanced(root)) {
     std::cout << "FALHA: Arvore AVL nao esta balanceada" << std::endl;
     success = false;
   }
