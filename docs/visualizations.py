@@ -14,21 +14,20 @@ def plot_graph(ax, col_name, title):
     ax.set_ylabel(col_name)
     ax.set_title(title)
     ax.legend()
-    ax.grid()
 
 def save_branch_graph(col_name_1, col_name_2, title):
     _, axes = plt.subplots(1, 1, figsize=(6, 5)) 
-    plot_graph(axes[0], col_name_1, title)
-    axes[0].plot(avl["N_docs"], avl[col_name_2], color="#ff7f0e")
-    axes[0].plot(bst["N_docs"], bst[col_name_2], color="#1f77b4")
+    plot_graph(axes, col_name_1, title)
+    axes.plot(avl["N_docs"], avl[col_name_2], color="#ff7f0e")
+    axes.plot(bst["N_docs"], bst[col_name_2], color="#1f77b4")
     # axes[0].plot(rbt["N_docs"], rbt[col_name_2], color="#2ca02c")
-    axes[0].set_ylabel("Tamanaho do galho")
+    axes.set_ylabel("Tamanaho do galho")
     plt.savefig(f'docs/graphs/grafico_branchs.png')
     plt.close()
     
 def save_simple_graph(col_name, title):
     _, axes = plt.subplots(1, 1, figsize=(6, 5)) 
-    plot_graph(axes[0], col_name, title)
+    plot_graph(axes, col_name, title)
     plt.savefig(f'docs/graphs/grafico_{col_name}.png')
     plt.close()
 
@@ -40,8 +39,8 @@ def save_double_graph(col_name_1, col_name_2, pre, title, path):
     plt.savefig(f'docs/graphs/grafico_{path}.png')
     plt.close()
 
-save_double_graph(col_names[0], col_names[1], pre="Tempo", title="de Inserção de Palavra", path="ExecutionTimeInsertion")
-save_double_graph(col_names[2], col_names[3], pre="Tempo", title="de Busca de Palavra", path="ExecutionTimeSearch")
+save_double_graph(col_names[0], col_names[1], pre="Tempo", title="de Inserção de uma Palavra", path="ExecutionTimeInsertion")
+save_double_graph(col_names[2], col_names[3], pre="Tempo", title="de Busca de uma Palavra", path="ExecutionTimeSearch")
 save_double_graph(col_names[4], col_names[5], pre="Número", title="de Comparações para Inserção", path="NumComparisonsInsertion")
 save_double_graph(col_names[6], col_names[7], pre="Número", title="de Comparações para Busca", path="NumComparisonsSearch")
 save_simple_graph(col_names[8], title="Altura da Árvore")
