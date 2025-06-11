@@ -13,19 +13,23 @@ void exportToCSV(const std::vector<stats::TreeStats> &stats,
   ofstream arquivo(title);
 
   // Cabeçalho
-  arquivo << "N_docs,NumComparisonsInsertion,NumComparisonsInsertionMean,ExecutionTimeInsertionMean,"
-             "ExecutionTimeInsertion,NumComparisonsSearchMean,"
-             "NumComparisonsSearchMax,ExecutionTimeSearchMean,"
-             "ExecutionTimeSearchMax,TreeHeight,MaxBranch,MinBranch,NumNodes\n";
+  arquivo << "N_docs,"
+             "ExecutionTimeInsertionMean,ExecutionTimeInsertionTotal,"
+             "ExecutionTimeSearchMean,ExecutionTimeSearchTotal,"
+             "NumComparisonsInsertionMean,NumComparisonsInsertionTotal,"
+             "NumComparisonsSearchMean,NumComparisonsSearchTotal,"
+             "TreeHeight,MaxBranch,MinBranch,"
+             "NumNodes\n";
 
   // Preenche as linhas
   for (const auto &s : stats) {
-    arquivo << s.n_docs << "," << s.numComparisonsInsertion << "," << s.numComparisonsInsertionMean << ","
-            << s.executionTimeInsertionMean << "," << s.executionTimeInsertion
-            << "," << s.numComparisonsSearchMean << ","
-            << s.numComparisonsSearchMax << "," << s.executionTimeSearchMean
-            << "," << s.executionTimeSearchMax << "," << s.treeHeight << ","
-            << s.treeHeight << "," << s.minBranch << "," << s.numNodes << "\n";
+    arquivo << s.n_docs << "," 
+            << s.executionTimeInsertionMean << "," << s.executionTimeInsertion << "," 
+            << s.executionTimeSearchMean << "," << s.executionTimeSearchMax << ","
+            << s.numComparisonsInsertionMean << "," << s.numComparisonsInsertion << "," 
+            << s.numComparisonsSearchMean << "," << s.numComparisonsSearchMax << ","  
+            << s.treeHeight << "," << s.treeHeight << "," << s.minBranch << "," 
+            << s.numNodes << "\n";
   }
 
   // Fecha o arquivo
