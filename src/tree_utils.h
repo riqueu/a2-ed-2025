@@ -79,23 +79,29 @@ void printTree(BinaryTree *tree);
 
 namespace stats {
 struct TreeStats {
-    int n_docs; // Número de documentos inseridos na árvore
+  int n_docs; // Número de documentos inseridos na árvore
 
-    int numComparisonsInsertionMean; // Número médio de comparações realizadas durante as inserções
-    int numComparisonsInsertion; // Número total de comparações realizadas durante as inserções
+  int numComparisonsInsertionMean; // Número médio de comparações realizadas durante as inserções
+  int numComparisonsInsertion; // Número total de comparações realizadas durante as inserções
 
-    double executionTimeInsertionMean; // Tempo médio de execução das inserções em milissegundos
-    double executionTimeInsertion; // Tempo total de execução das inserções em milissegundos
+  double executionTimeInsertionMean; // Tempo médio de execução das inserções em
+                                     // milissegundos
+  double executionTimeInsertion;     // Tempo total de execução das inserções em
+                                     // milissegundos
 
-    int numComparisonsSearchMean; // Número médio de comparações realizadas durante as buscas
-    int numComparisonsSearchMax; // Número máximo de comparações realizadas durante as buscas
+  int numComparisonsSearchMean; // Número médio de comparações realizadas
+                                // durante as buscas
+  int numComparisonsSearchMax;  // Número máximo de comparações realizadas
+                                // durante as buscas
 
-    double executionTimeSearchMean; // Tempo médio de execução das buscas em milissegundos
-    double executionTimeSearchMax; // Tempo máximo de execução das buscas em milissegundos
+  double executionTimeSearchMean; // Tempo médio de execução das buscas em
+                                  // milissegundos
+  double executionTimeSearchMax;  // Tempo máximo de execução das buscas em
+                                  // milissegundos
 
-    int treeHeight; // Altura da árvore após as inserções
-    int minBranch; // Comprimento do menor galho
-    int numNodes; // Número total de nós na árvore
+  int treeHeight; // Altura da árvore após as inserções
+  int minBranch;  // Comprimento do menor galho
+  int numNodes;   // Número total de nós na árvore
 };
 
 /**
@@ -103,21 +109,25 @@ struct TreeStats {
  *
  * Calcula a altura da árvore a partir de um nó dado, considerando que a altura
  *
- * @param node Nó raiz da árvore ou subárvore a partir do qual a altura será calculada.
+ * @param node Nó raiz da árvore ou subárvore a partir do qual a altura será
+ * calculada.
  * @return Altura da árvore a partir do nó raiz.
  */
 int get_tree_height(Node *node);
 
 /**
  * @brief Encontra o comprimento do menor galho
- * 
- * Testa todos os caminhos da raiz ate as folhas e retorna o caminho do menor no min_branch
- * 
- * @param node Nó raiz da árvore ou subárvore a partir do qual o menor galho será calculado.
+ *
+ * Testa todos os caminhos da raiz ate as folhas e retorna o caminho do menor no
+ * min_branch
+ *
+ * @param node Nó raiz da árvore ou subárvore a partir do qual o menor galho
+ * será calculado.
  * @param currentLen Comprimento do caminho na recursão atual (INICIALIZE COM 0)
- * @param minBranch Comprimento do menor galho que será retornado (INICIALIZE COM A ALTURA DA ARVORE + 1)
+ * @param minBranch Comprimento do menor galho que será retornado (INICIALIZE
+ * COM A ALTURA DA ARVORE + 1)
  */
-void get_min_branch(Node *node, int currentLen, int* minBranch);
+void get_min_branch(Node *node, int currentLen, int *minBranch);
 
 /**
  * @brief Coleta todas as palavras de uma árvore binária de busca.
@@ -134,9 +144,9 @@ void collect_words(Node* node, std::vector<std::string>& words);
 /**
  * @brief Obtém estatísticas de uma árvore binária de busca.
  *
- * Esta função cria uma árvore do tipo especificado (BST ou AVL), insere palavras
- * de documentos nela, realiza buscas por palavras e coleta estatísticas sobre
- * inserções e buscas.
+ * Esta função cria uma árvore do tipo especificado (BST ou AVL), insere
+ * palavras de documentos nela, realiza buscas por palavras e coleta
+ * estatísticas sobre inserções e buscas.
  *
  * @param tree_type Tipo da árvore ("bst" ou "avl").
  * @param n_docs Número de documentos a serem processados.
@@ -145,9 +155,10 @@ void collect_words(Node* node, std::vector<std::string>& words);
  * @param search_words Vetor de palavras a serem buscadas na árvore.
  * @return Estrutura TreeStats contendo as estatísticas coletadas.
  */
-TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc, const std::vector<DocReading::Doc*>& docs);
+TreeStats get_tree_stats(const std::string &tree_type, int n_docs,
+                         int n_max_doc,
+                         const std::vector<DocReading::Doc *> &docs);
 
-}
-
+} // namespace stats
 
 #endif
