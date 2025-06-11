@@ -96,7 +96,7 @@ struct TreeStats {
     int minBranch; // Comprimento do menor galho
     int numNodes; // Número total de nós na árvore
 
-    int size; // tamanho em KBytes da árvore
+    size_t size; // tamanho em Bytes da árvore
 };
 
 /**

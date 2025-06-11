@@ -117,11 +117,18 @@ size_t get_tree_size(Node* node) {
     if (node == nullptr) {
         return 0;
     }
+    // soma os dados da estrutura do nó
     size_t size = sizeof(Node);
-    
+
+    // soma a memória alocada dinamicamente
+    size += node->word.capacity() * sizeof(char);
+    size += node->documentIds.capacity() * sizeof(int);
+
+    // recursão
     size += get_tree_size(node->right);
     size += get_tree_size(node->left);
 
+    // retorna o valor em bytes
     return size;
 }
 
