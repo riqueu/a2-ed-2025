@@ -81,6 +81,7 @@ namespace stats {
 struct TreeStats {
     int n_docs; // Número de documentos inseridos na árvore
 
+    int numComparisonsInsertionMean; // Número médio de comparações realizadas durante as inserções
     int numComparisonsInsertion; // Número total de comparações realizadas durante as inserções
 
     double executionTimeInsertionMean; // Tempo médio de execução das inserções em milissegundos
@@ -119,16 +120,16 @@ int get_tree_height(Node *node);
 void get_min_branch(Node *node, int currentLen, int* minBranch);
 
 /**
- * @brief Coleta palavras de uma árvore binária de busca, armazena em um vetor e conta a quantidade.
+ * @brief Coleta todas as palavras de uma árvore binária de busca.
  *
  * Esta função percorre a árvore em ordem (in-order) e coleta todas as palavras
- * presentes nos nós, armazenando-as no vetor fornecido e contado a quantidade.
+ * presentes nos nós, armazenando elas em um vetor.
  *
  * @param node Ponteiro para o nó atual da árvore.
  * @param words Vetor onde as palavras coletadas serão armazenadas.
- * @return Número total de palavras.
+ * @return Número total de palavras coletadas.
  */
-int collect_words_and_get_num_nodes(Node* node, std::vector<std::string>& words);
+void collect_words(Node* node, std::vector<std::string>& words);
 
 /**
  * @brief Obtém estatísticas de uma árvore binária de busca.
