@@ -1,9 +1,9 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-bst = pd.read_csv("docs/tables/dados_bst.csv")
-avl = pd.read_csv("docs/tables/dados_avl.csv")
-# rbt = pd.read_csv("docs/tables/dados_rbt.csv")
+bst = pd.read_csv("dados_bst.csv")
+avl = pd.read_csv("dados_avl.csv")
+# rbt = pd.read_csv("dados_rbt.csv")
 col_names = bst.columns[1:]
 
 def save_graph(col_name_1, col_name_2, pre, title, path):

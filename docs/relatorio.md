@@ -19,7 +19,7 @@ Este projeto foca na implementação de um índice invertido — estrutura de da
 * **Por que usar?** É a estrutura de árvore de busca mais fundamental e simples de implementar. Sua performance é de $O(n)$ para busca e inserção no pior caso.
 * **Principais Diferenças (vs AVL/RBT):** Não garante balanceamento, podendo degenerar em uma lista encadeada (pior caso $O(n)$). Menos complexa que AVL e RBT, mas sem otimizações para manter o balanceamento automático.
 
-### 2.2. Árvore AVL (Adelson-Velsky e Landis)
+### 2.2. Árvore Adelson-Velsky e Landis (AVL)
 * **Descrição:** É uma árvore binária de busca auto-balanceada. Para cada nó, a diferença de altura entre suas subárvores esquerda e direita (fator de balanceamento) é no máximo 1. O balanceamento é mantido através de rotações simples ou duplas após inserções.
 * **Por que usar?** Garante que as operações de busca, inserção e remoção tenham complexidade de tempo de pior caso $O(\log n)$. É ideal para aplicações onde buscas frequentes são realizadas, mesmo que isso implique um custo maior nas inserções devido às rotações.
 * **Principais Diferenças (vs BST/RBT):** É estritamente balanceada, o que garante o melhor desempenho para buscas. No entanto, pode realizar mais rotações durante a inserção em comparação com a RBT, o que pode torná-la mais lenta nessa operação.
@@ -80,7 +80,7 @@ Nesta seção, apresentamos os resultados numéricos obtidos e uma discussão so
 ### 4.4. Altura da Árvore
 #### **Figura 5: Altura da Árvore**
 ![Figura 5](graphs/grafico_TreeHeight.png)
-#### **Discussão (Altura):** Nota-se que a altura da árvore não cresce tanto conforme se aumenta o número de documentos, pois nos primeiros 40 documentos acessados já são computadas e criados os respectivos nós para mais de 4 mil palavras distintas, com os outros documentos apenas acrescentando unidades a esses nós, sem criar novos. As árvores BST tem em média o dobro da altura das árvores AVL, visto que aquelas podem vir a degenerar, enquanto que estas — por serem balanceadas — organizam melhor os nós pelas camadas, reduzindo a altura.
+#### **Discussão:** Nota-se que a altura da árvore não cresce tanto conforme se aumenta o número de documentos, pois nos primeiros 40 documentos acessados já são computadas e criados os respectivos nós para mais de 4 mil palavras distintas, com os outros documentos apenas acrescentando unidades a esses nós, sem criar novos. As árvores BST tem em média o dobro da altura das árvores AVL, visto que aquelas podem vir a degenerar, enquanto que estas — por serem balanceadas — organizam melhor os nós pelas camadas, reduzindo a altura.
 
 ### 4.5. Tamanho dos Galhos (Menor e Maior Caminho)
 #### **Figura 6: Tamanho do Maior e Menor Galho**
@@ -96,11 +96,11 @@ Nesta seção, apresentamos os resultados numéricos obtidos e uma discussão so
 
 #### **Figura 8: Altura da Árvore vs. Número de nós BST**
 ![Figura 8](graphs/grafico_height_node_bst.png)
-#### **Discussão:** Nesse gráfico verifica-se que o número de nós computados está dentro do aceitável, entre o máximo e mínimo teórico da BST. O mínimo número de nós se dá quando a BST degenera, isto é, há um nó por camada, logo $ n \ge h + 1 $. O número máximo de nós se dá quando a BST está completa, isto é, há $2^{m}$ nós na camada de altura $m$, logo $ n \le 2^{n+1} -1 $.
+#### **Discussão:** Nesse gráfico verifica-se que o número de nós computados está dentro do aceitável, entre o máximo e mínimo teórico da BST. O mínimo número de nós se dá quando a BST degenera, isto é, há um nó por camada, logo $ n \geq h + 1 $. O número máximo de nós se dá quando a BST está completa, isto é, há $2^{m}$ nós na camada de altura $m$, logo $ n \leq 2^{n+1} -1 $.
 
 #### **Figura 9: Altura da Árvore vs. Número de nós AVL**
 ![Figura 9](graphs/grafico_height_node_avl.png)
-#### **Discussão:** Nesse gráfico verifica-se que o número de nós computados está dentro do aceitável, entre o máximo e mínimo teórico da AVL. O mínimo número de nós se dá quando se cumpre minimamente as restrições de balanceamento da AVL, logo $ n \ge 2^{\frac{h}{2}} $. O número máximo de nós se dá quando a AVL está completa, isto é, há $2^{m}$ nós na camada de altura $m$, logo $ n \le 2^{n+1} -1 $.
+#### **Discussão:** Nesse gráfico verifica-se que o número de nós computados está dentro do aceitável, entre o máximo e mínimo teórico da AVL. O mínimo número de nós se dá quando se cumpre minimamente as restrições de balanceamento da AVL, logo $ n \geq 2^{\frac{h}{2}} $. O número máximo de nós se dá quando a AVL está completa, isto é, há $2^{m}$ nós na camada de altura $m$, logo $ n \leq 2^{n+1} -1 $.
 
 ## 6. Conclusão
 
