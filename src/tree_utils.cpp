@@ -1,12 +1,8 @@
 #include "tree_utils.h"
 #include "avl.h"
-<<<<<<< HEAD
 #include <cstddef>
-#include <iostream>
-=======
 #include "bst.h"
 #include "data.h"
->>>>>>> main
 #include <algorithm>
 #include <iostream>
 
@@ -116,7 +112,6 @@ void collect_words(Node* node, std::vector<std::string>& words) {
     collect_words(node->right, words);
 }
 
-<<<<<<< HEAD
 // calcula tamanho de memória ocupada pela árvore:
 size_t get_tree_size(Node* node) {
     if (node == nullptr) {
@@ -137,17 +132,12 @@ size_t get_tree_size(Node* node) {
     return size;
 }
 
-TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc, const std::vector<DocReading::Doc*>& docs) {
-    BinaryTree* tree = nullptr;
-    TreeStats s = {n_docs, 0, 0.0, 0.0, 0, 0, 0.0, 0.0, 0, 0, 0}; // Inicializa as estatísticas
-=======
 TreeStats get_tree_stats(const std::string &tree_type, int n_docs,
                          int n_max_doc,
                          const std::vector<DocReading::Doc *> &docs) {
   BinaryTree *tree = nullptr;
   TreeStats s = {n_docs, 0, 0, 0.0, 0.0, 0, 0,
                  0.0,    0.0, 0,   0,   0}; // Inicializa as estatísticas
->>>>>>> main
 
   if (tree_type == "bst") {
     tree = BST::create();
@@ -219,28 +209,12 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs,
         totalComparisons / j; // Calcula o número médio de comparações
     search.executionTime = totalTime / j; // Calcula o tempo médio de execução
 
-<<<<<<< HEAD
-    // Calcula o comprimento do menor galho e coloca na estrutura
-    get_min_branch(tree->root, 0, &minBranch);
-    s.minBranch = minBranch;
-
-    // calcula o tamanho da árvore e insere da estrutura de resultados
-    size_t size = get_tree_size(tree->root);
-    s.size = size;
-
-    // Libera a memória da árvore atual
-    if (tree_type == "bst") {
-        BST::destroy(tree);
-    } else if( tree_type == "avl") {
-        AVL::destroy(tree);
-=======
     // Atualiza as estatísticas de busca
     s.numComparisonsSearchMean += search.numComparisons;
     s.executionTimeSearchMean += search.executionTime;
     // Atualiza o número máximo de comparações
     if (search.numComparisons > s.numComparisonsSearchMax) {
       s.numComparisonsSearchMax = search.numComparisons;
->>>>>>> main
     }
     if (search.executionTime > s.executionTimeSearchMax) {
       s.executionTimeSearchMax = search.executionTime;
