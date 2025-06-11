@@ -6,35 +6,38 @@ avl = pd.read_csv("dados_avl.csv")
 # rbt = pd.read_csv("dados_rbt.csv")
 col_names = bst.columns[1:]
 
-def plot_graph(ax, col_name, title):
+def plot_graph(ax, col_name, title, ylabel):
     ax.plot(bst["N_docs"], bst[col_name], label="BST")
     ax.plot(avl["N_docs"], avl[col_name], label="AVL")
     # ax.plot(rbt["N_docs"], rbt[col_name], label="RBT")
     ax.set_xlabel("Número de documentos")
-    ax.set_ylabel(col_name)
+    ax.set_ylabel(ylabel)
     ax.set_title(title)
     ax.legend()
 
 def save_branch_graph(col_name_1, col_name_2, title):
     _, axes = plt.subplots(1, 1, figsize=(6, 5)) 
-    plot_graph(axes, col_name_1, title)
+    plot_graph(axes, col_name_1, title, "Tamanaho do galho")
     axes.plot(avl["N_docs"], avl[col_name_2], color="#ff7f0e")
     axes.plot(bst["N_docs"], bst[col_name_2], color="#1f77b4")
     # axes[0].plot(rbt["N_docs"], rbt[col_name_2], color="#2ca02c")
-    axes.set_ylabel("Tamanaho do galho")
     plt.savefig(f'docs/graphs/grafico_branchs.png')
     plt.close()
     
 def save_simple_graph(col_name, title):
     _, axes = plt.subplots(1, 1, figsize=(6, 5)) 
-    plot_graph(axes, col_name, title)
+    plot_graph(axes, col_name, title, title)
     plt.savefig(f'docs/graphs/grafico_{col_name}.png')
     plt.close()
 
 def save_double_graph(col_name_1, col_name_2, pre, title, path):
     _, axes = plt.subplots(1, 2, figsize=(12, 5))  
-    plot_graph(axes[0], col_name_1, pre + " Médio " + title)
-    plot_graph(axes[1], col_name_2, pre + " Total " + title)
+    if pre == "Tempo":
+        plot_graph(axes[0], col_name_1, pre + " Médio " + title, "Tempo (em milissegundos)")
+        plot_graph(axes[1], col_name_2, pre + " Total " + title, "Tempo (em milissegundos)")
+    elif pre == "Número":
+        plot_graph(axes[0], col_name_1, pre + " Médio " + title, "Número de comparações")
+        plot_graph(axes[1], col_name_2, pre + " Total " + title, "Número de comparações")
     plt.tight_layout(rect=[0, 0, 1, 0.95])
     plt.savefig(f'docs/graphs/grafico_{path}.png')
     plt.close()
