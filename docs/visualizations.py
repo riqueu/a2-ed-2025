@@ -6,78 +6,47 @@ avl = pd.read_csv("dados_avl.csv")
 # rbt = pd.read_csv("dados_rbt.csv")
 col_names = bst.columns[1:]
 
-def save_graph(col_name_1, col_name_2, pre, title, path):
-    _, axes = plt.subplots(1, 2, figsize=(12, 5))  
-    axes[0].plot(bst["N_docs"], bst[col_name_1], label="BST")
-    axes[0].plot(avl["N_docs"], avl[col_name_1], label="AVL")
-    # axes[0].plot(rbt["N_docs"], rbt[col_name_1], label="RBT")
-    axes[0].set_xlabel("Número de documentos")
-    axes[0].set_ylabel(col_name_1)
-    axes[0].set_title(pre + " Médio " + title)
-    axes[0].legend()
-    axes[0].grid()
+def plot_graph(ax, col_name, title):
+    ax.plot(bst["N_docs"], bst[col_name], label="BST")
+    ax.plot(avl["N_docs"], avl[col_name], label="AVL")
+    # ax.plot(rbt["N_docs"], rbt[col_name], label="RBT")
+    ax.set_xlabel("Número de documentos")
+    ax.set_ylabel(col_name)
+    ax.set_title(title)
+    ax.legend()
+    ax.grid()
 
-    axes[1].plot(bst["N_docs"], bst[col_name_2], label="BST")
-    axes[1].plot(avl["N_docs"], avl[col_name_2], label="AVL")
-    # axes[0].plot(rbt["N_docs"], rbt[col_name_2], label="RBT")
-    axes[1].set_xlabel("Número de documentos")
-    axes[1].set_ylabel(col_name_2)
-    axes[1].set_title(pre + " Total " + title)
-    axes[1].legend()
-    axes[1].grid()
+def save_branch_graph(col_name_1, col_name_2, title):
+    _, axes = plt.subplots(1, 1, figsize=(6, 5)) 
+    plot_graph(axes[0], col_name_1, title)
+    axes[0].plot(avl["N_docs"], avl[col_name_2], color="#ff7f0e")
+    axes[0].plot(bst["N_docs"], bst[col_name_2], color="#1f77b4")
+    # axes[0].plot(rbt["N_docs"], rbt[col_name_2], color="#2ca02c")
+    axes[0].set_ylabel("Tamanaho do galho")
+    plt.savefig(f'docs/graphs/grafico_branchs.png')
+    plt.close()
     
+def save_simple_graph(col_name, title):
+    _, axes = plt.subplots(1, 1, figsize=(6, 5)) 
+    plot_graph(axes[0], col_name, title)
+    plt.savefig(f'docs/graphs/grafico_{col_name}.png')
+    plt.close()
+
+def save_double_graph(col_name_1, col_name_2, pre, title, path):
+    _, axes = plt.subplots(1, 2, figsize=(12, 5))  
+    plot_graph(axes[0], col_name_1, pre + " Médio " + title)
+    plot_graph(axes[1], col_name_2, pre + " Total " + title)
     plt.tight_layout(rect=[0, 0, 1, 0.95])
     plt.savefig(f'docs/graphs/grafico_{path}.png')
     plt.close()
 
-
-save_graph(col_names[1], col_names[0], pre="Número", title="de Comparações para Inserção", path="NumComparisonsInsertion")
-save_graph(col_names[2], col_names[3], pre="Tempo", title="de Inserção de Palavra", path="ExecutionTimeInsertion")
-save_graph(col_names[4], col_names[5], pre="Número", title="de Comparações para Busca", path="NumComparisonsSearch")
-save_graph(col_names[6], col_names[7], pre="Tempo", title="de Busca de Palavra", path="ExecutionTimeSearch")
-
-#Altura da árvore
-plt.figure()
-plt.plot(bst["N_docs"], bst['TreeHeight'], label="BST")
-plt.plot(avl["N_docs"], avl['TreeHeight'], label="AVL")
-# plt.plot(rbt["N_docs"], rbt['TreeHeight'], label="RBT")
-plt.xlabel("Número de documentos")
-plt.ylabel("TreeHeight")
-plt.title("Altura da Árvore")
-plt.legend()
-plt.grid()
-plt.savefig(f'docs/graphs/grafico_TreeHeight.png')
-plt.close()
-
-#Numero de nós
-plt.figure()
-plt.plot(bst["N_docs"], bst['NumNodes'], label="BST")
-plt.plot(avl["N_docs"], avl['NumNodes'], label="AVL")
-# plt.plot(rbt["N_docs"], rbt['NumNodes'], label="RBT")
-plt.xlabel("Número de documentos")
-plt.ylabel("NumNodes")
-plt.title("Número de nós")
-plt.legend()
-plt.grid()
-plt.savefig(f'docs/graphs/grafico_NumNodes.png')
-plt.close()
-
-
-#Tamanho dos galhos
-plt.figure()
-plt.plot(bst["N_docs"], bst['MinBranch'], label="BST", color="#1f77b4")
-plt.plot(avl["N_docs"], avl['MinBranch'], label="AVL", color="#ff7f0e")
-# plt.plot(rbt["N_docs"], rbt['MinBranch'], label="RBT", color="#2ca02c")
-plt.plot(avl["N_docs"], avl['MaxBranch'], color="#ff7f0e")
-plt.plot(bst["N_docs"], bst['MaxBranch'], color="#1f77b4")
-# plt.plot(rbt["N_docs"], rbt['MaxBranch'], color="#2ca02c")
-plt.xlabel("Número de documentos")
-plt.ylabel("Tamanaho do galho")
-plt.title("Comparação maior e menor galho")
-plt.legend()
-plt.grid()
-plt.savefig(f'docs/graphs/grafico_branchs.png')
-plt.close()
+save_double_graph(col_names[0], col_names[1], pre="Tempo", title="de Inserção de Palavra", path="ExecutionTimeInsertion")
+save_double_graph(col_names[2], col_names[3], pre="Tempo", title="de Busca de Palavra", path="ExecutionTimeSearch")
+save_double_graph(col_names[4], col_names[5], pre="Número", title="de Comparações para Inserção", path="NumComparisonsInsertion")
+save_double_graph(col_names[6], col_names[7], pre="Número", title="de Comparações para Busca", path="NumComparisonsSearch")
+save_simple_graph(col_names[8], title="Altura da Árvore")
+save_branch_graph(col_names[9], col_names[10], "Comparação maior e menor galho")
+save_simple_graph(col_names[11], title="Número de nós")
 
 
 #Tamanho da arvore pelo numero de nós BST
