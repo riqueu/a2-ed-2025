@@ -94,6 +94,17 @@ void insertNode(Node *root, BinaryTree *tree, const std::string &word, int docum
 InsertResult insert(BinaryTree *tree, const std::string &word, int documentId);
 
 /**
+ * @brief Busca uma palavra na árvore binária RBT.
+ *
+ * Retorna um SearchResult contendo status da busca, documentos e comparações.
+ *
+ * @param tree Ponteiro para a árvore onde será feita a busca.
+ * @param word Palavra a ser buscada.
+ * @return Estrutura contendo o resultado da busca.
+ */
+SearchResult search(BinaryTree *tree, const std::string &word);
+
+/**
  * @brief Libera recursivamente a memória de todos os nós da subárvore.
  *
  * Esta função percorre a árvore em pós-ordem e deleta todos os nós alocados
