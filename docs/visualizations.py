@@ -30,22 +30,27 @@ def save_simple_graph(col_name, title):
     plt.savefig(f'docs/graphs/grafico_{col_name}.png')
     plt.close()
 
-def save_double_graph(col_name_1, col_name_2, pre, title, path):
+def save_double_graph(col_name_1, col_name_2, pre, mid, title, path):
     _, axes = plt.subplots(1, 2, figsize=(12, 5))  
     if pre == "Tempo":
         plot_graph(axes[0], col_name_1, pre + " Médio " + title, "Tempo (em milissegundos)")
-        plot_graph(axes[1], col_name_2, pre + " Total " + title, "Tempo (em milissegundos)")
+        plot_graph(axes[1], col_name_2, pre + " " + mid + " " + title, "Tempo (em milissegundos)")
     elif pre == "Número":
         plot_graph(axes[0], col_name_1, pre + " Médio " + title, "Número de comparações")
-        plot_graph(axes[1], col_name_2, pre + " Total " + title, "Número de comparações")
+        plot_graph(axes[1], col_name_2, pre + " " + mid + " " + title, "Número de comparações")
     plt.tight_layout(rect=[0, 0, 1, 0.95])
     plt.savefig(f'docs/graphs/grafico_{path}.png')
     plt.close()
 
-save_double_graph(col_names[0], col_names[1], pre="Tempo", title="de Inserção de uma Palavra", path="ExecutionTimeInsertion")
-save_double_graph(col_names[2], col_names[3], pre="Tempo", title="de Busca de uma Palavra", path="ExecutionTimeSearch")
-save_double_graph(col_names[4], col_names[5], pre="Número", title="de Comparações para Inserção", path="NumComparisonsInsertion")
-save_double_graph(col_names[6], col_names[7], pre="Número", title="de Comparações para Busca", path="NumComparisonsSearch")
+save_double_graph(col_names[0], col_names[1], pre="Tempo", mid="Total", 
+                  title="de Inserção de uma Palavra", path="ExecutionTimeInsertion")
+save_double_graph(col_names[2], col_names[3], pre="Tempo", mid="Máximo", 
+                  title="de Busca de uma Palavra", path="ExecutionTimeSearch")
+save_double_graph(col_names[4], col_names[5], pre="Número", mid="Total", 
+                  title="de Comparações para Inserção", path="NumComparisonsInsertion")
+save_double_graph(col_names[6], col_names[7], pre="Número", mid="Máximo", 
+                  title="de Comparações para Busca", path="NumComparisonsSearch")
+
 save_simple_graph(col_names[8], title="Altura da Árvore")
 save_branch_graph(col_names[9], col_names[10], "Comparação maior e menor galho")
 save_simple_graph(col_names[11], title="Número de nós")
