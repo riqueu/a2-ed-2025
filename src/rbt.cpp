@@ -12,18 +12,19 @@ BinaryTree *create() {
   // Criação do NIL
   Node* nil = new Node;
   nil->isRed = false;
+  nil->height = -1;
   binaryTree->NIL = nil;
   return binaryTree;
 }
 
-Node *createNode(const std::string &word, int documentId) {
+Node *createNode(const std::string &word, int documentId, Node *nil) {
   // Criação e definições iniciais de um nó
   Node *node = new Node;
   node->word = word;
   node->documentIds.push_back(documentId);
   node->parent = nullptr;
-  node->left = nullptr;
-  node->right = nullptr;
+  node->left = nil;
+  node->right = nil;
   node->height = 0;
 
   // Cor inicial é vermelho
@@ -74,17 +75,145 @@ Node *rotateLeft(Node *node) {
   return newRoot;
 }
 
-void deleteNodes(Node *root) {
-  if (root == nullptr) {
+void fixInsert(Node *node, BinaryTree *tree) {
+  // Se o pai for preto, não precisa consertar, inclusive caso node raiz, já que nil é preto
+  if (node->parent->isRed == false) {
     return;
-  } else if (root->left == nullptr) {
+  }
+
+  // Verifica se o pai é filho a esquerda
+  if (node->parent == node->parent->parent->left) {
+    Node* tio = node->parent->parent->right;
+    Node* vo = node->parent->parent;
+    // Caso 1: pai e tio vermelhos
+    if (tio->isRed == true) {
+      node->parent->isRed = false;
+      tio->isRed = false;
+      node->parent->parent->isRed = true;
+      fixInsert(node->parent->parent, tree);
+    } else {
+      // Caso 2: filho à direita → precisa girar para formar o caso filho à esquerda com tio preto → rotação e recoloração
+      if (node == node->parent->right) {
+        node = node->parent;
+        rotateLeft(node);
+      } 
+      // Caso 3: filho à esquerda com tio preto → rotação e recoloração
+      node->parent->isRed = false;
+      vo->isRed = true;
+      rotateRight(vo);
+      // Verifica se o vô não era a raiz, se for altera para o pai do vô
+      if (vo == tree->root) {
+        tree->root = vo->parent;
+      }
+    }
+
+  } else {
+    Node* tio = node->parent->parent->left;
+    Node* vo = node->parent->parent;
+    // Caso pai e tio vermelhos
+    if (tio->isRed == true) {
+      node->parent->isRed = false;
+      tio->isRed = false;
+      node->parent->parent->isRed = true;
+      fixInsert(node->parent->parent, tree);
+    } else {
+      // Caso 2: filho à esquerda → precisa girar para formar o caso 3
+      if (node == node->parent->left) {
+        node = node->parent;
+        rotateRight(node);
+      } 
+      // Caso 3: filho à direita com tio preto → rotação e recoloração
+      node->parent->isRed = false;
+      vo->isRed = true;
+      rotateLeft(vo);
+      // Verifica se o vô não era a raiz, se for altera para o pai do vô
+      if (vo == tree->root) {
+        tree->root = vo->parent;
+      }
+      }
+    }
+  }
+
+void insertNode(Node *root, BinaryTree *tree, const std::string &word, int documentId,
+                 int &numComparisons) {
+  // Incrementa o número de comparações
+  numComparisons++;
+
+  // insert recursivo
+  if (word < root->word) { // está a esquerda do nó atual
+    // Se a esquerda tiver vazia, coloca o nó lá e conserta as propriedades
+    if (root->left == tree->NIL) {
+      Node* newNode = createNode(word, documentId, tree->NIL);
+      newNode->parent = root;
+      root->left = newNode;
+
+      // Conserta as propriedades
+      fixInsert(newNode, tree);
+    } else {
+      // Se tiver ocupada avança a recursão
+      insertNode(root->left, tree, word, documentId, numComparisons);
+    }
+  } else if (word > root->word) { // está a direita do nó atual
+    // Se a direita tiver vazia, coloca o nó lá e conserta as propriedades
+    if (root->right == tree->NIL) {
+      Node* newNode = createNode(word, documentId, tree->NIL);
+      newNode->parent = root;
+      root->right = newNode;
+
+      // Conserta as propriedades
+      fixInsert(newNode, tree);
+    } else {
+      // Se tiver ocupada avança a recursão
+      insertNode(root->right, tree, word, documentId, numComparisons);
+    }
+  } else { // palavra já existe na árvore, adiciona o ID do documento
+    root->documentIds.push_back(documentId);
+  }
+
+  // Atualiza a altura do nó atual
+  root->height = std::max(getHeight(root->left), getHeight(root->right)) + 1;
+}
+
+InsertResult insert(BinaryTree *tree, const std::string &word, int documentId) {
+  InsertResult result;
+  result.numComparisons = 0;
+  result.executionTime = 0;
+
+  if (tree == nullptr) {
+    return result;
+  }
+
+  // Mede o tempo de execução da inserção
+  auto start = std::chrono::high_resolution_clock::now();
+  // Verifica se a raiz não é nullptr, se for cria um novo node preto para a raiz
+  if (tree->root == nullptr) {
+    Node* newNode = createNode(word, documentId, tree->NIL);
+    newNode->parent = tree->NIL;
+    tree->root = newNode;
+  } else {
+    // Insere o nó
+    insertNode(tree->root, tree, word, documentId, result.numComparisons);
+  }
+  // Garante que a raiz é preta
+  tree->root->isRed = false;
+  auto end = std::chrono::high_resolution_clock::now();
+
+  // Calcula o tempo gasto para inserir o nó (em milissegundos)
+  result.executionTime =
+      std::chrono::duration<double, std::milli>(end - start).count();
+
+  return result;
+}
+
+void deleteNodes(Node *root, Node *nil) {
+  if (root == nullptr or root == nil) {
     return;
   }
 
   // Recurção para deletar os nós, não tem necessidade de verificar se são
   // nullptr, pois a recurção já faz isso
-  deleteNodes(root->left);
-  deleteNodes(root->right);
+  deleteNodes(root->left, nil);
+  deleteNodes(root->right, nil);
 
   delete root;
   return;
@@ -96,7 +225,7 @@ void destroy(BinaryTree *tree) {
   }
 
   // Deleta todos os nós da árvore recursivamente
-  deleteNodes(tree->root);
+  deleteNodes(tree->root, tree->NIL);
 
   delete tree->NIL;
 

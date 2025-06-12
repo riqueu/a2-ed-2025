@@ -6,7 +6,7 @@
 namespace RBT {
 
 /**
- * @brief Cria uma nova árvore binária rpt vazia.
+ * @brief Cria uma nova árvore binária rbt vazia.
  *
  * @return Ponteiro para a nova árvore criada.
  */
@@ -56,14 +56,53 @@ Node *rotateRight(Node *node);
 Node *rotateLeft(Node *node);
 
 /**
+ * @brief Conserta o balanceamento da árvore
+ * 
+ * Corrige o balanceamento da árvore, obedecendo as propriedades da RBT. Pode fazer rotações e recolorações.
+ * 
+ * @param node Nó recém inserido.
+ * @param tree Ponteiro da árvore para alterar a raiz caso a rotação mude a raiz.
+ */
+void fixInsert(Node *node, BinaryTree *tree);
+
+/**
+ * @brief Insere uma palavra na árvore BST recursivamente.
+ *
+ * Adiciona a palavra na árvore; se já existir, insere o ID no vetor, se não,
+ * cria um novo nó. A função também garante que a árvore permaneça balanceada.
+ *
+ * @param root Raiz da árvore onde a palavra será inserida.
+ * @param tree Ponteiro da árvore para acesso ao nil e alterações na raiz.
+ * @param word Palavra a ser inserida.
+ * @param documentId ID do documento associado.
+ */
+void insertNode(Node *root, BinaryTree *tree, const std::string &word, int documentId,
+                 int &numComparisons);
+
+/**
+ * @brief Insere uma palavra na árvore binária RBT.
+ *
+ * Atualiza a raiz da árvore caso seja a primeira inserção (e retorna
+ * estatísticas sobre a performance).
+ *
+ * @param tree Ponteiro para a árvore.
+ * @param word Palavra a ser inserida.
+ * @param documentId ID do documento associado.
+ * @return Estrutura InsertResult contendo tempo de inserção e comparaçõelse {
+ * realizadas.
+ */
+InsertResult insert(BinaryTree *tree, const std::string &word, int documentId);
+
+/**
  * @brief Libera recursivamente a memória de todos os nós da subárvore.
  *
  * Esta função percorre a árvore em pós-ordem e deleta todos os nós alocados
  * dinamicamente.
  *
  * @param root Ponteiro para a raiz da árvore a ter seus nós deletados.
+ * @param nil Nó sentinela, NIL, para verificar se um nó não é o nil
  */
-void deleteNodes(Node *root);
+void deleteNodes(Node *root, Node *nil);
 
 /**
  * @brief Libera a memória ocupada por toda a árvore.
