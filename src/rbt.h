@@ -21,7 +21,7 @@ BinaryTree *create();
  * @param documentId ID do documento onde a palavra aparece.
  * @return Ponteiro para o novo nó criado.
  */
-Node *createNode(const std::string &word, int documentId);
+Node *createNode(const std::string &word, int documentId, Node *nil);
 
 /**
  * @brief Obtém a altura de um nó.
