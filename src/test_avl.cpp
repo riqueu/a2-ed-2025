@@ -126,6 +126,7 @@ void testInsertAndBalance() {
   // Muitas inserções para verificar o balanceamento no print
   AVL::insert(tree, "banana", 1);
   AVL::insert(tree, "morango", 2);
+  AVL::insert(tree, "morango", 3);
   AVL::insert(tree, "cereja", 3);
   AVL::insert(tree, "abacaxi", 4);
   AVL::insert(tree, "uva", 5);
