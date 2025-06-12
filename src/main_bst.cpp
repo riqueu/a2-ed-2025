@@ -34,6 +34,7 @@ int main(int argc, char *argv[]) {
     string path = argv[3];
 
     // ler os documentos e cria a árvore
+    cout << "Leitura dos documentos iniciada..." << endl;
     Doc **docs = readDocuments(n_docs, path);
     BinaryTree *bst = BST::create();
 
@@ -100,10 +101,12 @@ int main(int argc, char *argv[]) {
     auto startRead = std::chrono::high_resolution_clock::now();
     Doc **docs = readDocuments(n_docs, path);
     auto endRead = std::chrono::high_resolution_clock::now();
-    double readTime = std::chrono::duration<double, std::milli>(endRead - startRead).count();
+    double readTime =
+        std::chrono::duration<double, std::milli>(endRead - startRead).count();
 
     // Cria a árvore binária de busca e obtém as estatísticas
-    stats::TreeStats s = stats::get_tree_stats("bst", n_docs, n_docs, vector<Doc*>(docs, docs + n_docs));
+    stats::TreeStats s = stats::get_tree_stats(
+        "bst", n_docs, n_docs, vector<Doc *>(docs, docs + n_docs));
 
     // Print das estatísticas
     cout << "=========Estatisticas=========" << endl;
@@ -111,25 +114,25 @@ int main(int argc, char *argv[]) {
     cout << "==========Insercao==========" << endl;
     cout << "Tempo total de insercao: " << s.executionTimeInsertion << " ms"
          << endl;
-    cout << "Tempo medio de insercao: " << s.executionTimeInsertionMean << " ms" 
+    cout << "Tempo medio de insercao: " << s.executionTimeInsertionMean << " ms"
          << endl;
-    cout << "Numero total de comparacoes para insercao: " << s.numComparisonsInsertion
-         << endl;
-    cout << "Numero medio de comparacoes para insercao: " << s.numComparisonsInsertionMean
-         << endl;
+    cout << "Numero total de comparacoes para insercao: "
+         << s.numComparisonsInsertion << endl;
+    cout << "Numero medio de comparacoes para insercao: "
+         << s.numComparisonsInsertionMean << endl;
     cout << "===========Busca===========" << endl;
-    cout << "Numero medio de comparacoes para busca: " << s.numComparisonsSearchMean
+    cout << "Numero medio de comparacoes para busca: "
+         << s.numComparisonsSearchMean << endl;
+    cout << "Numero maximo de comparacoes para busca: "
+         << s.numComparisonsSearchMax << endl;
+    cout << "Tempo medio de busca: " << s.executionTimeSearchMean << " ms"
          << endl;
-    cout << "Numero maximo de comparacoes para busca: " << s.numComparisonsSearchMax
-         << endl;
-    cout << "Tempo medio de busca: " << s.executionTimeSearchMean << " ms" 
-         << endl;
-    cout << "Tempo maximo de busca: " << s.executionTimeSearchMax << " ms" 
+    cout << "Tempo maximo de busca: " << s.executionTimeSearchMax << " ms"
          << endl;
     cout << "===========Outros===========" << endl;
     cout << "Altura da arvore: " << s.treeHeight << endl;
-    cout << "Comprimento do maior galho: "  << s.treeHeight << endl;
-    cout << "Comprimento do menor galho: "  << s.minBranch << endl;
+    cout << "Comprimento do maior galho: " << s.treeHeight << endl;
+    cout << "Comprimento do menor galho: " << s.minBranch << endl;
     cout << "Quantidade de palavras/nodes: " << s.numNodes << endl;
 
     // free memory

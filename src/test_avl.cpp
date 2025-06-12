@@ -148,9 +148,7 @@ void testInsertAndBalance() {
   std::cout << "Estrutura da arvore AVL apos insercoes:\n";
   printTree(tree);
   std::cout << "Altura da Arvore AVL: " << tree->root->height << std::endl;
-  std::cout << "Numero de nodes: "
-            << words.size()
-            << std::endl;
+  std::cout << "Numero de nodes: " << words.size() << std::endl;
 
   std::cout << std::endl;
 

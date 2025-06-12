@@ -81,23 +81,29 @@ namespace stats {
 struct TreeStats {
   int n_docs; // Número de documentos inseridos na árvore
 
-  int numComparisonsInsertionMean; // Número médio de comparações realizadas durante as inserções
-  int numComparisonsInsertion; // Número total de comparações realizadas durante as inserções
+  int numComparisonsInsertionMean; // Número médio de comparações realizadas
+                                   // durante as inserções
+
+  int numComparisonsInsertion; // Número total de comparações realizadas durante
+                               // as inserções
 
   double executionTimeInsertionMean; // Tempo médio de execução das inserções em
                                      // milissegundos
-  double executionTimeInsertion;     // Tempo total de execução das inserções em
-                                     // milissegundos
+
+  double executionTimeInsertion; // Tempo total de execução das inserções em
+                                 // milissegundos
 
   int numComparisonsSearchMean; // Número médio de comparações realizadas
                                 // durante as buscas
-  int numComparisonsSearchMax;  // Número máximo de comparações realizadas
-                                // durante as buscas
+
+  int numComparisonsSearchMax; // Número máximo de comparações realizadas
+                               // durante as buscas
 
   double executionTimeSearchMean; // Tempo médio de execução das buscas em
                                   // milissegundos
-  double executionTimeSearchMax;  // Tempo máximo de execução das buscas em
-                                  // milissegundos
+
+  double executionTimeSearchMax; // Tempo máximo de execução das buscas em
+                                 // milissegundos
 
   int treeHeight; // Altura da árvore após as inserções
   int minBranch;  // Comprimento do menor galho
@@ -139,7 +145,7 @@ void get_min_branch(Node *node, int currentLen, int *minBranch);
  * @param words Vetor onde as palavras coletadas serão armazenadas.
  * @return Número total de palavras coletadas.
  */
-void collect_words(Node* node, std::vector<std::string>& words);
+void collect_words(Node *node, std::vector<std::string> &words);
 
 /**
  * @brief Obtém estatísticas de uma árvore binária de busca.

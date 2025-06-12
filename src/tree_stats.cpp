@@ -11,8 +11,8 @@ using namespace DocReading;
 int main(int argc, char *argv[]) {
   // Verifica se o número de argumentos é suficiente
   if (argc < 5) {
-    cout << "Erro: Comando invalido.\nUso: ./src/output/tree_stats <arvore> <n_max_docs> "
-            "<n_points> <diretorio>"
+    cout << "Erro: Comando invalido.\nUso: ./src/output/tree_stats <arvore> "
+            "<n_max_docs> <n_points> <diretorio>"
          << endl;
     return 1;
   }
