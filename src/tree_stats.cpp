@@ -10,8 +10,8 @@ using namespace DocReading;
 
 int main(int argc, char *argv[]) {
   // Verifica se o número de argumentos é suficiente
-  if (argc < 4) {
-    cout << "Erro: Comando inválido.\nUso: ./tree_stats <arvore> <n_max_docs> "
+  if (argc < 5) {
+    cout << "Erro: Comando invalido.\nUso: ./src/output/tree_stats <arvore> <n_max_docs> "
             "<n_points> <diretorio>"
          << endl;
     return 1;
@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
   // Seleciona o tipo de árvore
   if (treeType == "bst" || treeType == "avl") {
     // Cria as n_points árvores binária de busca
-    cout << "Criando arvores binaria de busca (" << treeType << ")..." << endl;
+    cout << "Criando arvores binarias de busca (" << treeType << ")..." << endl;
     for (int n : n_docs) {
       // Cria a árvore de busca e gera as estatísticas
       stats::TreeStats s = stats::get_tree_stats(treeType, n, n_max_docs,
@@ -76,6 +76,3 @@ int main(int argc, char *argv[]) {
 
   return 0;
 }
-
-// Comando para rodar o programa: ./src/output/tree_stats avl 1000 25 data/
-// Comando para rodar o programa: ./src/output/tree_stats bst 1000 25 data/

@@ -54,10 +54,10 @@ void testRotateLeft() {
   // Verifica se a rotação foi realizada corretamente
   if (newRoot->word == "morango" && newRoot->left->word == "banana" &&
       newRoot->left->parent == newRoot && newRoot->right == nullptr) {
-    std::cout << "SUCESSO: Rotação à esquerda realizada corretamente"
+    std::cout << "SUCESSO: Rotacao a esquerda realizada corretamente"
               << std::endl;
   } else {
-    std::cout << "FALHA: Problema na rotação à esquerda" << std::endl;
+    std::cout << "FALHA: Problema na rotacao a esquerda" << std::endl;
   }
 
   // Libera memória
@@ -80,7 +80,7 @@ void testRotateRight() {
   // Verifica se a rotação foi realizada corretamente
   if (newRoot->word == "banana" && newRoot->right->word == "morango" &&
       newRoot->right->parent == newRoot && newRoot->left == nullptr) {
-    std::cout << "SUCESSO: Rotação à direita realizada corretamente"
+    std::cout << "SUCESSO: Rotacao a direita realizada corretamente"
               << std::endl;
   } else {
     std::cout << "FALHA: Problema na rotação à direita" << std::endl;
@@ -108,7 +108,7 @@ void testBalanceFactor() {
     std::cout << "SUCESSO: Fator de balanceamento calculado corretamente"
               << std::endl;
   } else {
-    std::cout << "FALHA: Problema no cálculo do fator de balanceamento"
+    std::cout << "FALHA: Problema no calculo do fator de balanceamento"
               << std::endl;
   }
 
