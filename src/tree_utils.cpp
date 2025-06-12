@@ -99,24 +99,24 @@ void get_min_branch(Node *node, int currentLen, int *minBranch) {
   get_min_branch(node->right, currentLen + 1, minBranch);
 }
 
-void collect_words(Node* node, std::vector<std::string>& words) {
-    if (node==nullptr) {
-      return;
-    }
-    // Recursão para os nós a esquerda
-    collect_words(node->left, words);
-    // Adiciona a palavra do nó atual à lista de palavras
-    words.push_back(node->word);
-    // Recursão para os nós a direita
-    collect_words(node->right, words);
+void collect_words(Node *node, std::vector<std::string> &words) {
+  if (node == nullptr) {
+    return;
+  }
+  // Recursão para os nós a esquerda
+  collect_words(node->left, words);
+  // Adiciona a palavra do nó atual à lista de palavras
+  words.push_back(node->word);
+  // Recursão para os nós a direita
+  collect_words(node->right, words);
 }
 
 TreeStats get_tree_stats(const std::string &tree_type, int n_docs,
                          int n_max_doc,
                          const std::vector<DocReading::Doc *> &docs) {
   BinaryTree *tree = nullptr;
-  TreeStats s = {n_docs, 0, 0, 0.0, 0.0, 0, 0,
-                 0.0,    0.0, 0,   0,   0}; // Inicializa as estatísticas
+  TreeStats s = {n_docs, 0,   0,   0.0, 0.0, 0,
+                 0,      0.0, 0.0, 0,   0,   0}; // Inicializa as estatísticas
 
   if (tree_type == "bst") {
     tree = BST::create();
@@ -143,20 +143,24 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs,
     }
   }
 
-    s.executionTimeInsertionMean = s.executionTimeInsertion / numInsertion; // Calcula o tempo médio de inserção
-    s.numComparisonsInsertionMean = s.numComparisonsInsertion / numInsertion; // Calcula o número médio de comparações de inserção
+  s.executionTimeInsertionMean =
+      s.executionTimeInsertion /
+      numInsertion; // Calcula o tempo médio de inserção
+  s.numComparisonsInsertionMean =
+      s.numComparisonsInsertion /
+      numInsertion; // Calcula o número médio de comparações de inserção
 
-    // Pega as palavras inseridas na árvore
-    std::vector<std::string> search_words;
-    // Coleta as palavras
-    collect_words(tree->root, search_words);
+  // Pega as palavras inseridas na árvore
+  std::vector<std::string> search_words;
+  // Coleta as palavras
+  collect_words(tree->root, search_words);
 
-    // Armazena o número de nós na árvore
-    s.numNodes = search_words.size(); 
-  
-    // Busca cada palavra do vetor search_words na árvore
-    for (const std::string& word : search_words) {
-        SearchResult search; // Inicializa a estrutura de busca
+  // Armazena o número de nós na árvore
+  s.numNodes = search_words.size();
+
+  // Busca cada palavra do vetor search_words na árvore
+  for (const std::string &word : search_words) {
+    SearchResult search; // Inicializa a estrutura de busca
 
     int j = 0; // Contador de tentativas
     int j_max = (n_docs < 800)
