@@ -1,3 +1,5 @@
+# BRANCH : entrega_2
+
 # Projeto: Índice Invertido e Análise Comparativa de Estruturas de Dados  
 
 Este repositório é um refúgio para o projeto final da disciplina de Estrutura de Dados do 3º período da graduação de Ciências de Dados e Inteligência Artificial da FGV EMAp
