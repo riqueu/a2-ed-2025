@@ -1,6 +1,7 @@
 #include "tree_utils.h"
 #include "avl.h"
 #include "bst.h"
+#include "rbt.h"
 #include "data.h"
 #include <algorithm>
 #include <iostream>
@@ -122,6 +123,8 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs,
     tree = BST::create();
   } else if (tree_type == "avl") {
     tree = AVL::create();
+  } else if (tree_type == "rbt") {
+    tree = RBT::create();
   } else {
     return s; // Retorna estatísticas vazias se o tipo de árvore não for válido
   }
@@ -134,8 +137,10 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs,
       InsertResult result;
       if (tree_type == "bst") {
         result = BST::insert(tree, docs[i]->content->at(j), docs[i]->docID);
-      } else {
+      } else if (tree_type == "avl") {
         result = AVL::insert(tree, docs[i]->content->at(j), docs[i]->docID);
+      } else {
+        result = RBT::insert(tree, docs[i]->content->at(j), docs[i]->docID);
       }
       s.numComparisonsInsertion += result.numComparisons;
       s.executionTimeInsertion += result.executionTime;
@@ -179,6 +184,8 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs,
         search = BST::search(tree, word);
       } else if (tree_type == "avl") {
         search = AVL::search(tree, word);
+      } else if (tree_type == "rbt") {
+        search = RBT::search(tree, word);
       } else {
         return s; // Retorna estatísticas vazias se o tipo de árvore não for
                   // válido
@@ -227,6 +234,8 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs,
     BST::destroy(tree);
   } else if (tree_type == "avl") {
     AVL::destroy(tree);
+  } else if (tree_type == "rbt") {
+    RBT::destroy(tree);
   }
 
   return s;
