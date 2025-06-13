@@ -3,13 +3,13 @@ import matplotlib.pyplot as plt
 
 bst = pd.read_csv("dados_bst.csv")
 avl = pd.read_csv("dados_avl.csv")
-# rbt = pd.read_csv("dados_rbt.csv")
+rbt = pd.read_csv("dados_rbt.csv")
 col_names = bst.columns[1:]
 
 def plot_graph(ax, col_name, title, ylabel):
     ax.plot(bst["N_docs"], bst[col_name], label="BST")
     ax.plot(avl["N_docs"], avl[col_name], label="AVL")
-    # ax.plot(rbt["N_docs"], rbt[col_name], label="RBT")
+    ax.plot(rbt["N_docs"], rbt[col_name], label="RBT")
     ax.set_xlabel("Número de documentos")
     ax.set_ylabel(ylabel)
     ax.set_title(title)
@@ -20,7 +20,7 @@ def save_branch_graph(col_name_1, col_name_2, title):
     plot_graph(axes, col_name_1, title, "Tamanaho do galho")
     axes.plot(avl["N_docs"], avl[col_name_2], color="#ff7f0e")
     axes.plot(bst["N_docs"], bst[col_name_2], color="#1f77b4")
-    # axes[0].plot(rbt["N_docs"], rbt[col_name_2], color="#2ca02c")
+    axes.plot(rbt["N_docs"], rbt[col_name_2], color="#2ca02c")
     plt.savefig(f'docs/graphs/grafico_branchs.png')
     plt.close()
     

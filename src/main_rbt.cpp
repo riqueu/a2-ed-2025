@@ -1,4 +1,4 @@
-#include "RBT.h"
+#include "rbt.h"
 #include "data.h"
 #include <iostream>
 #include <ostream>
