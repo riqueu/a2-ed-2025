@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-int testPrintTree() {
+void testPrintTree() {
   // Cria arvore teste
   BinaryTree *tree = RBT::create();
 
@@ -30,31 +30,36 @@ int testPrintTree() {
 
   // Libera memoria
   RBT::destroy(tree);
-  return 0;
 }
 
-void testCreateTree() {
+bool testCreateTree() {
   // Cria arvore teste
   std::cout << "=== Teste RBT::create() ===" << std::endl;
   BinaryTree *tree = RBT::create();
+  bool success = true;
 
   // Verifica se a arvore foi criada corretamente
   if (tree != nullptr && tree->root == nullptr) {
     std::cout << "SUCESSO: Arvore criada corretamente" << std::endl;
   } else {
     std::cout << "FALHA: Problema ao criar arvore" << std::endl;
+    success = false;
   }
 
   // Libera memoria
   RBT::destroy(tree);
   std::cout << std::endl;
+
+  return success;
 }
 
-void testCreateNode() {
+bool testCreateNode() {
   // Inicia atributos do node
   std::cout << "=== Teste RBT::createNode() ===" << std::endl;
   std::string word = "morango";
   int docId = 1;
+
+  bool success = true;
 
   // Cria node teste
   BinaryTree *tree = RBT::create();
@@ -67,14 +72,17 @@ void testCreateNode() {
     std::cout << "SUCESSO: Node criado corretamente" << std::endl;
   } else {
     std::cout << "FALHA: Problema ao criar node" << std::endl;
+    success = false;
   }
 
   // Libera memoria
-  delete node;
+  RBT::destroy(tree);
   std::cout << std::endl;
+
+  return success;
 }
 
-void testSearch() {
+bool testSearch() {
   // Cria arvore teste
   std::cout << "=== Teste RBT::search() ===" << std::endl;
   BinaryTree *tree = RBT::create();
@@ -114,21 +122,23 @@ void testSearch() {
   }
   // Confere para "nao_existe"
   if (result4.found != 0 || !result4.documentIds.empty()) {
-    std::cout << "FALHA: Problema ao buscar palavra inexistente" << std::endl;
+    std::cout << "FALHA: Problema ao buscar palavra inexistente";
     success = false;
   }
 
   if (success) {
-    std::cout << "SUCESSO: Todas as buscas retornaram resultados esperados"
-              << std::endl;
+    std::cout << "SUCESSO: Todas as buscas retornaram resultados esperados";
   }
 
   // Libera memoria
   RBT::destroy(tree);
   std::cout << std::endl;
+  std::cout << std::endl;
+
+  return success;
 }
 
-void testInsertNode() {
+bool testInsertNode() {
   std::cout << "=== Teste RBT::insertNode() ===" << std::endl;
   BinaryTree *tree = RBT::create();
   int comparisons = 0;
@@ -207,8 +217,18 @@ void testInsertNode() {
   // Libera memoria
   RBT::destroy(tree);
   std::cout << std::endl;
+
+  return success;
 }
 
+/**
+ * @brief Verifica se a árvore (RBT) está colorida corretamente.
+ *
+ * @param node Nó atual da árvore
+ * @param tree Ponteiro para a árvore binária
+ * 
+ * @return true se a árvore estiver colorida corretamente, false caso contrário.
+ */
 bool colorCheck(Node *node, BinaryTree *tree) {
   // Verifica se o nó é o NIL (nó sentinela)
   if (node == tree->NIL) {
@@ -227,34 +247,45 @@ bool colorCheck(Node *node, BinaryTree *tree) {
   return colorCheck(node->left, tree) && colorCheck(node->right, tree);
 }
 
-bool checkBlackHeight(Node *node, BinaryTree *tree, int &blackHeight) {
+/**
+ * @brief Verifica a altura preta de cada nó da árvore.
+ *
+ * @param node Nó atual da árvore
+ * @param tree Ponteiro para a árvore binária
+ * 
+ * @return A altura preta do nó, ou -1 se houver inconsistência.
+ */
+int checkBlackHeight(Node *node, BinaryTree *tree) {
   // Verifica se o nó é o NIL
   if (node == tree->NIL) {
-    blackHeight++;
-    return true;
+    return 1;
   }
 
-  // Se o nó é vermelho, não incrementa a altura preta
-  if (!node->isRed) {
-    blackHeight++;
-  }
+  // Realiza a verificação recursiva para os filhos
+  int leftBlackHeight  = checkBlackHeight(node->left, tree);
+  int rightBlackHeight   = checkBlackHeight(node->right, tree);
 
-  // Verifica os filhos recursivamente
-  int leftBlackHeight = 0;
-  int rightBlackHeight = 0;
-  bool leftCheck = checkBlackHeight(node->left, tree, leftBlackHeight);
-  bool rightCheck = checkBlackHeight(node->right, tree, rightBlackHeight);
+  // Se algum filho retornar -1, significa que há uma inconsistência
+  if (leftBlackHeight == -1 || rightBlackHeight == -1) {
+    return -1;
+  }
 
   // Verifica se as alturas pretas dos filhos são iguais
   if (leftBlackHeight != rightBlackHeight) {
-    std::cout << "FALHA: Altura preta diferente nos filhos" << std::endl;
-    return false;
+    std::cout << "FALHA: Altura preta diferente nos filhos." << std::endl;
+    return -1;
   }
 
-  return leftCheck && rightCheck;
+  // Calcula a altura preta do nó atual se for preto
+  int currentHeight = leftBlackHeight;
+  if (!node->isRed) {
+    currentHeight++;
+  }
+
+  return currentHeight;
 }
 
-void testColor() {
+bool testColor() {
   std::cout << "=== Teste RBT::testColor() ===" << std::endl;
   BinaryTree *tree = RBT::create();
   int comparisons = 0;
@@ -289,12 +320,24 @@ void testColor() {
   }
 
   // Verifica se todos os nós estão com a cor correta
-  success = success && colorCheck(tree->root, tree);
+  if (!colorCheck(tree->root, tree)) {
+    std::cout << "FALHA: Verificacao de cor falhou" << std::endl;
+    success = false;
+  } else {
+    std::cout << "SUCESSO: Todas as cores estao corretas" << std::endl;
+  }
 
-  int blackHeight = 0;
   // Verifica se a altura preta é consistente
-  success = success && checkBlackHeight(tree->root, tree, blackHeight);
+  if(checkBlackHeight(tree->root, tree) == -1) {
+    std::cout << "FALHA: Altura preta inconsistente" << std::endl;
+    success = false;
+  } else {
+    std::cout << "SUCESSO: Altura preta consistente" << std::endl;
+  }
 
+  std::cout << std::endl;
+
+  return success;
 }
 
 void testDestroyTree() {
@@ -312,19 +355,27 @@ void testDestroyTree() {
 
   // Informar que a árvore foi destruída corretamente
   std::cout << "SUCESSO: Arvore destruida corretamente" << std::endl;
+  std::cout << std::endl;
 }
 
 int main() {
   std::cout << "INICIANDO TESTES UNITARIOS PARA RBT\n" << std::endl;
 
-  testCreateTree();
-  testCreateNode();
-  testInsertNode();
+  // Executa os testes
+  bool success = true;
   testPrintTree();
-  testSearch();
-  testColor();
+  success &= testCreateTree();
+  success &= testCreateNode(); 
+  success &= testInsertNode();
+  success &= testSearch();
+  success &= testColor();
   testDestroyTree();
 
-  std::cout << "TESTES CONCLUIDOS" << std::endl;
+  std::cout << "=== TESTES CONCLUIDOS ===" << std::endl;
+  if (success) {
+    std::cout << "Todos os testes passaram com sucesso!" << std::endl;
+  } else {
+    std::cout << "Alguns testes falharam." << std::endl;
+  }
   return 0;
 }
