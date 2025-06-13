@@ -168,7 +168,7 @@ void testInsertNode() {
     success = false;
   }
   // Confere para "jaca"
-  if (tree->root->right->isRed == true || tree->root->left->word != "jaca") {
+  if (tree->root->right->isRed == true || tree->root->right->word != "jaca") {
     std::cout << "FALHA: Node jaca incorreto" << std::endl;
     success = false;
   }
