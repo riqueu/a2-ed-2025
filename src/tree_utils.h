@@ -110,6 +110,9 @@ struct TreeStats {
   
   double executionTimeSearchMax; // Tempo máximo de execução das buscas em
                                  // milissegundos
+
+  double executionTimeSearchMean; // teste
+  
   
   size_t size; // tamanho em Bytes da árvore
 };

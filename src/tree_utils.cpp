@@ -137,7 +137,7 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs,
                          const std::vector<DocReading::Doc *> &docs) {
   BinaryTree *tree = nullptr;
   TreeStats s = {n_docs, 0,   0,   0.0, 0.0, 0,
-                 0,      0.0, 0.0, 0,   0,   0}; // Inicializa as estatísticas
+                 0,      0, 0, 0,   0,   0, 0}; // Inicializa as estatísticas
 
   if (tree_type == "bst") {
     tree = BST::create();
