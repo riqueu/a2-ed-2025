@@ -143,7 +143,7 @@ void testInsertAndBalance() {
   AVL::insert(tree, "tangerina", 16);
 
   std::vector<std::string> words;
-  stats::collect_words(tree->root, words);
+  stats::collect_words(tree->root, words, nullptr);
 
   std::cout << "Estrutura da arvore AVL apos insercoes:\n";
   printTree(tree);
@@ -162,7 +162,7 @@ void testInsertAndBalance() {
   }*/
 
   // Verifica se todos os nós estão balanceados
-  if (!stats::all_balanced(root)) {
+  if (!stats::all_balanced(root, nullptr)) {
     std::cout << "FALHA: Arvore AVL nao esta balanceada" << std::endl;
     success = false;
   }
