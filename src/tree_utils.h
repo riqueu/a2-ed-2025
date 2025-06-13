@@ -69,7 +69,7 @@ void printIndex(BinaryTree *tree);
  */
 void printTreeRec(Node *node, Node *NIL, std::string prefix, std::string linePrefix);
 
-/**
+/**    
  * @brief Imprime a estrutura visual da árvore fornecida.
  *
  * Esta função chama printTreeRec a partir da raiz da árvore, imprimindo a
@@ -100,16 +100,23 @@ struct TreeStats {
 
   int numComparisonsSearchMax; // Número máximo de comparações realizadas
                                // durante as buscas
-
-  double executionTimeSearchMean; // Tempo médio de execução das buscas em
                                   // milissegundos
-
+  int treeHeight; // Altura da árvore após as inserções
+  
+  
+  int minBranch; // Comprimento do menor galho
+  
+  
+  int numNodes; // Número total de nós na árvore
+  
+  
   double executionTimeSearchMax; // Tempo máximo de execução das buscas em
                                  // milissegundos
 
-  int treeHeight; // Altura da árvore após as inserções
-  int minBranch;  // Comprimento do menor galho
-  int numNodes;   // Número total de nós na árvore
+  double executionTimeSearchMean; // teste
+  
+  
+  size_t size; // tamanho em Bytes da árvore
 };
 
 /**

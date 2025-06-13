@@ -1,5 +1,6 @@
 #include "tree_utils.h"
 #include "avl.h"
+#include <cstddef>
 #include "bst.h"
 #include "rbt.h"
 #include "data.h"
@@ -21,8 +22,8 @@ void printIndexRec(Node *node, Node *NIL = nullptr) {
       std::cout << node->documentIds[i] << ", ";
     }
     std::cout << node->documentIds[size - 1];
+    std::cout << "\n";
   }
-  std::cout << "\n";
 
   // Recursão para os nós à direita
   printIndexRec(node->right, NIL);
@@ -112,11 +113,31 @@ void collect_words(Node *node, std::vector<std::string> &words, Node *NIL = null
   collect_words(node->right, words, NIL);
 }
 
+// calcula tamanho de memória ocupada pela árvore:
+size_t get_tree_size(Node* node, Node* NIL = nullptr) {
+    if (node == nullptr || node == NIL) {
+        return 0;
+    }
+    // soma os dados da estrutura do nó
+    size_t size = sizeof(Node);
+
+    // soma a memória alocada dinamicamente
+    size += node->word.capacity() * sizeof(char);
+    size += node->documentIds.capacity() * sizeof(int);
+
+    // recursão
+    size += get_tree_size(node->right, NIL);
+    size += get_tree_size(node->left, NIL);
+
+    // retorna o valor em bytes
+    return size;
+}
+
 TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc,
                          const std::vector<DocReading::Doc *> &docs) {
   BinaryTree *tree = nullptr;
   TreeStats s = {n_docs, 0,   0,   0.0, 0.0, 0,
-                 0,      0.0, 0.0, 0,   0,   0}; // Inicializa as estatísticas
+                 0,      0, 0, 0,   0,   0, 0}; // Inicializa as estatísticas
 
   if (tree_type == "bst") {
     tree = BST::create();
