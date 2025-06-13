@@ -150,11 +150,11 @@ void collect_words(Node *node, std::vector<std::string> &words);
 /**
  * @brief Obtém estatísticas de uma árvore binária de busca.
  *
- * Esta função cria uma árvore do tipo especificado (BST ou AVL), insere
+ * Esta função cria uma árvore do tipo especificado (BST, AVL ou RBT), insere
  * palavras de documentos nela, realiza buscas por palavras e coleta
  * estatísticas sobre inserções e buscas.
  *
- * @param tree_type Tipo da árvore ("bst" ou "avl").
+ * @param tree_type Tipo da árvore ("bst", "avl" ou "rbt").
  * @param n_docs Número de documentos a serem processados.
  * @param n_max_doc Número máximo de documentos a serem processados.
  * @param docs Vetor de ponteiros para os documentos a serem processados.
