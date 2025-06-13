@@ -1,5 +1,6 @@
 #include "tree_utils.h"
 #include "avl.h"
+#include <cstddef>
 #include "bst.h"
 #include "data.h"
 #include <algorithm>
@@ -109,6 +110,26 @@ void collect_words(Node *node, std::vector<std::string> &words) {
   words.push_back(node->word);
   // Recursão para os nós a direita
   collect_words(node->right, words);
+}
+
+// calcula tamanho de memória ocupada pela árvore:
+size_t get_tree_size(Node* node) {
+    if (node == nullptr) {
+        return 0;
+    }
+    // soma os dados da estrutura do nó
+    size_t size = sizeof(Node);
+
+    // soma a memória alocada dinamicamente
+    size += node->word.capacity() * sizeof(char);
+    size += node->documentIds.capacity() * sizeof(int);
+
+    // recursão
+    size += get_tree_size(node->right);
+    size += get_tree_size(node->left);
+
+    // retorna o valor em bytes
+    return size;
 }
 
 TreeStats get_tree_stats(const std::string &tree_type, int n_docs,
