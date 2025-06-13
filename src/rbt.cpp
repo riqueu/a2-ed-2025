@@ -104,6 +104,7 @@ void fixInsert(Node *node, BinaryTree *tree) {
       node->parent->isRed = false;
       vo->isRed = true;
       // Verifica se o vô não era a raiz, se for altera para o pai do vô
+      // Rotaciona o vô
       if (vo == tree->root) {
         rotateRight(vo);
         tree->root = vo->parent;
@@ -114,6 +115,7 @@ void fixInsert(Node *node, BinaryTree *tree) {
       }
     }
 
+  // Verifica se o pai é filho a direita
   } else {
     Node* tio = node->parent->parent->left;
     Node* vo = node->parent->parent;
@@ -133,6 +135,7 @@ void fixInsert(Node *node, BinaryTree *tree) {
       node->parent->isRed = false;
       vo->isRed = true;
       // Verifica se o vô não era a raiz, se for altera para o pai do vô
+      // Rotaciona o vô
       if (vo == tree->root) {
         rotateLeft(vo);
         tree->root = vo->parent;
