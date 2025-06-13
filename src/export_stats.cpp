@@ -19,7 +19,7 @@ void exportToCSV(const std::vector<stats::TreeStats> &stats,
              "NumComparisonsInsertionMean,NumComparisonsInsertionTotal,"
              "NumComparisonsSearchMean,NumComparisonsSearchMax,"
              "TreeHeight,MaxBranch,MinBranch,"
-             "NumNodesi,"
+             "NumNodes,"
              "TreeSizeBytes\n";
 
   // Preenche as linhas
