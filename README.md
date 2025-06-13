@@ -7,7 +7,7 @@ Este repositório é um refúgio para o projeto final da disciplina de Estrutura
 
 ---
 ### Resumo
--> resumo do trabalho aqui
+Optou-se por remover palavras duplicadas durante a leitura dos documentos, garantindo que cada palavra fosse inserida apenas uma vez na árvore BST por documento. Como resultado, a lista de palavras que serão inseridas na árvore contém apenas palavras únicas por documento.
 
 ---
 ### Relatório
@@ -70,13 +70,28 @@ src\output\main_bst.exe <comando> <n_docs> <diretório>
 src\output\tree_stats <tipoArvore> <n_docs> <n_pontos> <diretório>
 ```
 
-#### 4. Limpeza:
+#### 4. Geração dos gráficos
+#### Instale as bibliotecas Python necessárias:
+```sh
+pip install matplotlib pandas
+```
+
+#### Gere os gráficos a partir desse arquivo:
+```sh
+# Linux/macOS
+python3 docs/visualizations.py
+
+# Windows (cmd)
+python docs\visualizations.py
+```
+
+#### 5. Limpeza:
 #### Limpar todos os arquivos gerados
 ```sh
 make clean
 ```
 
-#### 5. Exemplo de Fluxos de compilação e execução:
+#### 6. Exemplo de Fluxos de compilação e execução:
 #### Exemplo de fluxo completo (Linux/macOS)
 ```sh
 make clean
