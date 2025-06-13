@@ -1,6 +1,7 @@
 #include "rbt.h"
 #include "tree_utils.h"
 #include <vector>
+#include <iostream>
 
 namespace RBT {
 
@@ -11,6 +12,8 @@ BinaryTree *create() {
 
   // Criação do NIL
   Node* nil = new Node;
+  nil->left = nullptr;
+  nil->right = nullptr;
   nil->isRed = false;
   nil->height = -1;
   binaryTree->NIL = nil;
@@ -89,21 +92,25 @@ void fixInsert(Node *node, BinaryTree *tree) {
     if (tio->isRed == true) {
       node->parent->isRed = false;
       tio->isRed = false;
-      node->parent->parent->isRed = true;
+      vo->isRed = true;
       fixInsert(node->parent->parent, tree);
     } else {
       // Caso 2: filho à direita → precisa girar para formar o caso filho à esquerda com tio preto → rotação e recoloração
       if (node == node->parent->right) {
         node = node->parent;
-        rotateLeft(node);
+        vo->left = rotateLeft(node);
       } 
       // Caso 3: filho à esquerda com tio preto → rotação e recoloração
       node->parent->isRed = false;
       vo->isRed = true;
-      rotateRight(vo);
       // Verifica se o vô não era a raiz, se for altera para o pai do vô
       if (vo == tree->root) {
+        rotateRight(vo);
         tree->root = vo->parent;
+      } else if (vo == vo->parent->left) {
+        vo->parent->left = rotateRight(vo);
+      } else {
+        vo->parent->right = rotateRight(vo);
       }
     }
 
@@ -120,15 +127,19 @@ void fixInsert(Node *node, BinaryTree *tree) {
       // Caso 2: filho à esquerda → precisa girar para formar o caso 3
       if (node == node->parent->left) {
         node = node->parent;
-        rotateRight(node);
+        vo->right = rotateRight(node);
       } 
       // Caso 3: filho à direita com tio preto → rotação e recoloração
       node->parent->isRed = false;
       vo->isRed = true;
-      rotateLeft(vo);
       // Verifica se o vô não era a raiz, se for altera para o pai do vô
       if (vo == tree->root) {
+        rotateLeft(vo);
         tree->root = vo->parent;
+      } else if (vo == vo->parent->left) {
+        vo->parent->left = rotateLeft(vo);
+      } else {
+        vo->parent->right = rotateLeft(vo);
       }
       }
     }
@@ -136,6 +147,15 @@ void fixInsert(Node *node, BinaryTree *tree) {
 
 void insertNode(Node *root, BinaryTree *tree, const std::string &word, int documentId,
                  int &numComparisons) {
+  // Verifica se não tem raiz
+  if (root == nullptr) {
+    Node* newNode = createNode(word, documentId, tree->NIL);
+    newNode->parent = tree->NIL;
+    newNode->isRed = false;
+    tree->root = newNode;
+    return;
+  }
+  
   // Incrementa o número de comparações
   numComparisons++;
 
@@ -148,7 +168,9 @@ void insertNode(Node *root, BinaryTree *tree, const std::string &word, int docum
       root->left = newNode;
 
       // Conserta as propriedades
-      fixInsert(newNode, tree);
+      fixInsert(root->left, tree);
+      // Garante que a raiz é preta
+      tree->root->isRed = false;
     } else {
       // Se tiver ocupada avança a recursão
       insertNode(root->left, tree, word, documentId, numComparisons);
@@ -161,7 +183,9 @@ void insertNode(Node *root, BinaryTree *tree, const std::string &word, int docum
       root->right = newNode;
 
       // Conserta as propriedades
-      fixInsert(newNode, tree);
+      fixInsert(root->right, tree);
+      // Garante que a raiz é preta
+      tree->root->isRed = false;
     } else {
       // Se tiver ocupada avança a recursão
       insertNode(root->right, tree, word, documentId, numComparisons);
@@ -185,15 +209,8 @@ InsertResult insert(BinaryTree *tree, const std::string &word, int documentId) {
 
   // Mede o tempo de execução da inserção
   auto start = std::chrono::high_resolution_clock::now();
-  // Verifica se a raiz não é nullptr, se for cria um novo node preto para a raiz
-  if (tree->root == nullptr) {
-    Node* newNode = createNode(word, documentId, tree->NIL);
-    newNode->parent = tree->NIL;
-    tree->root = newNode;
-  } else {
-    // Insere o nó
-    insertNode(tree->root, tree, word, documentId, result.numComparisons);
-  }
+  // Insere o nó
+  insertNode(tree->root, tree, word, documentId, result.numComparisons);
   // Garante que a raiz é preta
   tree->root->isRed = false;
   auto end = std::chrono::high_resolution_clock::now();
