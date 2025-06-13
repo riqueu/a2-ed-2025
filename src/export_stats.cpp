@@ -19,7 +19,8 @@ void exportToCSV(const std::vector<stats::TreeStats> &stats,
              "NumComparisonsInsertionMean,NumComparisonsInsertionTotal,"
              "NumComparisonsSearchMean,NumComparisonsSearchMax,"
              "TreeHeight,MaxBranch,MinBranch,"
-             "NumNodes\n";
+             "NumNodes,"
+             "TreeSizeBytes\n";
 
   // Preenche as linhas
   for (const auto &s : stats) {
@@ -29,7 +30,7 @@ void exportToCSV(const std::vector<stats::TreeStats> &stats,
             << s.numComparisonsInsertionMean << "," << s.numComparisonsInsertion << "," 
             << s.numComparisonsSearchMean << "," << s.numComparisonsSearchMax << ","  
             << s.treeHeight << "," << s.treeHeight << "," << s.minBranch << "," 
-            << s.numNodes << "\n";
+            << s.numNodes << "," << s.size << "\n";
   }
 
   // Fecha o arquivo
