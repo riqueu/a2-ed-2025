@@ -7,17 +7,17 @@ SRC_DIR = src
 OUTPUT_DIR = $(SRC_DIR)/output
 
 # source
-BST_SOURCES = $(SRC_DIR)/main_bst.cpp $(SRC_DIR)/bst.cpp $(SRC_DIR)/avl.cpp $(SRC_DIR)/data.cpp $(SRC_DIR)/tree_utils.cpp
-AVL_SOURCES = $(SRC_DIR)/main_avl.cpp $(SRC_DIR)/avl.cpp $(SRC_DIR)/bst.cpp $(SRC_DIR)/data.cpp $(SRC_DIR)/tree_utils.cpp
+BST_SOURCES = $(SRC_DIR)/main_bst.cpp $(SRC_DIR)/bst.cpp $(SRC_DIR)/avl.cpp $(SRC_DIR)/rbt.cpp $(SRC_DIR)/data.cpp $(SRC_DIR)/tree_utils.cpp
+AVL_SOURCES = $(SRC_DIR)/main_avl.cpp $(SRC_DIR)/avl.cpp $(SRC_DIR)/bst.cpp $(SRC_DIR)/rbt.cpp $(SRC_DIR)/data.cpp $(SRC_DIR)/tree_utils.cpp
 RBT_SOURCES = $(SRC_DIR)/main_rbt.cpp $(SRC_DIR)/rbt.cpp $(SRC_DIR)/bst.cpp $(SRC_DIR)/avl.cpp $(SRC_DIR)/data.cpp $(SRC_DIR)/tree_utils.cpp
 
 # test sources
-TEST_BST_SOURCES = $(SRC_DIR)/test_bst.cpp $(SRC_DIR)/bst.cpp $(SRC_DIR)/avl.cpp $(SRC_DIR)/data.cpp $(SRC_DIR)/tree_utils.cpp
-TEST_AVL_SOURCES = $(SRC_DIR)/test_avl.cpp $(SRC_DIR)/avl.cpp $(SRC_DIR)/bst.cpp $(SRC_DIR)/data.cpp $(SRC_DIR)/tree_utils.cpp
+TEST_BST_SOURCES = $(SRC_DIR)/test_bst.cpp $(SRC_DIR)/bst.cpp $(SRC_DIR)/avl.cpp $(SRC_DIR)/rbt.cpp $(SRC_DIR)/data.cpp $(SRC_DIR)/tree_utils.cpp
+TEST_AVL_SOURCES = $(SRC_DIR)/test_avl.cpp $(SRC_DIR)/avl.cpp $(SRC_DIR)/bst.cpp $(SRC_DIR)/rbt.cpp $(SRC_DIR)/data.cpp $(SRC_DIR)/tree_utils.cpp
 TEST_RBT_SOURCES = $(SRC_DIR)/test_rbt.cpp $(SRC_DIR)/rbt.cpp $(SRC_DIR)/bst.cpp $(SRC_DIR)/avl.cpp $(SRC_DIR)/data.cpp $(SRC_DIR)/tree_utils.cpp
 
 # tree stats sources
-TREE_STATS_SOURCES = $(SRC_DIR)/tree_stats.cpp $(SRC_DIR)/bst.cpp $(SRC_DIR)/avl.cpp $(SRC_DIR)/data.cpp $(SRC_DIR)/tree_utils.cpp $(SRC_DIR)/export_stats.cpp
+TREE_STATS_SOURCES = $(SRC_DIR)/tree_stats.cpp $(SRC_DIR)/bst.cpp $(SRC_DIR)/avl.cpp $(SRC_DIR)/rbt.cpp $(SRC_DIR)/data.cpp $(SRC_DIR)/tree_utils.cpp $(SRC_DIR)/export_stats.cpp
 
 # detecta o sistema operacional
 ifeq ($(OS),Windows_NT)

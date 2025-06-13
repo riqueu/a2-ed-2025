@@ -42,8 +42,9 @@ struct SearchResult {
  * os IDs dos documentos em que essa palavra aparece.
  *
  * @param node Ponteiro para o nó atual da árvore.
+ * @param NIL Ponteiro de parada para RBT, default = nullptr
  */
-void printIndexRec(Node *node);
+void printIndexRec(Node *node, Node *NIL);
 
 /**
  * @brief Imprime todo o índice invertido da árvore fornecida.
@@ -62,10 +63,11 @@ void printIndex(BinaryTree *tree);
  *
  * @param node Ponteiro para o nó atual da árvore.
  * @param prefix Espaço acumulado para identação do nó na árvore.
- * @param linePrefix Símbolo usado antes do nó, fornecendo a informação se é um
- * nó a esquerda (---) ou a direita (+--).
+ * @param linePrefix Símbolo usado antes do nó, fornecendo a informação se é um nó a esquerda (---) ou a direita (+--).
+ * @param NIL Ponteiro de parada para RBT, default = nullptr
+
  */
-void printTreeRec(Node *node, std::string prefix, std::string linePrefix);
+void printTreeRec(Node *node, Node *NIL, std::string prefix, std::string linePrefix);
 
 /**    
  * @brief Imprime a estrutura visual da árvore fornecida.
@@ -122,11 +124,11 @@ struct TreeStats {
  *
  * Calcula a altura da árvore a partir de um nó dado, considerando que a altura
  *
- * @param node Nó raiz da árvore ou subárvore a partir do qual a altura será
- * calculada.
+ * @param node Nó raiz da árvore ou subárvore a partir do qual a altura será calculada.
+ * @param NIL Ponteiro de parada para RBT, default = nullptr
  * @return Altura da árvore a partir do nó raiz.
  */
-int get_tree_height(Node *node);
+int get_tree_height(Node *node, Node *NIL);
 
 /**
  * @brief Encontra o comprimento do menor galho
@@ -139,8 +141,9 @@ int get_tree_height(Node *node);
  * @param currentLen Comprimento do caminho na recursão atual (INICIALIZE COM 0)
  * @param minBranch Comprimento do menor galho que será retornado (INICIALIZE
  * COM A ALTURA DA ARVORE + 1)
+ * @param NIL Ponteiro de parada para RBT, default = nullptr
  */
-void get_min_branch(Node *node, int currentLen, int *minBranch);
+void get_min_branch(Node *node, int currentLen, int *minBranch, Node *NIL);
 
 /**
  * @brief Coleta todas as palavras de uma árvore binária de busca.
@@ -150,18 +153,19 @@ void get_min_branch(Node *node, int currentLen, int *minBranch);
  *
  * @param node Ponteiro para o nó atual da árvore.
  * @param words Vetor onde as palavras coletadas serão armazenadas.
+ * @param NIL Ponteiro de parada para RBT, default = nullptr
  * @return Número total de palavras coletadas.
  */
-void collect_words(Node *node, std::vector<std::string> &words);
+void collect_words(Node *node, std::vector<std::string> &words, Node *NIL);
 
 /**
  * @brief Obtém estatísticas de uma árvore binária de busca.
  *
- * Esta função cria uma árvore do tipo especificado (BST ou AVL), insere
+ * Esta função cria uma árvore do tipo especificado (BST, AVL ou RBT), insere
  * palavras de documentos nela, realiza buscas por palavras e coleta
  * estatísticas sobre inserções e buscas.
  *
- * @param tree_type Tipo da árvore ("bst" ou "avl").
+ * @param tree_type Tipo da árvore ("bst", "avl" ou "rbt").
  * @param n_docs Número de documentos a serem processados.
  * @param n_max_doc Número máximo de documentos a serem processados.
  * @param docs Vetor de ponteiros para os documentos a serem processados.
@@ -176,11 +180,12 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs,
  * @brief Verifica se todos os nós da árvore estão balanceados.
  *
  * @param root Raiz da árvore a ser verificada.
+ * @param NIL Ponteiro de parada para RBT, default = nullptr
  * @return true se todos os nós estão balanceados, ou seja, se o fator de
  * balanceamento de cada nó está entre -1 e 1.
  * @return false se algum nó não está balanceado.
  */
-bool all_balanced(Node *root);
+bool all_balanced(Node *root, Node *NIL);
 
 } // namespace stats
 

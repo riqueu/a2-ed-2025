@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
   };
 
   // Seleciona o tipo de árvore
-  if (treeType == "bst" || treeType == "avl") {
+  if (treeType == "bst" || treeType == "avl" || treeType == "rbt") {
     // Cria as n_points árvores binária de busca
     cout << "Criando arvores binarias de busca (" << treeType << ")..." << endl;
     for (int n : n_docs) {
@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
       stats.push_back(s);
     }
   } else {
-    cout << "Erro: Tipo de arvore invalido. Use 'bst' ou 'avl'." << endl;
+    cout << "Erro: Tipo de arvore invalido. Use 'bst', 'avl' ou 'rbt'." << endl;
     return 1;
   }
 
