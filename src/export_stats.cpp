@@ -15,9 +15,9 @@ void exportToCSV(const std::vector<stats::TreeStats> &stats,
   // Cabeçalho
   arquivo << "N_docs,"
              "ExecutionTimeInsertionMean,ExecutionTimeInsertionTotal,"
-             "ExecutionTimeSearchMean,ExecutionTimeSearchTotal,"
+             "ExecutionTimeSearchMean,ExecutionTimeSearchMax,"
              "NumComparisonsInsertionMean,NumComparisonsInsertionTotal,"
-             "NumComparisonsSearchMean,NumComparisonsSearchTotal,"
+             "NumComparisonsSearchMean,NumComparisonsSearchMax,"
              "TreeHeight,MaxBranch,MinBranch,"
              "NumNodesi,"
              "TreeSizeBytes\n";

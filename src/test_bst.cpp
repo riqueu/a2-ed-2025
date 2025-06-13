@@ -201,7 +201,7 @@ void testDestroyTree() {
   tree = nullptr; // Garantir que o ponteiro não seja usado após a destruição
 
   // Informar que a árvore foi destruída corretamente
-  std::cout << "SUCESSO: Arvore destruída corretamente" << std::endl;
+  std::cout << "SUCESSO: Arvore destruida corretamente" << std::endl;
 }
 
 int main() {
