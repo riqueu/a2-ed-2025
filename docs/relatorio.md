@@ -99,7 +99,11 @@ Nesta seção, apresentamos os resultados numéricos obtidos e uma discussão so
 
 #### **Figura 9: Altura da Árvore vs. Número de nós AVL**
 ![Figura 9](graphs/grafico_height_node_avl.png)
-#### **Discussão:** Nesse gráfico verifica-se que o número de nós computados está dentro do aceitável, entre o máximo e mínimo teórico da AVL. O mínimo número de nós se dá quando se cumpre minimamente as restrições de balanceamento da AVL, logo $n \geq 2^{\frac{h}{2}}$. O número máximo de nós se dá quando a AVL está completa, isto é, há $2^{m}$ nós na camada de altura $m$, logo $n \leq 2^{n+1} -1$.
+#### **Discussão:** Nesse gráfico verifica-se que o número de nós computados está dentro do aceitável, entre o máximo e mínimo teórico da AVL. O mínimo número de nós se dá quando se cumpre minimamente as restrições de balanceamento da AVL, logo $n \geq 2^{\frac{h}{1.44}}$. O número máximo de nós se dá quando a AVL está completa, isto é, há $2^{m}$ nós na camada de altura $m$, logo $n \leq 2^{n+1} -1$.
+
+#### **Figura 10: Altura da Árvore vs. Número de nós AVL**
+![Figura 10](graphs/grafico_height_node_rbt.png)
+#### **Discussão:** Nesse gráfico verifica-se que o número de nós computados está dentro do aceitável, entre o máximo e mínimo teórico da RBT. O mínimo número de nós se dá quando se cumpre minimamente as restrições de balanceamento da RBT, logo $n \geq 2^{\frac{h}{2}} -1$. O número máximo de nós se dá quando a RBT está completa, isto é, há $2^{m}$ nós na camada de altura $m$, logo $n \leq 2^{n+1} -1$.
 
 ## 6. Conclusão
 
@@ -119,8 +123,8 @@ Após a implementação das três estruturas de dados para aplicacação do índ
 
 ### 6.3. Árvore Rubro-Negra (RBT)
 
-* **Vantagens:**
-* **Desvantagens:**
+* **Vantagens:** Seu critério de balanceamento menos rígido que o da AVL geralmente resulta em menos rotações durante as inserções, tornando-as potencialmente mais rápidas.
+* **Desvantagens:** A altura pode ser ligeiramente maior que a de uma AVL, podendo levar a um tempo de busca um pouco maior.
 * **Observado:** 
 
 ### 6.4. Recomendação Final 
@@ -132,10 +136,10 @@ Após a implementação das três estruturas de dados para aplicacação do índ
 
 ### 8.1 Entrega 1
 * **Bruno Ferreira Salvi:** Implementação da função de busca para BST e da CLI (Busca) para BST;
-* **Henrique Coelho Beltrão:** Adiantamente da implementação de funções para estatísticas, ajustes na CLI para estatísticas e construção do Makefile;
+* **Henrique Coelho Beltrão:** Implementação de funções para estatísticas, ajustes na CLI para estatísticas e construção do Makefile;
 * **Henrique Gabriel Gasparelo:** Implementação das funções de print da árvore, de inserção na BST e de destroy da BST;
 * **José Thevez Gomes Guedes:** Implementação das funções para leitura dos arquivos e construção do índice invertido;
-* **Luiz Eduardo Bravin:** Inicialização da redação do relatório e implementação dos teste unitários das funções feitas nessa entrega.
+* **Luiz Eduardo Bravin:** Implementação dos teste unitários da BST e inicialização da redação do relatório.
 
 ### 8.2 Entrega 2
 
@@ -146,3 +150,9 @@ Após a implementação das três estruturas de dados para aplicacação do índ
 * **Luiz Eduardo Bravin:** Implementação da análise comparativa das árvores, geração dos gráficos em Python e redação do relatório.
 
 ### 8.3 Entrega 3
+
+* **Bruno Ferreira Salvi:** 
+* **Henrique Coelho Beltrão:** 
+* **Henrique Gabriel Gasparelo:** Implementação dos testes unitários da RBT;
+* **José Thevez Gomes Guedes:** Implementação das funções da RBT;
+* **Luiz Eduardo Bravin:** Implementação da CLI para RBT, atualização das funções úteis para comportar NIL e redação do relatório.
