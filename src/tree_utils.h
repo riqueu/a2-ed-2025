@@ -159,6 +159,17 @@ void get_min_branch(Node *node, int currentLen, int *minBranch, Node *NIL);
 void collect_words(Node *node, std::vector<std::string> &words, Node *NIL);
 
 /**
+ * @brief Calcula o tamanho de memória ocupada pela árvore:
+ *
+ * Esta função percorre a árvore somando a memória alocada dinamicamente
+ *
+ * @param node Ponteiro para o nó atual da árvore.
+ * @param NIL Ponteiro de parada para RBT, default = nullptr
+ * @return Tamanho da árvore em bytes
+ */
+size_t get_tree_size(Node* node, Node* NIL);
+
+/**
  * @brief Obtém estatísticas de uma árvore binária de busca.
  *
  * Esta função cria uma árvore do tipo especificado (BST, AVL ou RBT), insere
