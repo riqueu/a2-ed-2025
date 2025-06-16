@@ -151,8 +151,8 @@ Após a implementação das três estruturas de dados para aplicacação do índ
 
 ### 8.3 Entrega 3
 
-* **Bruno Ferreira Salvi:** 
-* **Henrique Coelho Beltrão:** 
+* **Bruno Ferreira Salvi:** Elaboração e revisão do relatório final, formulação das estatísticas extras e revisão geral do código e documentação;
+* **Henrique Coelho Beltrão:**  Elaboração e revisão do relatório final, revisão geral do código, documentação, instruções de execução com novos dados e ajustes no Makefile;
 * **Henrique Gabriel Gasparelo:** Implementação dos testes unitários da RBT;
 * **José Thevez Gomes Guedes:** Implementação das funções da RBT;
 * **Luiz Eduardo Bravin:** Implementação da CLI para RBT, atualização das funções úteis para comportar NIL e redação do relatório.
