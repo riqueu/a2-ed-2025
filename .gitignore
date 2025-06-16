@@ -36,3 +36,6 @@
 
 # Ignore output directories
 src/output/
+
+# ignore data folder
+data/
