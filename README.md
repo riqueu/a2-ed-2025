@@ -18,7 +18,25 @@ Leia também o [Relatório Completo](docs/relatorio.md).
 
 - Certifique-se de que o compilador **g++** está instalado e configurado no sistema.
 - Use **C++17** ou uma versão superior.
-- O [Makefile](Makefile) detecta automaticamente o sistema operacional e ajusta os comandos de criação e limpeza de executáveis e diretórios.
+- O [Makefile](Makefile) detecta automaticamente o sistema operacional e ajusta os comandos de criação e limpeza de executáveis e diretórios. Como também é capaz de lidar com a descompactação, o passo 0 existe apenas por conveniência.
+
+### Avisos
+- O volume de dados é considerável, portanto, o tempo de execução pode ser longo, especialmente para a geração de estatísticas. Por exemplo, para ler e buscar 1000 documentos, a execução pode levar cerca de 40 segundos antes de entrarmos na interface de busca. Isto é, para a leitura de cada documento, o tempo médio é de aproximadamente 40 milissegundos, o que é aceitável para a leitura de arquivos de texto, mas gera longos tempos de leitura para grandes volumes de dados, como é o caso para a leitura de 1000 ou 10000 documentos. Esse tempo de leitura não está relacionado com a construção das diferentes estruturas das árvores, mas sim com o processamento dos arquivos de texto.
+
+#### 0. Descompactação dos dados (Opcional):
+
+Visto o tamanho dos dados, o repositório contém apenas o arquivo compactado `data.zip` com os dados necessários para a execução do projeto.
+
+Este passo é opcional, visto que o nosso [Makefile](Makefile) já faz a descompactação caso o diretório `data/` não exista, que é o caso na primeira execução.
+
+#### Descompacte o arquivo `data.zip` na raiz do projeto.
+```sh
+# Linux/macOS
+unzip -qo data.zip
+
+# Windows
+# use o seu descompactador de estimação (7z, winrar, explorer, etc.) e clique em "Extract Here"
+```
 
 
 #### 1. Compilação:
