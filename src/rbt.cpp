@@ -14,6 +14,7 @@ BinaryTree *create() {
   Node* nil = new Node;
   nil->left = nullptr;
   nil->right = nullptr;
+  nil->parent = nullptr;
   nil->isRed = false;
   nil->height = -1;
   binaryTree->NIL = nil;
@@ -239,7 +240,7 @@ SearchResult search(BinaryTree *tree, const std::string &word) {
 
   // verifica se o nó atual é a palavra que busco
   // se não é, atualiza o current
-  while (current != nullptr or current == tree->NIL) {
+  while (current != nullptr or current != tree->NIL) {
     numComparisons++;
     if (word == current->word) {
       result.documentIds = current->documentIds;
