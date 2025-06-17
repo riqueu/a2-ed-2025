@@ -6,7 +6,7 @@
 
 ---
 ## Resumo
--> resumo do trabalho aqui
+Este trabalho detalha a implementação e a avaliação de desempenho de um índice invertido utilizando três estruturas de dados baseadas em árvores: a Árvore Binária de Busca (BST), a Árvore AVL e a Árvore Rubro-Negra (RBT). O objetivo foi comparar a eficiência de cada estrutura em operações de inserção e busca, aplicadas a um corpus de aproximadamente 10.000 documentos de texto. As métricas analisadas, como tempo de execução, número de comparações e altura da árvore, demonstraram a superioridade das árvores auto-balanceadas (AVL e RBT) sobre a BST, que se mostrou suscetível à degeneração. Os resultados indicaram que a RBT ofereceu o melhor tempo de inserção, enquanto a AVL se destacou por buscas ligeiramente mais rápidas e estáveis. Conclui-se que a RBT representa a escolha mais equilibrada para aplicações dinâmicas com operações frequentes de inserção e busca, e a AVL é ideal para cenários onde a velocidade de consulta é a prioridade máxima.
 
 ## 1. Introdução
 
@@ -53,6 +53,7 @@ struct Node {
     * Altura da árvore
     * Tamanho dos galhos (menor e maior caminho)
     * Número de nós
+    * Tamanho da árvore
 4.  **Ferramentas:** A implementação das árvores e coleta de métricas foram realizadas por programas em C++. Os gráficos e análises estatísticas foram feitos utilizando a biblioteca Matplotlib de Python e também Excel.
 
 ## 4. Resultados e Discussões
@@ -62,29 +63,29 @@ Nesta seção, apresentamos os resultados numéricos obtidos e uma discussão so
 ### 4.1. Tempo de Inserção
 #### **Figura 1: Tempo de Inserção de Palavra**
 ![Figura 1](graphs/grafico_ExecutionTimeInsertion.png)
-#### **Discussão:** Nota-se que em nossa implementação das árvores BST e AVL, ambas levam tempos parecidos para fazer a inserção.
+#### **Discussão:** Analisando o tempo total de inserção, nota-se que a RBT apresentou o melhor desempenho, sendo consistentemente mais rápida que as outras duas. A árvore AVL, embora mantenha um tempo de inserção estável, foi ligeiramente mais lenta que a RBT, provavelmente devido ao maior número de rotações necessárias para manter seu balanceamento estrito. A BST, por sua vez, apresentou tempos médios voláteis e um tempo total que, embora próximo ao da AVL, reflete sua ineficiência estrutural.
 
 ### 4.2. Tempo de Busca
 #### **Figura 2: Tempo de Busca de Palavra**
 ![Figura 2](graphs/grafico_ExecutionTimeSearch.png)
-#### **Discussão:** Nota-se que em nossa implementação das árvores BST e AVL, esta reduz consideravelmente o tempo de busca em relação àquela.
+#### **Discussão:** As árvores auto-balanceadas, AVL e RBT, reduziram consideravelmente o tempo de busca em relação à BST. A AVL apresentou o tempo médio de busca mais baixo e estável, confirmando que seu balanceamento rigoroso é vantajoso para consultas. A RBT teve um desempenho muito próximo ao da AVL, sendo também uma excelente opção para buscas. A BST foi a mais lenta, com picos de tempo de busca que evidenciam os problemas causados por seu desbalanceamento.
 
 ### 4.3. Número de Comparações
 #### **Figura 3: Número de Comparações por Inserção de Palavra**
 ![Figura 3](graphs/grafico_NumComparisonsInsertion.png)
 #### **Figura 4: Número de Comparações por Busca de Palavra**
 ![Figura 4](graphs/grafico_NumComparisonsSearch.png)
-#### **Discussão:** Nota-se que tanto na inserção, quanto na busca, a AVL faz menos comparações que a BST.
+#### **Discussão:** Tanto na inserção quanto na busca, as árvores AVL e RBT realizaram um número de comparações significativamente menor que a BST. Para inserções, a RBT exigiu o menor número total de comparações, seguida de perto pela AVL, o que corrobora seus tempos de inserção mais baixos. Para buscas, a AVL se mostrou marginalmente mais eficiente, realizando, em média e no pior caso, o menor número de comparações, com a RBT apresentando resultados quase idênticos.
 
 ### 4.4. Altura da Árvore
 #### **Figura 5: Altura da Árvore**
 ![Figura 5](graphs/grafico_TreeHeight.png)
-#### **Discussão:** Nota-se que a altura da árvore não cresce tanto conforme se aumenta o número de documentos, pois nos primeiros 40 documentos acessados já são computadas e criados os respectivos nós para mais de 4 mil palavras distintas, com os outros documentos apenas acrescentando unidades a esses nós, sem criar novos. As árvores BST tem em média o dobro da altura das árvores AVL, visto que aquelas podem vir a degenerar, enquanto que estas — por serem balanceadas — organizam melhor os nós pelas camadas, reduzindo a altura.
+#### **Discussão:** Nota-se que a altura da árvore não cresce tanto conforme se aumenta o número de documentos, pois nos primeiros 40 documentos acessados já são computadas e criados os respectivos nós para mais de 4 mil palavras distintas, com os outros documentos apenas acrescentando unidades a esses nós, sem criar novos. As árvores BST têm em média o dobro da altura das árvores AVL e RBT, visto que aquelas podem vir a degenerar, enquanto que estas — por serem balanceadas — organizam melhor os nós pelas camadas, reduzindo a altura. As alturas da AVL e da RBT permaneceram muito próximas durante todo o experimento.
 
 ### 4.5. Tamanho dos Galhos (Menor e Maior Caminho)
 #### **Figura 6: Tamanho do Maior e Menor Galho**
 ![Figura 6](graphs/grafico_branchs.png)
-#### **Discussão:** Nota-se que a distância entre o maior e menor galho da AVL é bem curta, enquanto na BST essa distância é exageradamente longa. Isso ocorre devido a natureza da AVL que é projetada para evitar degenerações e manter a árvore balanceada, com isso balanceia-se também o tamanho dos galhos, enquanto que alguns galhos da BST podem degenerar e se tornar longos demais.
+#### **Discussão:** Nota-se que a distância entre o maior e menor galho da AVL e da RBT é bem curta, enquanto na BST essa distância é exageradamente longa. Isso ocorre devido à natureza da AVL e da RBT, que são projetadas para evitar degenerações e manter a árvore balanceada, com isso balanceia-se também o tamanho dos galhos. Em contrapartida, alguns galhos da BST podem degenerar e se tornar longos demais.
 
 ### 4.6. Números de nós
 #### **Figura 7: Número de nós**
@@ -159,6 +160,6 @@ Após a implementação das três estruturas de dados para aplicacação do índ
 
 * **Bruno Ferreira Salvi:** Elaboração e revisão do relatório final, formulação das estatísticas extras e revisão geral do código e documentação;
 * **Henrique Coelho Beltrão:**  Elaboração e revisão do relatório final, revisão geral do código, documentação, instruções de execução com novos dados e ajustes no Makefile;
-* **Henrique Gabriel Gasparelo:** Implementação dos testes unitários da RBT;
+* **Henrique Gabriel Gasparelo:** Implementação dos testes unitários da RBT e redação do relatório;
 * **José Thevez Gomes Guedes:** Implementação das funções da RBT;
 * **Luiz Eduardo Bravin:** Implementação da CLI para RBT, atualização das funções úteis para comportar NIL e redação do relatório.
