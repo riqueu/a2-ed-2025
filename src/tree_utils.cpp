@@ -217,13 +217,13 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc
 
     int j = 0; // Contador de tentativas
     int j_max = (n_docs < 800) ? 50 : 1; 
-    // Se o número de documentos for menor que 700, repete
-    // a busca 10 vezes, caso contrário, apenas uma vez
+    // Se o número de documentos for menor que 800, repete
+    // a busca 50 vezes, caso contrário, apenas uma vez
     int totalComparisons = 0;
     double totalTime = 0.0;
 
-    // Realiza a busca na árvore, repetindo até 10 vezes para cada palavra com
-    // menos 700 documentos
+    // Realiza a busca na árvore, repetindo até 50 vezes para cada palavra com
+    // menos 800 documentos
     for (int i = 0; i < j_max; ++i) {
       // Realiza a busca na árvore, dependendo do tipo de árvore
       if (tree_type == "bst") {
