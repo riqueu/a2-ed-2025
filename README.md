@@ -36,6 +36,8 @@ unzip -qo data.zip
 
 # Windows
 # use o seu descompactador de estimação (7z, winrar, explorer, etc.) e clique em "Extract Here"
+# ou
+tar -xf data.zip
 ```
 
 
