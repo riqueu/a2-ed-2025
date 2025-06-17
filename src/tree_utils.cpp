@@ -113,6 +113,36 @@ void collect_words(Node *node, std::vector<std::string> &words, Node *NIL = null
   collect_words(node->right, words, NIL);
 }
 
+void most_frequent_words(Node* node,
+                              std::vector<Node*>& mostFrequentNodes,
+                              std::vector<int>& maxCounts,
+                              Node* NIL = nullptr) {
+  if (node == nullptr || node == NIL) {
+    return;
+  }
+
+  // Visita esquerda
+  most_frequent_words(node->left, mostFrequentNodes, maxCounts, NIL);
+
+  // Verifica a palavra atual
+  int length = node->word.size();
+  int count = node->documentIds.size();
+
+  if (length >= 1 && length <= 15) {
+    int index = length - 1; // índice entre 0 e 14
+
+    if (count > maxCounts[index]) {
+      maxCounts[index] = count;
+      mostFrequentNodes[index] = node;
+    }
+  }
+
+  // Visita direita
+  most_frequent_words(node->right, mostFrequentNodes, maxCounts, NIL);
+}
+
+
+
 // calcula tamanho de memória ocupada pela árvore:
 size_t get_tree_size(Node* node, Node* NIL = nullptr) {
     if (node == nullptr || node == NIL) {
@@ -137,7 +167,7 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc
                          const std::vector<DocReading::Doc *> &docs) {
   BinaryTree *tree = nullptr;
   TreeStats s = {n_docs, 0,   0,   0.0, 0.0, 0,
-                 0,      0, 0, 0,   0,   0, 0}; // Inicializa as estatísticas
+                 0,      0, 0, 0,   0,   0, 0, {}}; // Inicializa as estatísticas
 
   if (tree_type == "bst") {
     tree = BST::create();
@@ -248,6 +278,23 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc
   // Calcula o comprimento do menor galho e coloca na estrutura
   get_min_branch(tree->root, 0, &minBranch, tree->NIL);
   s.minBranch = minBranch;
+
+  std::vector<Node*> mostFrequentNodes(15, nullptr);
+  std::vector<int> maxCounts(15, -1);  
+
+  if (tree_type == "rbt") {
+      most_frequent_words(tree->root, mostFrequentNodes, maxCounts, tree->NIL);
+  } else {
+      most_frequent_words(tree->root, mostFrequentNodes, maxCounts, nullptr);
+  }
+
+  for (int i = 0; i < 15; ++i) {
+    if (mostFrequentNodes[i]) {
+      s.mostFrequentNodes.push_back(*mostFrequentNodes[i]);
+    } else {
+      s.mostFrequentNodes.push_back(Node()); // node vazio
+    }
+  }
 
   // Libera a memória da árvore atual
   if (tree_type == "bst") {
