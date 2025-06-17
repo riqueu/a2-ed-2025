@@ -6,7 +6,7 @@ CXXFLAGS = -Wall -Wextra -g3
 SRC_DIR = src
 OUTPUT_DIR = $(SRC_DIR)/output
 DATA_DIR = data
-STAMP_FILE = $(DATA_DIR)/.unzip-stamp
+STAMP_FILE = .unzip-stamp
 
 # source
 BST_SOURCES = $(SRC_DIR)/main_bst.cpp $(SRC_DIR)/bst.cpp $(SRC_DIR)/avl.cpp $(SRC_DIR)/rbt.cpp $(SRC_DIR)/data.cpp $(SRC_DIR)/tree_utils.cpp
@@ -27,7 +27,7 @@ ifeq ($(OS),Windows_NT)
 	RM = del /Q /F
 	RMDIR = rmdir /S /Q
 	SEP = \\
-	UNZIP_CMD = powershell -command "Expand-Archive -Path data.zip -DestinationPath . -Force"
+	UNZIP_CMD = tar -xf data.zip
 	TOUCH = type NUL >
 	MKDIR_P = if not exist "$(subst /,\,$(1))" mkdir "$(subst /,\,$(1))"
 	SETUP_DATA_CMD = if exist "$(subst /,\,$(DATA_DIR))" ($(TOUCH) $@) else (if exist "data.zip" (echo Extracting data... & $(UNZIP_CMD) && $(TOUCH) $@) else (echo ERROR: Directory 'data' and file 'data.zip' not found. & exit 1))
@@ -40,6 +40,7 @@ else
 	TOUCH = touch
 	MKDIR_P = mkdir -p $(1)
 	SETUP_DATA_CMD = if [ -d "$(DATA_DIR)" ]; then $(TOUCH) $@; else if [ -f "data.zip" ]; then echo "Extracting data..."; $(UNZIP_CMD) && $(TOUCH) $@; else echo "ERROR: Directory 'data' and file 'data.zip' not found." >&2; exit 1; fi; fi
+
 endif
 
 # executáveis
