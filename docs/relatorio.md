@@ -91,18 +91,24 @@ Nesta seção, apresentamos os resultados numéricos obtidos e uma discussão so
 ![Figura 7](graphs/grafico_NumNodes.png)
 #### **Discussão:** Nota-se que para as três árvores os os números de nós é o mesmo, óbvio, pois todas possuem a mesma natureza de adicionar um nó para cada palavra única encontrada nos documentos e como ambas estão analisando os mesmos documentos. Nota-se algo mais interessante, no entanto, a quantidade de nós adicionados vai diminuindo conforme se aumenta a quantidade de documentos. Isso acontece pois as 4 mil palavras adicionadas nos primerios 40 arquivos são provavelmente as palavras mais utilizadas no idioma, os arquivos seguintes, portanto, estarão repletos dessas palavras que serão adicionadas aos nós já existentes e de algumas outras menos utilizadas que constituirão os novos nós. Desse modo, a cada arquivo analisado aumenta a probabilidade de uma palavra que já foi computada aparecer novamente, o que diminui a criação de novos nós pelos últimos documentos, podendo inclusive um documento não adicionar nenhum novo nó.
 
+### 4.7. Tamanho da árvore
+#### **Figura 8: Tamanho da árvore**
+![Figura 8](graphs/grafico_TreeSizeBytes.png)
+#### **Discussão:**
+
+
 ## 5. Gráficos e Estatísticas
 
-#### **Figura 8: Altura da Árvore vs. Número de nós BST**
-![Figura 8](graphs/grafico_height_node_bst.png)
+#### **Figura 9: Altura da Árvore vs. Número de nós BST**
+![Figura 9](graphs/grafico_height_node_bst.png)
 #### **Discussão:** Nesse gráfico verifica-se que o número de nós computados está dentro do aceitável, entre o máximo e mínimo teórico da BST. O mínimo número de nós se dá quando a BST degenera, isto é, há um nó por camada, logo $n \geq h + 1$. O número máximo de nós se dá quando a BST está completa, isto é, há $2^{m}$ nós na camada de altura $m$, logo $n \leq 2^{n+1} -1$.
 
-#### **Figura 9: Altura da Árvore vs. Número de nós AVL**
-![Figura 9](graphs/grafico_height_node_avl.png)
+#### **Figura 10: Altura da Árvore vs. Número de nós AVL**
+![Figura 10](graphs/grafico_height_node_avl.png)
 #### **Discussão:** Nesse gráfico verifica-se que o número de nós computados está dentro do aceitável, entre o máximo e mínimo teórico da AVL. O mínimo número de nós se dá quando se cumpre minimamente as restrições de balanceamento da AVL, logo $n \geq 2^{\frac{h}{1.44}}$. O número máximo de nós se dá quando a AVL está completa, isto é, há $2^{m}$ nós na camada de altura $m$, logo $n \leq 2^{n+1} -1$.
 
-#### **Figura 10: Altura da Árvore vs. Número de nós AVL**
-![Figura 10](graphs/grafico_height_node_rbt.png)
+#### **Figura 11: Altura da Árvore vs. Número de nós AVL**
+![Figura 11](graphs/grafico_height_node_rbt.png)
 #### **Discussão:** Nesse gráfico verifica-se que o número de nós computados está dentro do aceitável, entre o máximo e mínimo teórico da RBT. O mínimo número de nós se dá quando se cumpre minimamente as restrições de balanceamento da RBT, logo $n \geq 2^{\frac{h}{2}} -1$. O número máximo de nós se dá quando a RBT está completa, isto é, há $2^{m}$ nós na camada de altura $m$, logo $n \leq 2^{n+1} -1$.
 
 ## 6. Conclusão
