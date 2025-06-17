@@ -4,13 +4,22 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 using namespace std;
 
 void exportToCSV(const std::vector<stats::TreeStats> &stats,
                  std::string title) {
+  std::string dir = "docs";
+  std::string full_path;
+
+  fs::path final_path = fs::path(dir) / title;
+  full_path = final_path.string();
+  
   // Cria o arquivo CSV
-  ofstream arquivo(title);
+  ofstream arquivo(full_path);
 
   // Cabeçalho
   arquivo << "N_docs,"
@@ -35,5 +44,5 @@ void exportToCSV(const std::vector<stats::TreeStats> &stats,
 
   // Fecha o arquivo
   arquivo.close();
-  cout << "Dados exportados para " << title << " com sucesso!" << endl;
+  cout << "Dados exportados para " << full_path << " com sucesso!" << endl;
 }
