@@ -33,28 +33,35 @@ int testPrintTree() {
   return 0;
 }
 
-void testCreateTree() {
+bool testCreateTree() {
   // Cria arvore teste
   std::cout << "=== Teste BST::create() ===" << std::endl;
   BinaryTree *tree = BST::create();
+
+  bool success = true;
 
   // Verifica se a arvore foi criada corretamente
   if (tree != nullptr && tree->root == nullptr) {
     std::cout << "SUCESSO: Arvore criada corretamente" << std::endl;
   } else {
     std::cout << "FALHA: Problema ao criar arvore" << std::endl;
+    success = false;
   }
 
   // Libera memoria
   BST::destroy(tree);
   std::cout << std::endl;
+
+  return success;
 }
 
-void testCreateNode() {
+bool testCreateNode() {
   // Inicia atributos do node
   std::cout << "=== Teste BST::createNode() ===" << std::endl;
   std::string word = "morango";
   int docId = 1;
+
+  bool success = true;
 
   // Cria node teste
   Node *node = BST::createNode(word, docId);
@@ -66,14 +73,17 @@ void testCreateNode() {
     std::cout << "SUCESSO: Node criado corretamente" << std::endl;
   } else {
     std::cout << "FALHA: Problema ao criar node" << std::endl;
+    success = false;
   }
 
   // Libera memoria
   delete node;
   std::cout << std::endl;
+
+  return success;
 }
 
-void testInsertAndSearch() {
+bool testInsertAndSearch() {
   // Cria arvore teste
   std::cout << "=== Teste BST::insert() e BST::search() ===" << std::endl;
   BinaryTree *tree = BST::create();
@@ -125,9 +135,11 @@ void testInsertAndSearch() {
   // Libera memoria
   BST::destroy(tree);
   std::cout << std::endl;
+
+  return success;
 }
 
-void testInsertNode() {
+bool testInsertNode() {
   std::cout << "=== Teste BST::insertNode() ===" << std::endl;
   BinaryTree *tree = BST::create();
   int comparisons = 0;
@@ -185,6 +197,8 @@ void testInsertNode() {
   // Libera memoria
   BST::destroy(tree);
   std::cout << std::endl;
+
+  return success;
 }
 
 void testDestroyTree() {
@@ -202,18 +216,26 @@ void testDestroyTree() {
 
   // Informar que a árvore foi destruída corretamente
   std::cout << "SUCESSO: Arvore destruida corretamente" << std::endl;
+  std::cout << std::endl;
 }
 
 int main() {
   std::cout << "INICIANDO TESTES UNITARIOS PARA BST\n" << std::endl;
 
-  testCreateTree();
-  testCreateNode();
-  testInsertNode();
+  bool success = true;
+
+  success &= testCreateTree();
+  success &= testCreateNode();
+  success &= testInsertNode();
   testPrintTree();
-  testInsertAndSearch();
+  success &= testInsertAndSearch();
   testDestroyTree();
 
-  std::cout << "TESTES CONCLUIDOS" << std::endl;
+  std::cout << "=== TESTES CONCLUIDOS ===" << std::endl;
+  if (success) {
+    std::cout << "Todos os testes passaram com sucesso!" << std::endl;
+  } else {
+    std::cout << "Alguns testes falharam." << std::endl;
+  }
   return 0;
 }
