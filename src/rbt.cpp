@@ -240,7 +240,7 @@ SearchResult search(BinaryTree *tree, const std::string &word) {
 
   // verifica se o nó atual é a palavra que busco
   // se não é, atualiza o current
-  while (current != nullptr or current == tree->NIL) {
+  while (current != nullptr && current != tree->NIL) {
     numComparisons++;
     if (word == current->word) {
       result.documentIds = current->documentIds;
