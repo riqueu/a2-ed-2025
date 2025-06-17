@@ -105,7 +105,7 @@ int main(int argc, char *argv[]) {
 
     // Cria a árvore binária de busca e obtém as estatísticas
     stats::TreeStats s = stats::get_tree_stats(
-        "RBT", n_docs, n_docs, vector<Doc *>(docs, docs + n_docs));
+        "rbt", n_docs, n_docs, vector<Doc *>(docs, docs + n_docs));
 
     // Print das estatísticas
     cout << "=========Estatisticas=========" << endl;
