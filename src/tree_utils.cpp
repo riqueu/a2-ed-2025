@@ -231,6 +231,9 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc
   s.numComparisonsSearchMean /= search_words.size();
   s.executionTimeSearchMean /= search_words.size();
 
+  size_t size_bytes = get_tree_size(tree->root, tree->NIL);
+  s.size = size_bytes;
+
   // Pega a altura da árvore
   if (tree_type == "avl") {
     s.treeHeight = tree->root->height; // Armazena a altura da árvore AVL
