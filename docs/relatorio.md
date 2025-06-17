@@ -61,6 +61,16 @@ Geração e coleta de estatísticas (`tree_utils.cpp`, `tree_stats.cpp`, `export
 
 Arquivos principais (`main_bst.cpp`, `main_avl.cpp`, `main_rbt.cpp`): Para utilização do código por outros usuários, no arquivo main de cada árvore, foram desenvolvidos comandos CLI para busca de uma determinada palavra, geração de estatísticas e visualização da árvore.
 
+### 2.3 Estatísticas
+
+Assim como supracitado, o documento ‘tree_utils.cpp’ contém funções que coletam as estatísticas com base em parâmetros, como o tipo da árvore e a quantidade de documentos que serão inseridos. A partir dessas funções, são coletadas estatísticas como: o número total de documentos inseridos na estrutura (`n_docs`); o número médio (`numComparisonsInsertionMean`) e total (`numComparisonsInsertion`) de comparações realizadas durante as operações de inserção; o tempo médio (`executionTimeInsertionMean`) e total (`executionTimeInsertion`) de execução das inserções, medidos em milissegundos; o número médio (`numComparisonsSearchMean`) e o máximo (`numComparisonsSearchMax`) de comparações realizadas durante as buscas; o tempo máximo (`executionTimeSearchMax`) e médio (`executionTimeSearchMean`) de execução das buscas; a altura final da árvore (`treeHeight`) após todas as inserções; o comprimento do menor galho (`minBranch`); o número total de nós existentes na árvore (`numNodes`); além do tamanho total ocupado pela árvore em memória, representado em bytes (`size`).
+
+Vale ressaltar que, neste contexto, são considerados como número de comparações a quantidade de nós que foram percorridos durante a operação, ou seja, é contabilizado cada comparação com um nó durante a inserção ou busca. Além disso, a fim de reduzir erros de medições de tempo nas estáticas de tempo de busca, para as árvores que tem 800 documentos ou menos, a busca por cada palavra é realizada 50 vezes, e então é calculado a médias desses resultados, mitigando assim, as oscilações causas pelo computador nos tempos calculados.
+
+Essas métricas permitem a análise comparativa dos diferentes tipos de implementação de árvores, possibilitando, por exemplo, a comparação do impacto do número de documentos inseridos na altura de cada uma das árvores.
+
+No documento `tree_stats.cpp`, utilizando as funções responsáveis pela coleta de estatísticas, são armazenadas as métricas obtidas de um tipo especificado de árvore, variando a quantidade de documentos inseridos. Essas estatísticas são então concatenadas em um arquivo CSV, o que viabiliza a plotagem dos dados e facilita a análise entre as diferentes estruturas de árvores. Vale destacar que o `tree_stats.cpp` deve ser executado separadamente para cada tipo de árvore, uma vez que o CSV gerado tem apenas as estatísticas referentes a um único tipo de árvore.
+
 ### 2.4. Divisão de Tarefas
 
 #### 2.4.1. Entrega 1
