@@ -46,13 +46,13 @@ void printTreeRec(Node* node, Node* NIL = nullptr,
 
     // imprime o nó atual
     std::cout << prefix;
-    std::cout << (left ? "/ " : "\\ ");
+    std::cout << (left ? "├── " : "└── ");
     std::cout << node->word << std::endl;
 
     // calcula o novo prefix
     std::string newPrefix;
     if (left) {
-        newPrefix = prefix + "|   ";
+        newPrefix = prefix + "│   ";
     } else {
         newPrefix = prefix + "    ";
     }
