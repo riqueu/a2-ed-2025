@@ -102,11 +102,15 @@ Nesta seção, serão apresentados os resultados numéricos obtidos e uma discus
 
 ### 3.1. Dados Brutos
 
+Para análise dos resultados obtidos, foram criados arquivos CSV com as métricas calculadas, onde esses dados brutos podem ser acessados pelos links de acesso abaixo.
+
 [Tabela BST](dados_bst.csv)
 
 [Tabela AVL](dados_avl.csv)
 
 [Tabela RBT](dados_rbt.csv)
+
+A seguir, serão analisados graficamente os resultados obtidos, comparando o desempenho de cada árvore implementada em uma estatística específica.
 
 ### 3.2. Gráficos e Estatísticas
 
@@ -190,3 +194,5 @@ Após a implementação das três estruturas de dados para aplicação do índic
 * **Validação dos Resultados:** Verificar e validar se os resultados obtidos eram similares aos esperados foi uma tarefa desafiadora e exigiu a produção de um grande número de testes.
 
 ## 4. Conclusão
+
+A partir das análises, pode-se concluir que o desempenho da BST, no geral, foi insatisfatório, ao contrário da performance da AVL e RBT que obtiveram bons resultados para todas as métricas estipuladas. Mesmo assim, apesar da RBT apresentar um maior desbalanceamento quando comparada a AVL, indicada pela diferença entre o maior e menor galho e a altura da árvore, a RBT possui um desempenho tão bom quanto a AVL, uma vez que os tempos de inserção são menores ou iguais que os da AVL e os tempo de busca são similares, o que é refletido no número de comparações semelhantes entre ambas as árvores. Deste modo, conclui-se que a Árvore Rubro-Negra (RBT) é a árvore recomendada para implementação do índice invertido.
