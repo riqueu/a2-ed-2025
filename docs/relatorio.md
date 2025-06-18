@@ -115,7 +115,7 @@ Nesta seção, serão apresentados os resultados numéricos obtidos e uma discus
 ![Figura 1](graphs/grafico_ExecutionTimeInsertion.png)
 ##### **Discussão:** Analisando o tempo total de inserção, nota-se que a RBT apresentou o melhor desempenho, sendo consistentemente mais rápida que as outras duas. A árvore AVL, embora mantenha um tempo de inserção estável, foi ligeiramente mais lenta que a RBT, provavelmente devido ao maior número de rotações necessárias para manter seu balanceamento estrito. A BST, por sua vez, apresentou tempos médios voláteis e um tempo total que, embora próximo ao da AVL, reflete sua ineficiência estrutural.
 
-#### 3.2.3. Tempo de Busca
+#### 3.2.2. Tempo de Busca
 ##### **Figura 2: Tempo de Busca de Palavra**
 ![Figura 2](graphs/grafico_ExecutionTimeSearch.png)
 ##### **Discussão:** As árvores auto-balanceadas, AVL e RBT, reduziram consideravelmente o tempo de busca em relação à BST. A AVL apresentou o tempo médio de busca mais baixo e estável, confirmando que seu balanceamento rigoroso é vantajoso para consultas. A RBT teve um desempenho muito próximo ao da AVL, sendo também uma excelente opção para buscas. A BST foi a mais lenta, com picos de tempo de busca que evidenciam os problemas causados por seu desbalanceamento.
@@ -130,7 +130,7 @@ Nesta seção, serão apresentados os resultados numéricos obtidos e uma discus
 #### 3.2.4. Altura da Árvore
 ##### **Figura 5: Altura da Árvore**
 ![Figura 5](graphs/grafico_TreeHeight.png)
-##### **Discussão:** Nota-se primeiramente que existem uma grande diferença de altura entre a BST e a AVL, ou RBT, isso se dá por conta do desbalaceamento da BST que permite, em certos casos, uma altura proporcional a $n$ ao invés do $log(n)$ desejado, ao contrário da AVL e RBT, que mesmo no pior caso possuem altura proporcional a $log(n)$. Isso mostra um comportamento similar ao esperado, por conta das proporções explicadas, mesmo a altura da AVL sendo semelhante a da RBT em todo o experimento. Além disso, é visível que a altura de todas as árvores não cresce muito a medida que se aumenta o número de documentos, que pode ser explicado por dois fatores: existirem muitas palavras comuns a muitos documentos, que não aumenta o número de nós já que não são palavras distintas, e o fato de que é necessário, no caso geral, inserir muitos nós para aumentar a altura de uma árvore grande, já que para isso, é necessário que o novo nó seja filho de um nó de altura máxima, no caso da BST, ou que o balaceamento esteja no limite, no caso da AVL e RBT.
+##### **Discussão:** Nota-se primeiramente que existem uma grande diferença de altura entre a BST e a AVL, ou RBT, isso se dá por conta do desbalaceamento da BST que permite, em certos casos, uma altura proporcional a $n$ ao invés do $log(n)$ desejado, ao contrário da AVL e RBT, que mesmo no pior caso possuem altura proporcional a $log(n)$. Isso mostra um comportamento similar ao esperado, por conta das proporções explicadas e pela altura da RBT ser ligeiramente maior que a da AVL, uma vez que possui uma menor rigidez no balaceamento, mesmo a altura da AVL sendo semelhante a da RBT em todo o experimento. Além disso, é visível que a altura de todas as árvores não cresce muito a medida que se aumenta o número de documentos, que pode ser explicado por dois fatores: existirem muitas palavras comuns a muitos documentos, que não aumenta o número de nós já que não são palavras distintas, e o fato de que é necessário, no caso geral, inserir muitos nós para aumentar a altura de uma árvore grande, já que para isso, é necessário que o novo nó seja filho de um nó de altura máxima, no caso da BST, ou que o balaceamento esteja no limite, no caso da AVL e RBT.
 
 #### 3.2.5. Tamanho dos Galhos (Menor e Maior Caminho)
 ##### **Figura 6: Tamanho do Maior e Menor Galho**
@@ -162,7 +162,7 @@ Nesta seção, serão apresentados os resultados numéricos obtidos e uma discus
 
 ### 3.3. Resultados
 
-Após a implementação das três estruturas de dados para aplicação do índice invertido e análise dos dados, podemos extrair as seguintes conclusões:
+Após a implementação das três estruturas de dados para aplicação do índice invertido e análise dos dados, pode-se extrair as seguintes conclusões:
 
 #### 3.3.1. Árvore Binária de Busca (BST)
 
@@ -172,7 +172,7 @@ Após a implementação das três estruturas de dados para aplicação do índic
 
 #### 3.3.2. Árvore Adelson-Velsky e Landis (AVL)
 
-* **Vantagens:** Garante um tempo de busca logarítmico, mantendo a altura da árvore próxima do mínimo teórico ($log(n)$).
+* **Vantagens:** Garante um tempo de busca logarítmico, mantendo a altura da árvore próxima do mínimo teórico ( $log(n)$ ).
 * **Desvantagens:** Para manter o balanceamento, a árvore AVL implementa regras muito restritivas, o que faz com que muitas das novas inserções exijam ajustes na estrutura. Ajustes esses que envolvem a realização de rotações, que embora garantam a altura próxima a $log(n)$, podem aumentar o tempo da realização da operação de inserção.
 * **Observado:** A AVL manteve uma altura controlada e muito menor que a BST (Figura 5), resultando em número de comparações e tempo de busca (Figuras 2 e 4) consideravelmente inferiores aos da BST, provando sua eficácia para aplicações focadas em consulta. Embora apresente um custo de inserção mais elevado em comparação à BST, esse custo foi compensado pelo balanceamento eficiente da estrutura, refletindo em um bom desempenho também nas operações de inserção (Figuras 1 e 3).
 
