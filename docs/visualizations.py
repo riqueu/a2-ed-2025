@@ -1,9 +1,9 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-bst = pd.read_csv("dados_bst.csv")
-avl = pd.read_csv("dados_avl.csv")
-rbt = pd.read_csv("dados_rbt.csv")
+bst = pd.read_csv("docs/dados_bst.csv")
+avl = pd.read_csv("docs/dados_avl.csv")
+rbt = pd.read_csv("docs/dados_rbt.csv")
 col_names = bst.columns[1:]
 
 def plot_graph(ax, col_name, title, ylabel):
@@ -95,6 +95,3 @@ plt.yscale("log")
 plt.legend()
 plt.savefig(f'docs/graphs/grafico_height_node_rbt.png')
 plt.close()
-
-
-print(bst[-1])

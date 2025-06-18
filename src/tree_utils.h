@@ -117,6 +117,8 @@ struct TreeStats {
   
   
   size_t size; // tamanho em Bytes da árvore
+
+  std::vector<Node> mostFrequentNodes; // Nós mais frequentes nos arquivos
 };
 
 /**
@@ -157,6 +159,21 @@ void get_min_branch(Node *node, int currentLen, int *minBranch, Node *NIL);
  * @return Número total de palavras coletadas.
  */
 void collect_words(Node *node, std::vector<std::string> &words, Node *NIL);
+
+/**
+ * @brief Coleta todas as palavras de uma árvore binária de busca.
+ *
+ * Esta função percorre a árvore em ordem (in-order) e encontra a palavra com
+ maior ocorrência
+ *
+ * @param node Ponteiro para o nó atual da árvore.
+ * @param mostFrequentNode Vetor de ponteiros para os nós com maior ocorrências
+ * @param maxCount Vetor de número de ocorrências dos nós com maior ocorrências
+ * @param NIL Ponteiro de parada para RBT, default = nullptr
+ * @return Ponteiro para o nó com maior ocorrência
+ */
+void most_frequent_words(Node* node,std::vector<Node*>& mostFrequentNodes,
+      std::vector<int>& maxCounts, Node* NIL);
 
 /**
  * @brief Calcula o tamanho de memória ocupada pela árvore:

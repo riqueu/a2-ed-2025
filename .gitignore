@@ -39,3 +39,4 @@ src/output/
 
 # ignore data folder
 data/
+.unzip-stamp
