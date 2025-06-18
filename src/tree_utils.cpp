@@ -39,24 +39,40 @@ void printIndex(BinaryTree *tree) {
 }
 
 void printTreeRec(Node *node, Node *NIL = nullptr, 
-  std::string prefix = "", std::string linePrefix = "") {
+  std::string prefix = "", bool left = false) {
   if (node == nullptr || node == NIL) {
     return;
   }
 
-  // Exibe o nó atual na árvore
-  std::cout << prefix << linePrefix;
-  std::cout << node->word << std::endl;
+  std::cout << prefix;
+
+  if (left &&  node->left != nullptr && node != NIL) {
+    std::cout << "/";
+  } else {
+    std::cout << "\\";
+  }
+
+  if (left) {
+    printTreeRec(node->left, NIL, prefix + ("|    "), true);
+  } else if (left == false) {
+    printTreeRec(node->left, NIL, prefix + ("    "), true);
+  }
+  
+  if (left) {
+    printTreeRec(node->left, NIL, prefix + ("|    "), false);
+  } else if (left == false) {
+    printTreeRec(node->right, NIL, prefix + ("    "), false);
+  }
 
   // Recursão caso haja um nó à esquerda
-  if (node->left != nullptr && node->left != NIL) {
-    printTreeRec(node->left, NIL, prefix + "    ", "--- ");
-  }
+  // if (node->left != nullptr && node->left != NIL) {
+    // printTreeRec(node->left, NIL, prefix + "    ", "--- ");
+  // }
 
   // Recursão caso haja um nó à direita
-  if (node->right != nullptr && node->right != NIL) {
-    printTreeRec(node->right, NIL, prefix + "    ", "+-- ");
-  }
+  // if (node->right != nullptr && node->right != NIL) {
+    // printTreeRec(node->right, NIL, prefix + "    ", "+-- ");
+  // }
 }
 
 void printTree(BinaryTree *tree) {

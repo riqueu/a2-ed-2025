@@ -95,3 +95,6 @@ plt.yscale("log")
 plt.legend()
 plt.savefig(f'docs/graphs/grafico_height_node_rbt.png')
 plt.close()
+
+
+print(bst[-1])
