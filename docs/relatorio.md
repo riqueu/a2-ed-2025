@@ -63,7 +63,7 @@ Arquivos principais (`main_bst.cpp`, `main_avl.cpp`, `main_rbt.cpp`): Para utili
 
 ### 2.3 Estatísticas
 
-Assim como supracitado, o documento ‘tree_utils.cpp’ contém funções que coletam as estatísticas com base em parâmetros, como o tipo da árvore e a quantidade de documentos que serão inseridos. A partir dessas funções, são coletadas estatísticas como: o número total de documentos inseridos na estrutura (`n_docs`); o número médio (`numComparisonsInsertionMean`) e total (`numComparisonsInsertion`) de comparações realizadas durante as operações de inserção; o tempo médio (`executionTimeInsertionMean`) e total (`executionTimeInsertion`) de execução das inserções, medidos em milissegundos; o número médio (`numComparisonsSearchMean`) e o máximo (`numComparisonsSearchMax`) de comparações realizadas durante as buscas; o tempo máximo (`executionTimeSearchMax`) e médio (`executionTimeSearchMean`) de execução das buscas; a altura final da árvore (`treeHeight`) após todas as inserções; o comprimento do menor galho (`minBranch`); o número total de nós existentes na árvore (`numNodes`); além do tamanho total ocupado pela árvore em memória, representado em bytes (`size`).
+Assim como supracitado, o documento `tree_utils.cpp` contém funções que coletam as estatísticas com base em parâmetros, como o tipo da árvore e a quantidade de documentos que serão inseridos. A partir dessas funções, são coletadas estatísticas como: o número total de documentos inseridos na estrutura (`n_docs`); o número médio (`numComparisonsInsertionMean`) e total (`numComparisonsInsertion`) de comparações realizadas durante as operações de inserção; o tempo médio (`executionTimeInsertionMean`) e total (`executionTimeInsertion`) de execução das inserções, medidos em milissegundos; o número médio (`numComparisonsSearchMean`) e o máximo (`numComparisonsSearchMax`) de comparações realizadas durante as buscas; o tempo máximo (`executionTimeSearchMax`) e médio (`executionTimeSearchMean`) de execução das buscas; a altura final da árvore (`treeHeight`) após todas as inserções; o comprimento do menor galho (`minBranch`); o número total de nós existentes na árvore (`numNodes`); além do tamanho total ocupado pela árvore em memória, representado em bytes (`size`).
 
 Vale ressaltar que, neste contexto, são considerados como número de comparações a quantidade de nós que foram percorridos durante a operação, ou seja, é contabilizado cada comparação com um nó durante a inserção ou busca. Além disso, a fim de reduzir erros de medições de tempo nas estáticas de tempo de busca, para as árvores que tem 800 documentos ou menos, a busca por cada palavra é realizada 50 vezes, e então é calculado a médias desses resultados, mitigando assim, as oscilações causas pelo computador nos tempos calculados.
 
@@ -102,11 +102,11 @@ Nesta seção, serão apresentados os resultados numéricos obtidos e uma discus
 
 ### 3.1. Dados Brutos
 
-![Tabela 1](dados_bst.csv)
+[Tabela BST](dados_bst.csv)
 
-![Tabela 2](dados_avl.csv)
+[Tabela AVL](dados_avl.csv)
 
-![Tabela 3](dados_rbt.csv)
+[Tabela RBT](dados_rbt.csv)
 
 ### 3.2. Gráficos e Estatísticas
 
@@ -130,7 +130,7 @@ Nesta seção, serão apresentados os resultados numéricos obtidos e uma discus
 #### 3.2.4. Altura da Árvore
 ##### **Figura 5: Altura da Árvore**
 ![Figura 5](graphs/grafico_TreeHeight.png)
-##### **Discussão:** Nota-se que a altura da árvore não cresce tanto conforme se aumenta o número de documentos, pois nos primeiros 40 documentos acessados já são computadas e criados os respectivos nós para mais de 4 mil palavras distintas, com os outros documentos apenas acrescentando unidades a esses nós, sem criar novos. As árvores BST têm em média o dobro da altura das árvores AVL e RBT, visto que aquelas podem vir a degenerar, enquanto que estas — por serem balanceadas — organizam melhor os nós pelas camadas, reduzindo a altura. As alturas da AVL e da RBT permaneceram muito próximas durante todo o experimento.
+##### **Discussão:** Nota-se primeiramente que existem uma grande diferença de altura entre a BST e a AVL, ou RBT, isso se dá por conta do desbalaceamento da BST que permite, em certos casos, uma altura proporcional a $n$ ao invés do $log(n)$ desejado, ao contrário da AVL e RBT, que mesmo no pior caso possuem altura proporcional a $log(n)$. Isso mostra um comportamento similar ao esperado, por conta das proporções explicadas, mesmo a altura da AVL sendo semelhante a da RBT em todo o experimento. Além disso, é visível que a altura de todas as árvores não cresce muito a medida que se aumenta o número de documentos, que pode ser explicado por dois fatores: existirem muitas palavras comuns a muitos documentos, que não aumenta o número de nós já que não são palavras distintas, e o fato de que é necessário, no caso geral, inserir muitos nós para aumentar a altura de uma árvore grande, já que para isso, é necessário que o novo nó seja filho de um nó de altura máxima, no caso da BST, ou que o balaceamento esteja no limite, no caso da AVL e RBT.
 
 #### 3.2.5. Tamanho dos Galhos (Menor e Maior Caminho)
 ##### **Figura 6: Tamanho do Maior e Menor Galho**
@@ -140,25 +140,25 @@ Nesta seção, serão apresentados os resultados numéricos obtidos e uma discus
 #### 3.2.6. Números de nós
 ##### **Figura 7: Número de nós**
 ![Figura 7](graphs/grafico_NumNodes.png)
-##### **Discussão:** Nota-se que para as três árvores os os números de nós é o mesmo, óbvio, pois todas possuem a mesma natureza de adicionar um nó para cada palavra única encontrada nos documentos e como ambas estão analisando os mesmos documentos. Nota-se algo mais interessante, no entanto, a quantidade de nós adicionados vai diminuindo conforme se aumenta a quantidade de documentos. Isso acontece pois as 4 mil palavras adicionadas nos primerios 40 arquivos são provavelmente as palavras mais utilizadas no idioma, os arquivos seguintes, portanto, estarão repletos dessas palavras que serão adicionadas aos nós já existentes e de algumas outras menos utilizadas que constituirão os novos nós. Desse modo, a cada arquivo analisado aumenta a probabilidade de uma palavra que já foi computada aparecer novamente, o que diminui a criação de novos nós pelos últimos documentos, podendo inclusive um documento não adicionar nenhum novo nó.
+##### **Discussão:** Nota-se que o número de nós nas três árvores é o mesmo, uma vez que o que muda em cada implementação é a forma de inserção do nó, mas nenhum nó deixa de ser inserido ou é inserido mais de uma vez. Além disso, pode-se observar um crescimento natural do número de nós, uma vez que se aumenta o número de documentos, e, consequentemente, aumentasse o número de palavras e potenciais nós. Entretanto, mesmo com esse crescimento, é possível observar leves estagnações a medida que aumenta-se o número de documentos, que provavelmente ocorre devido a existência de muitas palavras repetidas em mais de um documento que não criam novos nós, podendo existir documentos com uma série de palavras repetidas.
 
 #### 3.2.7. Tamanho da árvore
 ##### **Figura 8: Tamanho da árvore**
 ![Figura 8](graphs/grafico_TreeSizeBytes.png)
-##### **Discussão:**
+##### **Discussão:** Comparando este gráfico com a Figura 7, é possível perceber uma possível correlação entre número de nós e o tamanho da árvore, o que pode ser explicado uma vez que o tamanho da árvore depende unicamente do tamanho de cada nó, que bem similar, uma vez que possuem a mesma estrutura. Deste modo, a medida que se aumenta o número de nós, aumenta-se o tamanho da árvore, da mesma maneira.
 
 #### 3.2.8. Altura da árvore vs Número de nós
 ##### **Figura 9: Altura da Árvore vs. Número de nós BST**
 ![Figura 9](graphs/grafico_height_node_bst.png)
-##### **Discussão:** Nesse gráfico verifica-se que o número de nós computados está dentro do aceitável, entre o máximo e mínimo teórico da BST. O mínimo número de nós se dá quando a BST degenera, isto é, há um nó por camada, logo $n \geq h + 1$. O número máximo de nós se dá quando a BST está completa, isto é, há $2^{m}$ nós na camada de altura $m$, logo $n \leq 2^{n+1} -1$.
+##### **Discussão:** Nesse gráfico verifica-se que o número de nós computados está dentro do aceitável, entre o máximo e mínimo teórico da BST. O mínimo número de nós se dá quando a BST degenera, isto é, há um nó por camada, logo $n \geq h + 1$. O número máximo de nós se dá quando a BST está completa, isto é, há $2^{m}$ nós na camada de altura $m$, logo $n \leq 2^{h+1} -1$.
 
 ##### **Figura 10: Altura da Árvore vs. Número de nós AVL**
 ![Figura 10](graphs/grafico_height_node_avl.png)
-##### **Discussão:** Nesse gráfico verifica-se que o número de nós computados está dentro do aceitável, entre o máximo e mínimo teórico da AVL. O mínimo número de nós se dá quando se cumpre minimamente as restrições de balanceamento da AVL, logo $n \geq 2^{\frac{h}{1.44}}$. O número máximo de nós se dá quando a AVL está completa, isto é, há $2^{m}$ nós na camada de altura $m$, logo $n \leq 2^{n+1} -1$.
+##### **Discussão:** Nesse gráfico verifica-se que o número de nós computados está dentro do aceitável, entre o máximo e mínimo teórico da AVL. O mínimo número de nós se dá quando se cumpre minimamente as restrições de balanceamento da AVL, logo $n \geq 2^{\frac{h}{1.44}}$. O número máximo de nós se dá quando a AVL está completa, isto é, há $2^{m}$ nós na camada de altura $m$, logo $n \leq 2^{h+1} -1$.
 
 ##### **Figura 11: Altura da Árvore vs. Número de nós AVL**
 ![Figura 11](graphs/grafico_height_node_rbt.png)
-##### **Discussão:** Nesse gráfico verifica-se que o número de nós computados está dentro do aceitável, entre o máximo e mínimo teórico da RBT. O mínimo número de nós se dá quando se cumpre minimamente as restrições de balanceamento da RBT, logo $n \geq 2^{\frac{h}{2}} -1$. O número máximo de nós se dá quando a RBT está completa, isto é, há $2^{m}$ nós na camada de altura $m$, logo $n \leq 2^{n+1} -1$.
+##### **Discussão:** Nesse gráfico verifica-se que o número de nós computados está dentro do aceitável, entre o máximo e mínimo teórico da RBT. O mínimo número de nós se dá quando se cumpre minimamente as restrições de balanceamento da RBT, logo $n \geq 2^{\frac{h}{2}} -1$. O número máximo de nós se dá quando a RBT está completa, isto é, há $2^{m}$ nós na camada de altura $m$, logo $n \leq 2^{h+1} -1$.
 
 ### 3.3. Resultados
 
