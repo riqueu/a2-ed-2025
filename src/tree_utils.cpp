@@ -1,10 +1,10 @@
 #include "tree_utils.h"
 #include "avl.h"
-#include <cstddef>
 #include "bst.h"
-#include "rbt.h"
 #include "data.h"
+#include "rbt.h"
 #include <algorithm>
+#include <cstddef>
 #include <iostream>
 
 void printIndexRec(Node *node, Node *NIL = nullptr) {
@@ -38,30 +38,29 @@ void printIndex(BinaryTree *tree) {
   printIndexRec(tree->root, tree->NIL);
 }
 
-void printTreeRec(Node* node, Node* NIL = nullptr, 
-                  const std::string& prefix = "", bool left = false) {
-    if (node == nullptr ||  node == NIL) {
-        return;
-    }
+void printTreeRec(Node *node, Node *NIL = nullptr,
+                  const std::string &prefix = "", bool left = false) {
+  if (node == nullptr || node == NIL) {
+    return;
+  }
 
-    // imprime o nó atual
-    std::cout << prefix;
-    std::cout << (left ? "├── " : "└── ");
-    std::cout << node->word << std::endl;
+  // imprime o nó atual
+  std::cout << prefix;
+  std::cout << (left ? "├── " : "└── ");
+  std::cout << node->word << std::endl;
 
-    // calcula o novo prefix
-    std::string newPrefix;
-    if (left) {
-        newPrefix = prefix + "│   ";
-    } else {
-        newPrefix = prefix + "    ";
-    }
+  // calcula o novo prefix
+  std::string newPrefix;
+  if (left) {
+    newPrefix = prefix + "│   ";
+  } else {
+    newPrefix = prefix + "    ";
+  }
 
-    // recursão para os filhos
-    printTreeRec(node->left, NIL, newPrefix, true);
-    printTreeRec(node->right, NIL, newPrefix, false);
+  // recursão para os filhos
+  printTreeRec(node->left, NIL, newPrefix, true);
+  printTreeRec(node->right, NIL, newPrefix, false);
 }
-
 
 void printTree(BinaryTree *tree) {
   if (tree == nullptr || tree->root == nullptr) {
@@ -70,6 +69,25 @@ void printTree(BinaryTree *tree) {
 
   // Chamada da função recursiva
   printTreeRec(tree->root, tree->NIL);
+}
+
+// função para exibir a barra de progresso
+void displayProgressBar(int current, int total, const std::string &message) {
+  int barWidth = 50;
+  float progress = (float)current / total;
+  int pos = barWidth * progress;
+
+  std::cout << "\r" << message << " [";
+  for (int i = 0; i < barWidth; ++i) {
+    if (i < pos)
+      std::cout << "=";
+    else if (i == pos)
+      std::cout << ">";
+    else
+      std::cout << " ";
+  }
+  std::cout << "] " << std::setw(3) << int(progress * 100.0) << "%";
+  std::cout.flush();
 }
 
 namespace stats {
@@ -86,14 +104,14 @@ int get_tree_height(Node *node, Node *NIL = nullptr) {
   return std::max(leftHeight, rightHeight) + 1;
 }
 
-void get_min_branch(Node *node, int currentLen, int *minBranch, 
+void get_min_branch(Node *node, int currentLen, int *minBranch,
                     Node *NIL = nullptr) {
   // Verifica se o node atual é inválido (nullptr ou NIL)
   if (node == nullptr || node == NIL) {
     return;
   }
 
-  if ((node->left == nullptr || node->left == NIL) && 
+  if ((node->left == nullptr || node->left == NIL) &&
       (node->right == nullptr || node->right == NIL)) {
     *minBranch = std::min(currentLen, *minBranch);
     return;
@@ -104,7 +122,8 @@ void get_min_branch(Node *node, int currentLen, int *minBranch,
   get_min_branch(node->right, currentLen + 1, minBranch, NIL);
 }
 
-void collect_words(Node *node, std::vector<std::string> &words, Node *NIL = nullptr) {
+void collect_words(Node *node, std::vector<std::string> &words,
+                   Node *NIL = nullptr) {
   if (node == nullptr || node == NIL) {
     return;
   }
@@ -117,10 +136,8 @@ void collect_words(Node *node, std::vector<std::string> &words, Node *NIL = null
   collect_words(node->right, words, NIL);
 }
 
-void most_frequent_words(Node* node,
-                              std::vector<Node*>& mostFrequentNodes,
-                              std::vector<int>& maxCounts,
-                              Node* NIL = nullptr) {
+void most_frequent_words(Node *node, std::vector<Node *> &mostFrequentNodes,
+                         std::vector<int> &maxCounts, Node *NIL = nullptr) {
   if (node == nullptr || node == NIL) {
     return;
   }
@@ -132,8 +149,8 @@ void most_frequent_words(Node* node,
   int length = node->word.size();
   int count = node->documentIds.size();
 
-  if (length >= 1 && length <= 15) {
-    int index = length - 1; // índice entre 0 e 14
+  if (length >= 1 && length <= 20) {
+    int index = length - 1; // índice entre 0 e 19
 
     if (count > maxCounts[index]) {
       maxCounts[index] = count;
@@ -145,33 +162,32 @@ void most_frequent_words(Node* node,
   most_frequent_words(node->right, mostFrequentNodes, maxCounts, NIL);
 }
 
-
-
 // calcula tamanho de memória ocupada pela árvore:
-size_t get_tree_size(Node* node, Node* NIL = nullptr) {
-    if (node == nullptr || node == NIL) {
-        return 0;
-    }
-    // soma os dados da estrutura do nó
-    size_t size = sizeof(Node);
+size_t get_tree_size(Node *node, Node *NIL = nullptr) {
+  if (node == nullptr || node == NIL) {
+    return 0;
+  }
+  // soma os dados da estrutura do nó
+  size_t size = sizeof(Node);
 
-    // soma a memória alocada dinamicamente
-    size += node->word.capacity() * sizeof(char);
-    size += node->documentIds.capacity() * sizeof(int);
+  // soma a memória alocada dinamicamente
+  size += node->word.capacity() * sizeof(char);
+  size += node->documentIds.capacity() * sizeof(int);
 
-    // recursão
-    size += get_tree_size(node->right, NIL);
-    size += get_tree_size(node->left, NIL);
+  // recursão
+  size += get_tree_size(node->right, NIL);
+  size += get_tree_size(node->left, NIL);
 
-    // retorna o valor em bytes
-    return size;
+  // retorna o valor em bytes
+  return size;
 }
 
-TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc,
+TreeStats get_tree_stats(const std::string &tree_type, int n_docs,
+                         int n_max_doc,
                          const std::vector<DocReading::Doc *> &docs) {
   BinaryTree *tree = nullptr;
-  TreeStats s = {n_docs, 0,   0,   0.0, 0.0, 0,
-                 0,      0, 0, 0,   0,   0, 0, {}}; // Inicializa as estatísticas
+  TreeStats s = {n_docs, 0, 0, 0.0, 0.0, 0, 0,
+                 0,      0, 0, 0,   0,   0, {}}; // Inicializa as estatísticas
 
   if (tree_type == "bst") {
     tree = BST::create();
@@ -203,14 +219,14 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc
   }
 
   // Calcula o tempo médio de inserção
-  s.executionTimeInsertionMean = s.executionTimeInsertion / numInsertion; 
+  s.executionTimeInsertionMean = s.executionTimeInsertion / numInsertion;
   // Calcula o número médio de comparações de inserção
-  s.numComparisonsInsertionMean = s.numComparisonsInsertion / numInsertion; 
+  s.numComparisonsInsertionMean = s.numComparisonsInsertion / numInsertion;
 
   // Pega as palavras inseridas na árvore
   std::vector<std::string> search_words;
   // Coleta as palavras
-  collect_words(tree->root, search_words, tree->NIL); 
+  collect_words(tree->root, search_words, tree->NIL);
 
   // Armazena o número de nós na árvore
   s.numNodes = search_words.size();
@@ -220,7 +236,7 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc
     SearchResult search; // Inicializa a estrutura de busca
 
     int j = 0; // Contador de tentativas
-    int j_max = (n_docs < 800) ? 50 : 1; 
+    int j_max = (n_docs < 800) ? 50 : 1;
     // Se o número de documentos for menor que 800, repete
     // a busca 50 vezes, caso contrário, apenas uma vez
     int totalComparisons = 0;
@@ -246,9 +262,9 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc
     }
 
     // Calcula o número médio de comparações
-    search.numComparisons = totalComparisons / j; 
+    search.numComparisons = totalComparisons / j;
     // Calcula o tempo médio de execução
-    search.executionTime = totalTime / j; 
+    search.executionTime = totalTime / j;
 
     // Atualiza as estatísticas de busca
     s.numComparisonsSearchMean += search.numComparisons;
@@ -283,16 +299,16 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc
   get_min_branch(tree->root, 0, &minBranch, tree->NIL);
   s.minBranch = minBranch;
 
-  std::vector<Node*> mostFrequentNodes(15, nullptr);
-  std::vector<int> maxCounts(15, -1);  
+  std::vector<Node *> mostFrequentNodes(20, nullptr);
+  std::vector<int> maxCounts(20, -1);
 
   if (tree_type == "rbt") {
-      most_frequent_words(tree->root, mostFrequentNodes, maxCounts, tree->NIL);
+    most_frequent_words(tree->root, mostFrequentNodes, maxCounts, tree->NIL);
   } else {
-      most_frequent_words(tree->root, mostFrequentNodes, maxCounts, nullptr);
+    most_frequent_words(tree->root, mostFrequentNodes, maxCounts, nullptr);
   }
 
-  for (int i = 0; i < 15; ++i) {
+  for (int i = 0; i < 20; ++i) {
     if (mostFrequentNodes[i]) {
       s.mostFrequentNodes.push_back(*mostFrequentNodes[i]);
     } else {

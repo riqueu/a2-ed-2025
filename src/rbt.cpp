@@ -1,7 +1,6 @@
 #include "rbt.h"
 #include "tree_utils.h"
 #include <vector>
-#include <iostream>
 
 namespace RBT {
 
@@ -11,7 +10,7 @@ BinaryTree *create() {
   binaryTree->root = nullptr;
 
   // Criação do NIL
-  Node* nil = new Node;
+  Node *nil = new Node;
   nil->left = nullptr;
   nil->right = nullptr;
   nil->parent = nullptr;
@@ -80,15 +79,16 @@ Node *rotateLeft(Node *node) {
 }
 
 void fixInsert(Node *node, BinaryTree *tree) {
-  // Se o pai for preto, não precisa consertar, inclusive caso node raiz, já que nil é preto
+  // Se o pai for preto, não precisa consertar, inclusive caso node raiz, já que
+  // nil é preto
   if (node->parent->isRed == false) {
     return;
   }
 
   // Verifica se o pai é filho a esquerda
   if (node->parent == node->parent->parent->left) {
-    Node* tio = node->parent->parent->right;
-    Node* vo = node->parent->parent;
+    Node *tio = node->parent->parent->right;
+    Node *vo = node->parent->parent;
     // Caso 1: pai e tio vermelhos
     if (tio->isRed == true) {
       node->parent->isRed = false;
@@ -96,11 +96,12 @@ void fixInsert(Node *node, BinaryTree *tree) {
       vo->isRed = true;
       fixInsert(node->parent->parent, tree);
     } else {
-      // Caso 2: filho à direita → precisa girar para formar o caso filho à esquerda com tio preto → rotação e recoloração
+      // Caso 2: filho à direita → precisa girar para formar o caso filho à
+      // esquerda com tio preto → rotação e recoloração
       if (node == node->parent->right) {
         node = node->parent;
         vo->left = rotateLeft(node);
-      } 
+      }
       // Caso 3: filho à esquerda com tio preto → rotação e recoloração
       node->parent->isRed = false;
       vo->isRed = true;
@@ -116,10 +117,10 @@ void fixInsert(Node *node, BinaryTree *tree) {
       }
     }
 
-  // Verifica se o pai é filho a direita
+    // Verifica se o pai é filho a direita
   } else {
-    Node* tio = node->parent->parent->left;
-    Node* vo = node->parent->parent;
+    Node *tio = node->parent->parent->left;
+    Node *vo = node->parent->parent;
     // Caso pai e tio vermelhos
     if (tio->isRed == true) {
       node->parent->isRed = false;
@@ -131,7 +132,7 @@ void fixInsert(Node *node, BinaryTree *tree) {
       if (node == node->parent->left) {
         node = node->parent;
         vo->right = rotateRight(node);
-      } 
+      }
       // Caso 3: filho à direita com tio preto → rotação e recoloração
       node->parent->isRed = false;
       vo->isRed = true;
@@ -145,21 +146,21 @@ void fixInsert(Node *node, BinaryTree *tree) {
       } else {
         vo->parent->right = rotateLeft(vo);
       }
-      }
     }
   }
+}
 
-void insertNode(Node *root, BinaryTree *tree, const std::string &word, int documentId,
-                 int &numComparisons) {
+void insertNode(Node *root, BinaryTree *tree, const std::string &word,
+                int documentId, int &numComparisons) {
   // Verifica se não tem raiz
   if (root == nullptr) {
-    Node* newNode = createNode(word, documentId, tree->NIL);
+    Node *newNode = createNode(word, documentId, tree->NIL);
     newNode->parent = tree->NIL;
     newNode->isRed = false;
     tree->root = newNode;
     return;
   }
-  
+
   // Incrementa o número de comparações
   numComparisons++;
 
@@ -167,7 +168,7 @@ void insertNode(Node *root, BinaryTree *tree, const std::string &word, int docum
   if (word < root->word) { // está a esquerda do nó atual
     // Se a esquerda tiver vazia, coloca o nó lá e conserta as propriedades
     if (root->left == tree->NIL) {
-      Node* newNode = createNode(word, documentId, tree->NIL);
+      Node *newNode = createNode(word, documentId, tree->NIL);
       newNode->parent = root;
       root->left = newNode;
 
@@ -182,7 +183,7 @@ void insertNode(Node *root, BinaryTree *tree, const std::string &word, int docum
   } else if (word > root->word) { // está a direita do nó atual
     // Se a direita tiver vazia, coloca o nó lá e conserta as propriedades
     if (root->right == tree->NIL) {
-      Node* newNode = createNode(word, documentId, tree->NIL);
+      Node *newNode = createNode(word, documentId, tree->NIL);
       newNode->parent = root;
       root->right = newNode;
 
@@ -290,4 +291,4 @@ void destroy(BinaryTree *tree) {
   return;
 }
 
-}
+} // namespace RBT
