@@ -15,7 +15,8 @@ BinaryTree *create();
 /**
  * @brief Cria um novo nó com uma palavra e um ID de documento.
  *
- * Inicializa o nó com a palavra, insere o ID no vetor e define ponteiros nulos. Inicializa a cor do node como vermelho.
+ * Inicializa o nó com a palavra, insere o ID no vetor e define ponteiros nulos.
+ * Inicializa a cor do node como vermelho.
  *
  * @param word Palavra a ser inserida no nó.
  * @param documentId ID do documento onde a palavra aparece.
@@ -57,11 +58,13 @@ Node *rotateLeft(Node *node);
 
 /**
  * @brief Conserta o balanceamento da árvore
- * 
- * Corrige o balanceamento da árvore, obedecendo as propriedades da RBT. Pode fazer rotações e recolorações.
- * 
+ *
+ * Corrige o balanceamento da árvore, obedecendo as propriedades da RBT. Pode
+ * fazer rotações e recolorações.
+ *
  * @param node Nó recém inserido.
- * @param tree Ponteiro da árvore para alterar a raiz caso a rotação mude a raiz.
+ * @param tree Ponteiro da árvore para alterar a raiz caso a rotação mude a
+ * raiz.
  */
 void fixInsert(Node *node, BinaryTree *tree);
 
@@ -76,8 +79,8 @@ void fixInsert(Node *node, BinaryTree *tree);
  * @param word Palavra a ser inserida.
  * @param documentId ID do documento associado.
  */
-void insertNode(Node *root, BinaryTree *tree, const std::string &word, int documentId,
-                 int &numComparisons);
+void insertNode(Node *root, BinaryTree *tree, const std::string &word,
+                int documentId, int &numComparisons);
 
 /**
  * @brief Insere uma palavra na árvore binária RBT.
@@ -124,6 +127,6 @@ void deleteNodes(Node *root, Node *nil);
  */
 void destroy(BinaryTree *tree);
 
-}
+} // namespace RBT
 
 #endif
