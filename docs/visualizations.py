@@ -57,7 +57,7 @@ save_double_graph(col_names[6], col_names[7], pre="Número", mid="Máximo",
 save_simple_graph(col_names[8], title="Altura da Árvore")
 save_branch_graph(col_names[9], col_names[10], "Comparação maior e menor galho")
 save_simple_graph(col_names[11], title="Número de Nós")
-save_simple_graph(col_names[12], title="Tamanho da Arvore (bytes)")
+save_simple_graph(col_names[12], title="Tamanho da Árvore (bytes)")
 
 
 #Tamanho da arvore pelo numero de nós BST
