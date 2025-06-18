@@ -175,14 +175,20 @@ int main(int argc, char *argv[]) {
     cout << "Quantidade de palavras/nodes: " << s.numNodes << endl;
     cout << "===========Palavras que Aparecem em Mais Documentos==========="
          << endl;
-    for (int i = 0; i < 15; ++i) {
+    size_t limit =
+        std::min(s.mostFrequentNodes.size(), static_cast<size_t>(20));
+    for (size_t i = 0; i < limit; ++i) {
       const Node &node = s.mostFrequentNodes[i];
-      if (i == 0) {
-        cout << i + 1 << " letra - " << node.word << " - "
-             << node.documentIds.size() << " documentos;" << endl;
-      } else {
-        cout << i + 1 << " letras - " << node.word << " - "
-             << node.documentIds.size() << " documentos;" << endl;
+      if (node.word.empty()) {
+        cout << i + 1 << " letras - (nenhuma palavra encontrada)" << endl;
+        continue;
+      }
+      cout << i + 1 << " letras - " << node.word << " - "
+           << node.documentIds.size() << " documentos;" << endl;
+    }
+    if (limit < 20) {
+      for (size_t i = limit; i < 20; ++i) {
+        cout << i + 1 << " letras - (nenhuma palavra encontrada)" << endl;
       }
     }
     // free memory

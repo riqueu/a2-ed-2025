@@ -174,16 +174,18 @@ void get_min_branch(Node *node, int currentLen, int *minBranch, Node *NIL);
 void collect_words(Node *node, std::vector<std::string> &words, Node *NIL);
 
 /**
- * @brief Coleta todas as palavras de uma árvore binária de busca.
+ * @brief Encontra os nós com maior número de ocorrências de documentos.
  *
- * Esta função percorre a árvore em ordem (in-order) e encontra a palavra com
- maior ocorrência
+ * Percorre a árvore em ordem (in-order) e identifica os nós (palavras) que
+ * aparecem no maior número de documentos, armazenando ponteiros para esses nós
+ * em mostFrequentNodes e seus respectivos contadores em maxCounts.
  *
  * @param node Ponteiro para o nó atual da árvore.
- * @param mostFrequentNode Vetor de ponteiros para os nós com maior ocorrências
- * @param maxCount Vetor de número de ocorrências dos nós com maior ocorrências
- * @param NIL Ponteiro de parada para RBT, default = nullptr
- * @return Ponteiro para o nó com maior ocorrência
+ * @param mostFrequentNodes Vetor onde serão armazenados os ponteiros para os
+ * nós mais frequentes.
+ * @param maxCounts Vetor onde serão armazenadas as quantidades máximas de
+ * ocorrências correspondentes aos nós.
+ * @param NIL Ponteiro de parada para RBT.
  */
 void most_frequent_words(Node *node, std::vector<Node *> &mostFrequentNodes,
                          std::vector<int> &maxCounts, Node *NIL);
