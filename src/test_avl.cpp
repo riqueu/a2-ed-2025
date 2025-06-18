@@ -150,7 +150,17 @@ bool testInsertAndBalance() {
 
   // Muitas inserções para verificar o balanceamento no print
   AVL::insert(tree, "banana", 1);
+  /* morango várias vezes no mesmo doc 
+  (para testar se o mesmo documentId é adicionado apenas uma vez)
+  (no código geral, essa filtragem é feita pelo leitor dos dados
+  mas a função BST::insert também deve lidar com isso, apesar de
+  ser mais custoso em termos de performance) */
   AVL::insert(tree, "morango", 2);
+  AVL::insert(tree, "morango", 2);
+  AVL::insert(tree, "morango", 2);
+  AVL::insert(tree, "morango", 2);
+  AVL::insert(tree, "morango", 4);
+  AVL::insert(tree, "morango", 3);
   AVL::insert(tree, "morango", 3);
   AVL::insert(tree, "cereja", 3);
   AVL::insert(tree, "abacaxi", 4);
@@ -174,6 +184,12 @@ bool testInsertAndBalance() {
   printTree(tree);
   std::cout << "Altura da Arvore AVL: " << tree->root->height << std::endl;
   std::cout << "Numero de nodes: " << words.size() << std::endl;
+
+  // Testa funcao printindex
+  std::cout << "Teste printIndex" << std::endl;
+  std::cout << "Indices:\n";
+  printIndex(tree);
+  std::cout << std::endl;
 
   std::cout << std::endl;
 

@@ -110,7 +110,15 @@ Node *insertNode(Node *root, const std::string &word, int documentId,
     root->left = insertNode(root->left, word, documentId, numComparisons);
   } else if (word > root->word) { // está a direita do nó atual
     root->right = insertNode(root->right, word, documentId, numComparisons);
-  } else { // palavra já existe na árvore, adiciona o ID do documento
+  } else { // palavra já existe na árvore
+    // Verifica se o documentId já existe
+    for (int id : root->documentIds) {
+      if (id == documentId) {
+        // Se já existe, não insere novamente
+        return root;
+      }
+    }
+    // Se não existe, adiciona o novo documentId
     root->documentIds.push_back(documentId);
     return root;
   }
