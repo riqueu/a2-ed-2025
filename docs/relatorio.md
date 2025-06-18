@@ -57,13 +57,26 @@ Implementação da árvores (`bst.cpp`, `avl.cpp`, `rbt.cpp`): Para a implementa
 
 Implementação dos testes (`test_bst.cpp`, `test_avl.cpp`, `test_rbt.cpp`): Para implementação dos testes, foram verificadas a consistência das regras de cada árvore, as funções de inserção e de busca.
 
-Geração e coleta de estatísticas (`tree_utils.cpp`, `tree_stats.cpp`, `export_stats.cpp`): Para coleta das métricas, no arquivo `tree_utils.cpp`, foram implementadas funções que geram as estatísticas referentes às árvores. Estas métricas são utilizadas no CLI de estatísticas e na criação de um arquivo CSV com os dados obtidos.
+Geração e coleta de estatísticas (`tree_utils.cpp`, `tree_stats.cpp`, `export_stats.cpp`): Para coleta das métricas, no arquivo `tree_utils.cpp`, foram implementadas funções que geram as estatísticas referentes às árvores. Estas métricas são utilizadas no CLI de estatísticas e na criação de um arquivo CSV com os dados obtidos. É Importante destacar que o arquivo CSV é somente gerado pelo `tree_stats.cpp`, enquanto a CLI de estatísticas gera apenas um overview simplificado.  
 
-Arquivos principais (`main_bst.cpp`, `main_avl.cpp`, `main_rbt.cpp`): Para utilização do código por outros usuários, no arquivo main de cada árvore, foram desenvolvidos comandos CLI para busca de uma determinada palavra, geração de estatísticas e visualização da árvore.
+Arquivos principais (`main_bst.cpp`, `main_avl.cpp`, `main_rbt.cpp`): Para utilização do código por outros usuários, no arquivo main de cada árvore, foram desenvolvidos comandos CLI para busca de uma determinada palavra, geração de estatísticas e visualização da árvore. Como mencionado no parágrafo anterior, as estatísticas geradas por esses arquivos são mais apenas impressas no terminal, para gerar o arquivo CSV, usamos `tree_stats.cpp`, que será melhor explicado no próximo tópico.
 
 ### 2.3 Estatísticas
 
-Assim como supracitado, o documento `tree_utils.cpp` contém funções que coletam as estatísticas com base em parâmetros, como o tipo da árvore e a quantidade de documentos que serão inseridos. A partir dessas funções, são coletadas estatísticas como: o número total de documentos inseridos na estrutura (`n_docs`); o número médio (`numComparisonsInsertionMean`) e total (`numComparisonsInsertion`) de comparações realizadas durante as operações de inserção; o tempo médio (`executionTimeInsertionMean`) e total (`executionTimeInsertion`) de execução das inserções, medidos em milissegundos; o número médio (`numComparisonsSearchMean`) e o máximo (`numComparisonsSearchMax`) de comparações realizadas durante as buscas; o tempo máximo (`executionTimeSearchMax`) e médio (`executionTimeSearchMean`) de execução das buscas; a altura final da árvore (`treeHeight`) após todas as inserções; o comprimento do menor galho (`minBranch`); o número total de nós existentes na árvore (`numNodes`); além do tamanho total ocupado pela árvore em memória, representado em bytes (`size`).
+Assim como supracitado, o documento `tree_utils.cpp` contém funções que coletam as estatísticas com base em parâmetros, como o tipo da árvore e a quantidade de documentos que serão inseridos. A partir dessas funções, são coletadas estatísticas como:
+- **Número total de documentos inseridos** (`n_docs`)
+- **Número médio de comparações na inserção** (`numComparisonsInsertionMean`)
+- **Número total de comparações na inserção** (`numComparisonsInsertion`)
+- **Tempo médio de execução das inserções (ms)** (`executionTimeInsertionMean`)
+- **Tempo total de execução das inserções (ms)** (`executionTimeInsertion`)
+- **Número médio de comparações na busca** (`numComparisonsSearchMean`)
+- **Número máximo de comparações na busca** (`numComparisonsSearchMax`)
+- **Tempo máximo de execução das buscas (ms)** (`executionTimeSearchMax`)
+- **Tempo médio de execução das buscas (ms)** (`executionTimeSearchMean`)
+- **Altura final da árvore após as inserções** (`treeHeight`)
+- **Comprimento do menor galho** (`minBranch`)
+- **Número total de nós na árvore** (`numNodes`)
+- **Tamanho total ocupado pela árvore em memória (bytes)** (`size`)
 
 Vale ressaltar que, neste contexto, são considerados como número de comparações a quantidade de nós que foram percorridos durante a operação, ou seja, é contabilizado cada comparação com um nó durante a inserção ou busca. Além disso, a fim de reduzir erros de medições de tempo nas estáticas de tempo de busca, para as árvores que tem 800 documentos ou menos, a busca por cada palavra é realizada 50 vezes, e então é calculado a médias desses resultados, mitigando assim, as oscilações causas pelo computador nos tempos calculados.
 
@@ -90,8 +103,8 @@ No documento `tree_stats.cpp`, utilizando as funções responsáveis pela coleta
 
 #### 2.4.3. Entrega 3
 
-* **Bruno Ferreira Salvi:** Elaboração e revisão do relatório final, formulação das estatísticas extras e revisão geral do código e documentação;
-* **Henrique Coelho Beltrão:**  Elaboração e revisão do relatório final, revisão geral do código, documentação, instruções de execução com novos dados e ajustes no Makefile;
+* **Bruno Ferreira Salvi:** Revisão do relatório final, formulação das estatísticas extras e revisão geral do código e documentação;
+* **Henrique Coelho Beltrão:** Revisão do relatório final, verificações e visualização de progresso das etapas, ajustes no Makefile para descompactar dados e reformatação do código;
 * **Henrique Gabriel Gasparelo:** Implementação dos testes unitários da RBT e redação do relatório;
 * **José Thevez Gomes Guedes:** Implementação das funções da RBT e redação do relatório;
 * **Luiz Eduardo Bravin:** Implementação da CLI para RBT, atualização das funções úteis para comportar NIL e redação do relatório.
@@ -117,52 +130,56 @@ A seguir, serão analisados graficamente os resultados obtidos, comparando o des
 #### 3.2.1. Tempo de Inserção
 ##### **Figura 1: Tempo de Inserção de Palavra**
 ![Figura 1](graphs/grafico_ExecutionTimeInsertion.png)
-##### **Discussão:** Analisando o tempo total de inserção, nota-se que a RBT apresentou o melhor desempenho, sendo consistentemente mais rápida que as outras duas. A árvore AVL, embora mantenha um tempo de inserção estável, foi ligeiramente mais lenta que a RBT, provavelmente devido ao maior número de rotações necessárias para manter seu balanceamento estrito. A BST, por sua vez, apresentou tempos médios voláteis e um tempo total que, embora próximo ao da AVL, reflete sua ineficiência estrutural.
+##### **Discussão:** A análise do tempo total de inserção revela que a RBT apresentou o melhor desempenho, sendo consistentemente mais rápida que as outras duas estruturas. Esse resultado pode ser atribuído ao menor número de rotações necessárias para manter o balanceamento, em comparação à AVL. Apesar disso, a AVL manteve um tempo de inserção estável, embora ligeiramente mais lento, devido ao rigor de suas regras de balanceamento. Por outro lado, a BST apresentou tempos médios voláteis e um tempo total próximo ao da AVL, mas sua falta de balanceamento estrutural resultou em maior variabilidade e ineficiência.
+
 
 #### 3.2.2. Tempo de Busca
 ##### **Figura 2: Tempo de Busca de Palavra**
 ![Figura 2](graphs/grafico_ExecutionTimeSearch.png)
-##### **Discussão:** As árvores auto-balanceadas, AVL e RBT, reduziram consideravelmente o tempo de busca em relação à BST. A AVL apresentou o tempo médio de busca mais baixo e estável, confirmando que seu balanceamento rigoroso é vantajoso para consultas. A RBT teve um desempenho muito próximo ao da AVL, sendo também uma excelente opção para buscas. A BST foi a mais lenta, com picos de tempo de busca que evidenciam os problemas causados por seu desbalanceamento.
+##### **Discussão:** As árvores auto-balanceadas, AVL e RBT, reduziram significativamente o tempo de busca em relação à BST. A AVL destacou-se com o menor tempo médio de busca, evidenciando que seu balanceamento rigoroso é vantajoso para consultas. A RBT apresentou desempenho muito próximo ao da AVL, sendo também uma excelente opção para buscas. A BST, por sua vez, foi a mais lenta, com picos de tempo de busca que refletem os problemas causados por seu desbalanceamento.
 
 #### 3.2.3. Número de Comparações
 ##### **Figura 3: Número de Comparações por Inserção de Palavra**
 ![Figura 3](graphs/grafico_NumComparisonsInsertion.png)
 ##### **Figura 4: Número de Comparações por Busca de Palavra**
 ![Figura 4](graphs/grafico_NumComparisonsSearch.png)
-##### **Discussão:** Tanto na inserção quanto na busca, as árvores AVL e RBT realizaram um número de comparações significativamente menor que a BST. Para inserções, a RBT exigiu o menor número total de comparações, seguida de perto pela AVL, o que corrobora seus tempos de inserção mais baixos. Para buscas, a AVL se mostrou marginalmente mais eficiente, realizando, em média e no pior caso, o menor número de comparações, com a RBT apresentando resultados quase idênticos.
+##### **Discussão:** Tanto na inserção quanto na busca, as árvores AVL e RBT realizaram um número de comparações significativamente menor que a BST. Para inserções, a RBT exigiu o menor número total de comparações, seguida de perto pela AVL, o que corrobora seus tempos de inserção mais baixos. Para buscas, a AVL foi marginalmente mais eficiente, realizando, em média e no pior caso, o menor número de comparações, enquanto a RBT apresentou resultados quase idênticos. A BST, por sua vez, teve o maior número de comparações, refletindo sua tendência ao desbalanceamento.
 
 #### 3.2.4. Altura da Árvore
 ##### **Figura 5: Altura da Árvore**
 ![Figura 5](graphs/grafico_TreeHeight.png)
-##### **Discussão:** Nota-se primeiramente que existem uma grande diferença de altura entre a BST e a AVL, ou RBT, isso se dá por conta do desbalaceamento da BST que permite, em certos casos, uma altura proporcional a $n$ ao invés do $log(n)$ desejado, ao contrário da AVL e RBT, que mesmo no pior caso possuem altura proporcional a $log(n)$. Isso mostra um comportamento similar ao esperado, por conta das proporções explicadas e pela altura da RBT ser ligeiramente maior que a da AVL, uma vez que possui uma menor rigidez no balaceamento, mesmo a altura da AVL sendo semelhante a da RBT em todo o experimento. Além disso, é visível que a altura de todas as árvores não cresce muito a medida que se aumenta o número de documentos, que pode ser explicado por dois fatores: existirem muitas palavras comuns a muitos documentos, que não aumenta o número de nós já que não são palavras distintas, e o fato de que é necessário, no caso geral, inserir muitos nós para aumentar a altura de uma árvore grande, já que para isso, é necessário que o novo nó seja filho de um nó de altura máxima, no caso da BST, ou que o balaceamento esteja no limite, no caso da AVL e RBT.
+##### **Discussão:** Observa-se uma diferença significativa de altura entre a BST e as árvores balanceadas (AVL e RBT). Essa disparidade ocorre porque a BST, por não possuir mecanismos de balanceamento, pode atingir alturas próximas a $n$ em casos desfavoráveis, enquanto AVL e RBT mantêm a altura próxima de $log(n)$ mesmo no pior cenário. Esse comportamento está de acordo com a teoria, já que a RBT, por adotar regras de balanceamento menos rígidas que a AVL, apresenta uma altura levemente superior, embora ambas permaneçam próximas ao ideal. Além disso, nota-se que a altura das árvores cresce lentamente à medida que aumenta o número de documentos. Isso pode ser atribuído a dois fatores principais: a presença de muitas palavras comuns entre os documentos, que não geram novos nós, e o fato de que, para aumentar a altura de árvores grandes, é necessário inserir novos nós em posições específicas (filhos de nós de altura máxima), o que se torna cada vez mais raro tanto na BST quanto nas árvores balanceadas.
 
 #### 3.2.5. Tamanho dos Galhos (Menor e Maior Caminho)
 ##### **Figura 6: Tamanho do Maior e Menor Galho**
 ![Figura 6](graphs/grafico_branchs.png)
-##### **Discussão:** Nota-se que a distância entre o maior e menor galho da AVL e da RBT é bem curta, enquanto na BST essa distância é exageradamente longa. Isso ocorre devido à natureza da AVL e da RBT, que são projetadas para evitar degenerações e manter a árvore balanceada, com isso balanceia-se também o tamanho dos galhos. Em contrapartida, alguns galhos da BST podem degenerar e se tornar longos demais. Outro ponto relevante é que a diferença entre o maior e o menor galho na RBT foi mais acentuada do que na AVL. Onde, o menor galho da RBT foi mais curto que o da AVL, enquanto o maior foi mais longo, o que reflete o balanceamento menos rígido da RBT em relação ao da AVL.
+##### **Discussão:** A diferença entre o maior (acima) e menor (abaixo) galho foi muito mais acentuada na BST, evidenciando sua falta de balanceamento. Em contraste, a AVL e a RBT mantiveram uma distância curta entre os galhos, refletindo suas propriedades de balanceamento. A RBT apresentou uma diferença ligeiramente maior que a AVL, devido ao seu balanceamento mais flexível, mas ainda dentro de limites aceitáveis.
 
 #### 3.2.6. Números de nós
 ##### **Figura 7: Número de nós**
 ![Figura 7](graphs/grafico_NumNodes.png)
-##### **Discussão:** Nota-se que o número de nós nas três árvores é o mesmo, uma vez que o que muda em cada implementação é a forma de inserção do nó, mas nenhum nó deixa de ser inserido ou é inserido mais de uma vez. Além disso, pode-se observar um crescimento natural do número de nós, uma vez que se aumenta o número de documentos, e, consequentemente, aumentasse o número de palavras e potenciais nós. Entretanto, mesmo com esse crescimento, é possível observar leves estagnações a medida que aumenta-se o número de documentos, que provavelmente ocorre devido a existência de muitas palavras repetidas em mais de um documento que não criam novos nós, podendo existir documentos com uma série de palavras repetidas.
+##### **Discussão:** Observa-se que o número de nós é idêntico nas três estruturas, pois a diferença entre elas está apenas na forma de organização e balanceamento, não na quantidade de elementos inseridos. Cada palavra única resulta em um nó, independentemente da árvore utilizada. Inicialmente, o número de nós cresce rapidamente à medida que novas palavras são encontradas. No entanto, à medida que mais documentos são processados, a frequência de palavras repetidas aumenta, fazendo com que a inserção de novos nós se torne menos comum. Isso faz com que o crescimento do número total de nós tenda a ser logarítmico em relação ao número de documentos processados, já que a maioria das novas inserções corresponde a palavras já existentes. Assim, mesmo com o aumento do corpus, a presença de palavras repetidas limita o crescimento do número total de nós.
 
 #### 3.2.7. Tamanho da árvore
 ##### **Figura 8: Tamanho da árvore**
 ![Figura 8](graphs/grafico_TreeSizeBytes.png)
-##### **Discussão:** Comparando este gráfico com a Figura 7, é possível perceber uma possível correlação entre número de nós e o tamanho da árvore, o que pode ser explicado uma vez que o tamanho da árvore depende unicamente do tamanho de cada nó, que bem similar, uma vez que possuem a mesma estrutura. Deste modo, a medida que se aumenta o número de nós, aumenta-se o tamanho da árvore, da mesma maneira.
+##### **Discussão:** O tamanho da árvore apresentou uma correlação direta com o número de nós, já que o tamanho de cada nó é semelhante entre as estruturas. Isso confirma que o aumento no número de nós resulta em um aumento proporcional no tamanho da árvore.
+
 
 #### 3.2.8. Altura da árvore vs Número de nós
 ##### **Figura 9: Altura da Árvore vs. Número de nós BST**
 ![Figura 9](graphs/grafico_height_node_bst.png)
-##### **Discussão:** Nesse gráfico verifica-se que o número de nós computados está dentro do aceitável, entre o máximo e mínimo teórico da BST. O mínimo número de nós se dá quando a BST degenera, isto é, há um nó por camada, logo $n \geq h + 1$. O número máximo de nós se dá quando a BST está completa, isto é, há $2^{m}$ nós na camada de altura $m$, logo $n \leq 2^{h+1} -1$.
+##### **Discussão:** A BST apresentou resultados dentro dos limites teóricos, com o número de nós variando entre o mínimo ($n \geq h + 1$) e o máximo ($n \leq 2^{h+1} -1$). No entanto, sua tendência ao desbalanceamento foi evidente, com muitos casos próximos ao limite mínimo.
+
 
 ##### **Figura 10: Altura da Árvore vs. Número de nós AVL**
 ![Figura 10](graphs/grafico_height_node_avl.png)
-##### **Discussão:** Nesse gráfico verifica-se que o número de nós computados está dentro do aceitável, entre o máximo e mínimo teórico da AVL. O mínimo número de nós se dá quando se cumpre minimamente as restrições de balanceamento da AVL, logo $n \geq 2^{\frac{h}{1.44}}$. O número máximo de nós se dá quando a AVL está completa, isto é, há $2^{m}$ nós na camada de altura $m$, logo $n \leq 2^{h+1} -1$.
+##### **Discussão:** A AVL manteve o número de nós dentro dos limites teóricos, com o mínimo ($n \geq 2^{\frac{h}{1.44}}$) e o máximo ($n \leq 2^{h+1} -1$). Isso demonstra a eficácia de suas regras de balanceamento em manter a estrutura otimizada.
 
 ##### **Figura 11: Altura da Árvore vs. Número de nós AVL**
 ![Figura 11](graphs/grafico_height_node_rbt.png)
-##### **Discussão:** Nesse gráfico verifica-se que o número de nós computados está dentro do aceitável, entre o máximo e mínimo teórico da RBT. O mínimo número de nós se dá quando se cumpre minimamente as restrições de balanceamento da RBT, logo $n \geq 2^{\frac{h}{2}} -1$. O número máximo de nós se dá quando a RBT está completa, isto é, há $2^{m}$ nós na camada de altura $m$, logo $n \leq 2^{h+1} -1$.
+##### **Discussão:** A RBT também apresentou resultados dentro dos limites teóricos, com o mínimo ($n \geq 2^{\frac{h}{2}} -1$) e o máximo ($n \leq 2^{h+1} -1$). Sua altura foi ligeiramente maior que a da AVL, refletindo seu balanceamento menos rígido, mas ainda eficiente.
+
 
 ### 3.3. Resultados
 
