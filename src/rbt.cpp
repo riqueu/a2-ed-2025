@@ -196,6 +196,19 @@ void insertNode(Node *root, BinaryTree *tree, const std::string &word,
       insertNode(root->right, tree, word, documentId, numComparisons);
     }
   } else { // palavra já existe na árvore, adiciona o ID do documento
+    // Verifica se o documentId já existe
+    for (int id : root->documentIds) {
+      if (id == documentId) {
+        // Se já existe, não insere novamente
+        return;
+      }
+    }
+    // Se não existe, adiciona o novo documentId
+    // Verifica se o nó é o NIL, se for não adiciona o documentId
+    if (root == tree->NIL) {
+      return;
+    }
+    // Adiciona o documentId ao nó atual
     root->documentIds.push_back(documentId);
   }
 

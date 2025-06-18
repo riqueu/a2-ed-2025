@@ -14,7 +14,17 @@ void testPrintTree() {
   RBT::insert(tree, "cereja", 3);
   RBT::insert(tree, "banana", 4);
   RBT::insert(tree, "abobora", 5);
+  /* morango várias vezes de mesmo documentId
+     (para testar se o mesmo documentId é adicionado apenas uma vez)
+     (no código geral, essa filtragem é feita pelo leitor dos dados
+     mas a função RBT::insert também deve lidar com isso, apesar de
+     ser mais custoso em termos de performance) */
   RBT::insert(tree, "morango", 6);
+  RBT::insert(tree, "morango", 6);
+  RBT::insert(tree, "morango", 6);
+  RBT::insert(tree, "morango", 6);
+  RBT::insert(tree, "morango", 7);
+  RBT::insert(tree, "banana", 6);
 
   // Testa funcao printTree
   std::cout << "=== Teste printTree ===" << std::endl;

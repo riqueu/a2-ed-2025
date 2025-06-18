@@ -60,10 +60,13 @@ int main(int argc, char *argv[]) {
 
     // Itera sobre cada palavra no documento e insere ela na árvore
     for (int i = 0; i < n_docs; i++) {
+      // exibe o progresso da leitura
+      displayProgressBar(i + 1, n_docs, "Indexando documentos");
       for (size_t j = 0; j < docs[i]->content->size(); j++) {
         AVL::insert(avl, docs[i]->content->at(j), docs[i]->docID);
       }
     }
+    cout << endl;
 
     // loop para iterar por mais palavras na mesma indexação
     string repeat = "s";
@@ -105,7 +108,7 @@ int main(int argc, char *argv[]) {
   }
 
   // se o comando for stats
-  if (command == "stats") {
+  else if (command == "stats") {
     if (argc != 4) {
       cout << "Erro, estrutura esperada: " << endl
            << "./<arvore> stats <n_docs> <diretorio>" << endl;
@@ -140,6 +143,9 @@ int main(int argc, char *argv[]) {
     });
     cout << endl;
     auto endRead = std::chrono::high_resolution_clock::now();
+
+    cout << "Coletando estatísticas..." << endl;
+
     double readTime =
         std::chrono::duration<double, std::milli>(endRead - startRead).count();
 
@@ -197,7 +203,7 @@ int main(int argc, char *argv[]) {
   }
 
   // se o comando for o print
-  if (command == "print") {
+  else if (command == "print") {
 
     // se a estrutura não for a esperada para search
     if (argc != 4) {
@@ -229,15 +235,21 @@ int main(int argc, char *argv[]) {
 
     // ler os documentos e cria a árvore
     cout << "Leitura dos documentos iniciada..." << endl;
-    Doc **docs = readDocuments(n_docs, path);
+    Doc **docs = readDocuments(n_docs, path, [](int current, int total) {
+      displayProgressBar(current, total, "Lendo documentos");
+    });
+    cout << endl;
     BinaryTree *avl = AVL::create();
 
     // Itera sobre cada palavra no documento e insere ela na árvore
     for (int i = 0; i < n_docs; i++) {
+      // exibe o progresso da leitura
+      displayProgressBar(i + 1, n_docs, "Indexando documentos");
       for (size_t j = 0; j < docs[i]->content->size(); j++) {
         AVL::insert(avl, docs[i]->content->at(j), docs[i]->docID);
       }
     }
+    cout << endl;
 
     string print_type;
     cout << "Digite o que tu quer printar!" << endl

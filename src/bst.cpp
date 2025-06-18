@@ -35,6 +35,14 @@ Node *insertNode(Node *root, const std::string &word, int documentId,
 
   // Caso onde se encontra o nó com a palavra
   if (root->word == word) {
+    // Verifica se o documentId já existe
+    for (int id : root->documentIds) {
+      if (id == documentId) {
+        // Se já existe, não insere novamente
+        return root;
+      }
+    }
+    // Se não existe, adiciona o novo documentId
     root->documentIds.push_back(documentId);
   } else if (root->word > word) { // Caso onde a palavra a ser inserida esta a
                                   // esquerda do nó atual
