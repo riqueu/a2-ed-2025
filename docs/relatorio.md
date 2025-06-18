@@ -135,7 +135,7 @@ Nesta seção, serão apresentados os resultados numéricos obtidos e uma discus
 #### 3.2.5. Tamanho dos Galhos (Menor e Maior Caminho)
 ##### **Figura 6: Tamanho do Maior e Menor Galho**
 ![Figura 6](graphs/grafico_branchs.png)
-##### **Discussão:** Nota-se que a distância entre o maior e menor galho da AVL e da RBT é bem curta, enquanto na BST essa distância é exageradamente longa. Isso ocorre devido à natureza da AVL e da RBT, que são projetadas para evitar degenerações e manter a árvore balanceada, com isso balanceia-se também o tamanho dos galhos. Em contrapartida, alguns galhos da BST podem degenerar e se tornar longos demais.
+##### **Discussão:** Nota-se que a distância entre o maior e menor galho da AVL e da RBT é bem curta, enquanto na BST essa distância é exageradamente longa. Isso ocorre devido à natureza da AVL e da RBT, que são projetadas para evitar degenerações e manter a árvore balanceada, com isso balanceia-se também o tamanho dos galhos. Em contrapartida, alguns galhos da BST podem degenerar e se tornar longos demais. Outro ponto relevante é que a diferença entre o maior e o menor galho na RBT foi mais acentuada do que na AVL. Onde, o menor galho da RBT foi mais curto que o da AVL, enquanto o maior foi mais longo, o que reflete o balanceamento menos rígido da RBT em relação ao da AVL.
 
 #### 3.2.6. Números de nós
 ##### **Figura 7: Número de nós**
@@ -180,7 +180,7 @@ Após a implementação das três estruturas de dados para aplicação do índic
 
 * **Vantagens:** Seu critério de balanceamento menos rígido que o da AVL geralmente resulta em menos rotações durante as inserções, tornando a operação de inserção potencialmente mais rápida.
 * **Desvantagens:** A altura pode ser ligeiramente maior que a de uma AVL, podendo levar a um tempo de busca um pouco maior.
-* **Observado:** A RBT apresentou um tempo de inserção mais rápido que a AVL (Figura 1), resultado do menor número de rotações necessitadas pelas suas regras. Em relação à busca, a RBT mostrou-se ligeiramente menos eficiente, realizando um número maior de comparações em comparação à AVL, embora o tempo de execução tenha se mantido bastante próximo (Figuras 2 e 4). Como esperado, sua altura foi levemente superior à da AVL (Figura 5), e a diferença entre o maior e o menor galho também foi mais acentuada, onde o menor galho da RBT foi inferior ao da AVL, enquanto o maior ultrapassou o da AVL (Figura 6), refletindo seu balanceamento mais afrouxado.
+* **Observado:** A RBT apresentou um tempo de inserção mais rápido que a AVL (Figura 1), resultado do menor número de rotações necessitadas pelas suas regras. Em relação à busca, a RBT mostrou-se ligeiramente menos eficiente, realizando um número maior de comparações em comparação à AVL, embora o tempo de execução tenha se mantido bastante próximo (Figuras 2 e 4). Como esperado, sua altura foi levemente superior à da AVL (Figura 5), e sua diferença entre o maior e o menor galho também foi mais acentuada (Figura 6), refletindo seu balanceamento mais afrouxado.
 
 ### 3.4. Dificuldades encontradas
 
