@@ -40,12 +40,12 @@ int main(int argc, char *argv[]) {
       max_docs = distance(filesystem::directory_iterator(path),
                           filesystem::directory_iterator{});
     } catch (const filesystem::filesystem_error &e) {
-      cout << "Erro ao acessar o diretório: " << e.what() << endl;
+      cout << "Erro ao acessar o diretorio: " << e.what() << endl;
       return 1;
     }
 
     if (n_docs < 1 || n_docs > max_docs) {
-      cout << "Erro: O número de documentos deve ser entre 1 e " << max_docs
+      cout << "Erro: O numero de documentos deve ser entre 1 e " << max_docs
            << "." << endl;
       return 0;
     }
@@ -122,12 +122,12 @@ int main(int argc, char *argv[]) {
       max_docs = distance(filesystem::directory_iterator(path),
                           filesystem::directory_iterator{});
     } catch (const filesystem::filesystem_error &e) {
-      cout << "Erro ao acessar o diretório: " << e.what() << endl;
+      cout << "Erro ao acessar o diretorio: " << e.what() << endl;
       return 1;
     }
 
     if (n_docs < 1 || n_docs > max_docs) {
-      cout << "Erro: O número de documentos deve ser entre 1 e " << max_docs
+      cout << "Erro: O numero de documentos deve ser entre 1 e " << max_docs
            << "." << endl;
       return 0;
     }

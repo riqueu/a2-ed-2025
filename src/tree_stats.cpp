@@ -1,6 +1,7 @@
 #include "data.h"
 #include "export_stats.h"
 #include "tree_utils.h"
+#include <filesystem>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -23,10 +24,31 @@ int main(int argc, char *argv[]) {
   int n_points = stoi(argv[3]);
   string path = argv[4];
 
+  // Verifica se o número de documentos é válido
+  int max_docs = 0;
+  try {
+    max_docs = distance(filesystem::directory_iterator(path),
+                        filesystem::directory_iterator{});
+  } catch (const filesystem::filesystem_error &e) {
+    cout << "Erro ao acessar o diretorio: " << e.what() << endl;
+    return 1;
+  }
+
+  if (n_max_docs < 1 || n_max_docs > max_docs) {
+    cout << "Erro: O numero de documentos deve ser entre 1 e " << max_docs
+          << "." << endl;
+    return 0;
+  }
+
+  if (n_points < 1 || n_points > n_max_docs) {
+    cout << "Erro: O numero de pontos deve ser pelo menos 1 e no maximo igual ao numero de documentos (" << n_max_docs << ")." << endl;
+    return 0;
+  }
+
   // Verifica se o tipo de árvore é válido antes de ler os dados
   if (treeType != "bst" && treeType != "avl" && treeType != "rbt") {
     cout << "Erro: Tipo de arvore invalido. Use 'bst', 'avl' ou 'rbt'." << endl;
-    return 1;
+    return 0;
   }
 
   // Lê documentos do diretório especificado (callback para acompanhar
@@ -70,7 +92,7 @@ int main(int argc, char *argv[]) {
       stats.push_back(s);
 
       // Exibe progresso da criação das árvores
-      displayProgressBar(i + 1, n_docs.size(), "Criando árvores");
+      displayProgressBar(i + 1, n_docs.size(), "Coletando dados da arvore");
     }
     cout << endl; // Move to the next line after progress bar
   } else {
