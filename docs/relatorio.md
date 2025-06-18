@@ -123,9 +123,38 @@ Para análise dos resultados obtidos, foram criados arquivos CSV com as métrica
 
 [Tabela RBT](dados_rbt.csv)
 
-A seguir, serão analisados graficamente os resultados obtidos, comparando o desempenho de cada árvore implementada em uma estatística específica.
+#### 3.1.1. Palavras Mais Frequentes por Tamanho
+
+A tabela abaixo apresenta, para cada tamanho de palavra (de 1 a 20 letras), a palavra que aparece em mais documentos do corpus, juntamente com a quantidade de documentos em que ela ocorre. Isso evidencia a presença de termos comuns e recorrentes, muitos deles funcionais ou relacionados ao contexto dos textos analisados. Palavras curtas, como preposições e artigos, tendem a aparecer em praticamente todos os documentos, enquanto palavras mais longas são naturalmente mais raras.
+
+| Nº de Letras | Palavra                | Nº de Documentos |
+|:------------:|:----------------------|:----------------:|
+| 1            | a                     | 9.999            |
+| 2            | in                    | 10.000           |
+| 3            | and                   | 9.999            |
+| 4            | with                  | 9.950            |
+| 5            | which                 | 9.647            |
+| 6            | during                | 8.326            |
+| 7            | between               | 7.647            |
+| 8            | category              | 9.825            |
+| 9            | including             | 6.935            |
+| 10           | references            | 9.670            |
+| 11           | development           | 3.353            |
+| 12           | particularly          | 2.646            |
+| 13           | international         | 3.093            |
+| 14           | administration        | 1.184            |
+| 15           | characteristics       | 900              |
+| 16           | responsibilities      | 293              |
+| 17           | disestablishments     | 138              |
+| 18           | telecommunications    | 83               |
+| 19           | counterintelligence   | 14               |
+| 20           | uncharacteristically  | 28               |
+
+Esses dados reforçam a importância de considerar a frequência e o tamanho das palavras ao analisar índices invertidos, pois termos muito comuns podem impactar o desempenho das operações de busca e o balanceamento das árvores.
 
 ### 3.2. Gráficos e Estatísticas
+
+A seguir, serão analisados graficamente os resultados obtidos, comparando o desempenho de cada árvore implementada em uma estatística específica.
 
 #### 3.2.1. Tempo de Inserção
 ##### **Figura 1: Tempo de Inserção de Palavra**

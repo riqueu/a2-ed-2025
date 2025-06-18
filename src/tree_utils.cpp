@@ -146,8 +146,8 @@ void most_frequent_words(Node *node, std::vector<Node *> &mostFrequentNodes,
   int length = node->word.size();
   int count = node->documentIds.size();
 
-  if (length >= 1 && length <= 15) {
-    int index = length - 1; // índice entre 0 e 14
+  if (length >= 1 && length <= 20) {
+    int index = length - 1; // índice entre 0 e 19
 
     if (count > maxCounts[index]) {
       maxCounts[index] = count;
@@ -296,8 +296,8 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs,
   get_min_branch(tree->root, 0, &minBranch, tree->NIL);
   s.minBranch = minBranch;
 
-  std::vector<Node *> mostFrequentNodes(15, nullptr);
-  std::vector<int> maxCounts(15, -1);
+  std::vector<Node *> mostFrequentNodes(20, nullptr);
+  std::vector<int> maxCounts(20, -1);
 
   if (tree_type == "rbt") {
     most_frequent_words(tree->root, mostFrequentNodes, maxCounts, tree->NIL);
@@ -305,7 +305,7 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs,
     most_frequent_words(tree->root, mostFrequentNodes, maxCounts, nullptr);
   }
 
-  for (int i = 0; i < 15; ++i) {
+  for (int i = 0; i < 20; ++i) {
     if (mostFrequentNodes[i]) {
       s.mostFrequentNodes.push_back(*mostFrequentNodes[i]);
     } else {
