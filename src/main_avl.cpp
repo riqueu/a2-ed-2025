@@ -138,7 +138,7 @@ int main(int argc, char *argv[]) {
     deleteDocs(docs, n_docs);
   }
 
-  // se o comando for o search
+  // se o comando for o print
   if (command == "print") {
 
     // se a estrutura não for a esperada para search
