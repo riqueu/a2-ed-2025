@@ -147,4 +147,49 @@ int main(int argc, char *argv[]) {
     // free memory
     deleteDocs(docs, n_docs);
   }
+
+  // se o comando for o print
+  if (command == "print") {
+
+    // se a estrutura não for a esperada para search
+    if (argc != 4) {
+      cout << "Erro, estrutura esperada: " << endl
+           << "./<arvore> print <n_docs> <diretorio>";
+      return 0;
+    }
+
+    // parâmetros -> variáveis de entrada
+    string n = argv[2];
+    int n_docs = stoi(n);
+    string path = argv[3];
+
+    // ler os documentos e cria a árvore
+    cout << "Leitura dos documentos iniciada..." << endl;
+    Doc **docs = readDocuments(n_docs, path);
+    BinaryTree *bst = BST::create();
+
+    // Itera sobre cada palavra no documento e insere ela na árvore
+    for (int i = 0; i < n_docs; i++) {
+      for (size_t j = 0; j < docs[i]->content->size(); j++) {
+        BST::insert(bst, docs[i]->content->at(j), docs[i]->docID);
+      }
+    }
+  
+    string print_type;
+    cout << "Digite o que tu quer printar!" << endl
+         << "1 para printar o index, 2 para printar a árvore: ";
+    cin >> print_type;
+    int print_t = stoi(print_type);
+
+    if (print_t == 1) {
+      printIndex(bst);
+    } else if (print_t == 2) {
+      printTree(bst);
+    }
+
+    // free memory
+    BST::destroy(bst);
+    deleteDocs(docs, n_docs);
+  }
+
 }
