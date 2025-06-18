@@ -164,8 +164,18 @@ int main(int argc, char *argv[]) {
         AVL::insert(avl, docs[i]->content->at(j), docs[i]->docID);
       }
     }
+  
+    string print_type;
+    cout << "Digite o que tu quer printar!" << endl
+         << "1 para printar o index, 2 para printar a árvore: ";
+    cin >> print_type;
+    int print_t = stoi(print_type);
 
-    printTree(avl);
+    if (print_t == 1) {
+      printIndex(avl);
+    } else if (print_t == 2) {
+      printTree(avl);
+    }
 
     // free memory
     AVL::destroy(avl);
