@@ -176,7 +176,9 @@ bool testInsertNode() {
   if (tree->root->documentIds.size() != 2 ||
       tree->root->documentIds[0] != 1 ||
       tree->root->documentIds[1] != 4) {
-    std::cout << "FALHA: DocumentIds duplicados nao foram adicionados corretamente para 'banana'" << std::endl;
+   std::cout << "FALHA: DocumentIds duplicados nao foram adicionados "
+                 "corretamente para 'banana'"
+              << std::endl;
     success = false;
   }
 
@@ -184,15 +186,18 @@ bool testInsertNode() {
   tree->root = BST::insertNode(tree->root, "banana", 42, comparisons);
   tree->root = BST::insertNode(tree->root, "banana", 99, comparisons);
 
-  if (tree->root->documentIds.size() != 4 ||
-      tree->root->documentIds[2] != 42 ||
+  if (tree->root->documentIds.size() != 4 || tree->root->documentIds[2] != 42 ||
       tree->root->documentIds[3] != 99) {
-    std::cout << "FALHA: DocumentIds adicionais não foram inseridos corretamente para 'banana'" << std::endl;
+    std::cout << "FALHA: DocumentIds adicionais não foram inseridos "
+                 "corretamente para 'banana'"
+              << std::endl;
     success = false;
   }
 
   if (success) {
-    std::cout << "SUCESSO: Nodes inseridos corretamente, incluindo palavras duplicadas com todos os documentIds" << std::endl;
+    std::cout << "SUCESSO: Nodes inseridos corretamente, incluindo palavras "
+                 "duplicadas com todos os documentIds"
+              << std::endl;
   }
   // Libera memoria
   BST::destroy(tree);

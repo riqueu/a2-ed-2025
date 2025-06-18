@@ -68,7 +68,8 @@ bool testCreateNode() {
   // Testa se o node foi iniciado corretamente
   if (node != nullptr && node->word == word && node->documentIds.size() == 1 &&
       node->documentIds[0] == docId && node->parent == nullptr &&
-      node->left == tree->NIL && node->right == tree->NIL && node->isRed == true) {
+      node->left == tree->NIL && node->right == tree->NIL &&
+      node->isRed == true) {
     std::cout << "SUCESSO: Node criado corretamente" << std::endl;
   } else {
     std::cout << "FALHA: Problema ao criar node" << std::endl;
@@ -183,36 +184,43 @@ bool testInsertNode() {
     success = false;
   }
   // Confere para "abobora"
-  if (tree->root->left->left->isRed == false || tree->root->left->left->word != "abobora") {
+  if (tree->root->left->left->isRed == false ||
+      tree->root->left->left->word != "abobora") {
     std::cout << "FALHA: Node abobora incorreto" << std::endl;
     success = false;
   }
   // Confere para "cereja"
-  if (tree->root->left->right->isRed == false || tree->root->left->right->word != "cereja") {
+  if (tree->root->left->right->isRed == false ||
+      tree->root->left->right->word != "cereja") {
     std::cout << "FALHA: Node cereja incorreto" << std::endl;
     success = false;
   }
   // Confere para "goiaba"
-  if (tree->root->right->left->isRed == false || tree->root->right->left->word != "goiaba") {
+  if (tree->root->right->left->isRed == false ||
+      tree->root->right->left->word != "goiaba") {
     std::cout << "FALHA: Node goiaba incorreto" << std::endl;
     success = false;
   }
   // Confere para "kiwi"
-  if (tree->root->right->right->isRed == false || tree->root->right->right->word != "kiwi") {
+  if (tree->root->right->right->isRed == false ||
+      tree->root->right->right->word != "kiwi") {
     std::cout << "FALHA: Node kiwi incorreto" << std::endl;
     success = false;
   }
 
   // Confere documentIds para "banana"
-  if (tree->root->documentIds.size() != 2 ||
-      tree->root->documentIds[0] != 1 ||
+  if (tree->root->documentIds.size() != 2 || tree->root->documentIds[0] != 1 ||
       tree->root->documentIds[1] != 4) {
-    std::cout << "FALHA: DocumentIds duplicados nao foram adicionados corretamente para 'damasco'" << std::endl;
+    std::cout << "FALHA: DocumentIds duplicados nao foram adicionados "
+                 "corretamente para 'damasco'"
+              << std::endl;
     success = false;
   }
 
   if (success) {
-    std::cout << "SUCESSO: Nodes inseridos corretamente, incluindo palavras duplicadas com todos os documentIds" << std::endl;
+    std::cout << "SUCESSO: Nodes inseridos corretamente, incluindo palavras "
+                 "duplicadas com todos os documentIds"
+              << std::endl;
   }
   // Libera memoria
   RBT::destroy(tree);
@@ -226,7 +234,7 @@ bool testInsertNode() {
  *
  * @param node Nó atual da árvore
  * @param tree Ponteiro para a árvore binária
- * 
+ *
  * @return true se a árvore estiver colorida corretamente, false caso contrário.
  */
 bool colorCheck(Node *node, BinaryTree *tree) {
@@ -238,11 +246,12 @@ bool colorCheck(Node *node, BinaryTree *tree) {
   // Verifica se o nó vermelho tem filhos vermelhos
   if (node->isRed) {
     if (node->left->isRed || node->right->isRed) {
-      std::cout << "FALHA: Dois vermelhos em sequencia encontrados" << std::endl;
+      std::cout << "FALHA: Dois vermelhos em sequencia encontrados"
+                << std::endl;
       return false;
     }
   }
-  
+
   // Verifica os filhos recursivamente
   return colorCheck(node->left, tree) && colorCheck(node->right, tree);
 }
@@ -252,7 +261,7 @@ bool colorCheck(Node *node, BinaryTree *tree) {
  *
  * @param node Nó atual da árvore
  * @param tree Ponteiro para a árvore binária
- * 
+ *
  * @return A altura preta do nó, ou -1 se houver inconsistência.
  */
 int checkBlackHeight(Node *node, BinaryTree *tree) {
@@ -262,8 +271,8 @@ int checkBlackHeight(Node *node, BinaryTree *tree) {
   }
 
   // Realiza a verificação recursiva para os filhos
-  int leftBlackHeight  = checkBlackHeight(node->left, tree);
-  int rightBlackHeight   = checkBlackHeight(node->right, tree);
+  int leftBlackHeight = checkBlackHeight(node->left, tree);
+  int rightBlackHeight = checkBlackHeight(node->right, tree);
 
   // Se algum filho retornar -1, significa que há uma inconsistência
   if (leftBlackHeight == -1 || rightBlackHeight == -1) {
@@ -291,21 +300,26 @@ bool testColor() {
   int comparisons = 0;
 
   // Inserções
-  RBT::insertNode(tree->root, tree, "banana", 1, comparisons);   // 3ª (banana)
-  RBT::insertNode(tree->root, tree, "abacaxi", 2, comparisons);  // 1ª (abacaxi)
-  RBT::insertNode(tree->root, tree, "morango", 3, comparisons);  // 9ª (morango)
-  RBT::insertNode(tree->root, tree, "cereja", 4, comparisons);   // 4ª (cereja)
-  RBT::insertNode(tree->root, tree, "uva", 5, comparisons);      // 14ª (uva)
-  RBT::insertNode(tree->root, tree, "banana", 6, comparisons);   // 3ª (banana, repetida)
-  RBT::insertNode(tree->root, tree, "laranja", 7, comparisons);  // 7ª (laranja)
-  RBT::insertNode(tree->root, tree, "abacaxi", 8, comparisons);  // 1ª (abacaxi, repetida)
-  RBT::insertNode(tree->root, tree, "pera", 9, comparisons);     // 11ª (pera)
-  RBT::insertNode(tree->root, tree, "kiwi", 10, comparisons);    // 6ª (kiwi)
-  RBT::insertNode(tree->root, tree, "morango", 11, comparisons); // 9ª (morango, repetida)
-  RBT::insertNode(tree->root, tree, "cereja", 12, comparisons);  // 4ª (cereja, repetida)
-  RBT::insertNode(tree->root, tree, "manga", 13, comparisons);   // 8ª (manga)
-  RBT::insertNode(tree->root, tree, "goiaba", 14, comparisons);  // 5ª (goiaba)
-  RBT::insertNode(tree->root, tree, "banana", 15, comparisons);  // 3ª (banana, repetida)
+  RBT::insertNode(tree->root, tree, "banana", 1, comparisons);  // 3ª (banana)
+  RBT::insertNode(tree->root, tree, "abacaxi", 2, comparisons); // 1ª (abacaxi)
+  RBT::insertNode(tree->root, tree, "morango", 3, comparisons); // 9ª (morango)
+  RBT::insertNode(tree->root, tree, "cereja", 4, comparisons);  // 4ª (cereja)
+  RBT::insertNode(tree->root, tree, "uva", 5, comparisons);     // 14ª (uva)
+  RBT::insertNode(tree->root, tree, "banana", 6,
+                  comparisons); // 3ª (banana, repetida)
+  RBT::insertNode(tree->root, tree, "laranja", 7, comparisons); // 7ª (laranja)
+  RBT::insertNode(tree->root, tree, "abacaxi", 8,
+                  comparisons); // 1ª (abacaxi, repetida)
+  RBT::insertNode(tree->root, tree, "pera", 9, comparisons);  // 11ª (pera)
+  RBT::insertNode(tree->root, tree, "kiwi", 10, comparisons); // 6ª (kiwi)
+  RBT::insertNode(tree->root, tree, "morango", 11,
+                  comparisons); // 9ª (morango, repetida)
+  RBT::insertNode(tree->root, tree, "cereja", 12,
+                  comparisons); // 4ª (cereja, repetida)
+  RBT::insertNode(tree->root, tree, "manga", 13, comparisons);  // 8ª (manga)
+  RBT::insertNode(tree->root, tree, "goiaba", 14, comparisons); // 5ª (goiaba)
+  RBT::insertNode(tree->root, tree, "banana", 15,
+                  comparisons); // 3ª (banana, repetida)
 
   // Verificações
   bool success = true;
@@ -328,7 +342,7 @@ bool testColor() {
   }
 
   // Verifica se a altura preta é consistente
-  if(checkBlackHeight(tree->root, tree) == -1) {
+  if (checkBlackHeight(tree->root, tree) == -1) {
     std::cout << "FALHA: Altura preta inconsistente" << std::endl;
     success = false;
   } else {
@@ -365,7 +379,7 @@ int main() {
   bool success = true;
   testPrintTree();
   success &= testCreateTree();
-  success &= testCreateNode(); 
+  success &= testCreateNode();
   success &= testInsertNode();
   success &= testSearch();
   success &= testColor();

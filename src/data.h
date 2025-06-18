@@ -1,6 +1,7 @@
 #ifndef DATA_H
 #define DATA_H
 
+#include <functional>
 #include <string>
 #include <vector>
 
@@ -76,9 +77,12 @@ bool wordInDocumentCheck(Doc *document, std::string word);
  *
  * @param numDocs Numero de documentos a serem lidos
  * @param dirPath Caminho para a pasta com os arquivos
+ * @param progressCallback Funcao de callback para atualizar o progresso.
+ * Default nullptr
  * @return Array de documentos
  */
-Doc **readDocuments(int numDocs, std::string dirPath);
+Doc **readDocuments(int numDocs, std::string dirPath,
+                    std::function<void(int, int)> progressCallback = nullptr);
 
 }; // namespace DocReading
 

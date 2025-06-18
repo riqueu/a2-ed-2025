@@ -1,5 +1,7 @@
 #include "avl.h"
 #include "data.h"
+#include "tree_utils.h"
+#include <filesystem>
 #include <iostream>
 #include <ostream>
 
@@ -11,7 +13,7 @@ int main(int argc, char *argv[]) {
   // verifica se foi passado um número suficiente de parâmetros
   if (argc < 2) {
     cout << "Erro: Nenhum comando fornecido. Estrutura esperada: ./<arvore> "
-            "<comando> <n_docs> <diretorio>"
+            "<comando(search/stats/print> <n_docs> <diretorio>"
          << endl;
     return 1;
   }
@@ -32,9 +34,28 @@ int main(int argc, char *argv[]) {
     int n_docs = stoi(n);
     string path = argv[3];
 
+    // Verifica se o número de documentos é válido
+    int max_docs = 0;
+    try {
+      max_docs = distance(filesystem::directory_iterator(path),
+                          filesystem::directory_iterator{});
+    } catch (const filesystem::filesystem_error &e) {
+      cout << "Erro ao acessar o diretorio: " << e.what() << endl;
+      return 1;
+    }
+
+    if (n_docs < 1 || n_docs > max_docs) {
+      cout << "Erro: O numero de documentos deve ser entre 1 e " << max_docs
+           << "." << endl;
+      return 0;
+    }
+
     // ler os documentos e cria a árvore
     cout << "Leitura dos documentos iniciada..." << endl;
-    Doc **docs = readDocuments(n_docs, path);
+    Doc **docs = readDocuments(n_docs, path, [](int current, int total) {
+      displayProgressBar(current, total, "Lendo documentos");
+    });
+    cout << endl;
     BinaryTree *avl = AVL::create();
 
     // Itera sobre cada palavra no documento e insere ela na árvore
@@ -95,10 +116,29 @@ int main(int argc, char *argv[]) {
     int n_docs = stoi(n);
     string path = argv[3];
 
+    // Verifica se o número de documentos é válido
+    int max_docs = 0;
+    try {
+      max_docs = distance(filesystem::directory_iterator(path),
+                          filesystem::directory_iterator{});
+    } catch (const filesystem::filesystem_error &e) {
+      cout << "Erro ao acessar o diretorio: " << e.what() << endl;
+      return 1;
+    }
+
+    if (n_docs < 1 || n_docs > max_docs) {
+      cout << "Erro: O numero de documentos deve ser entre 1 e " << max_docs
+           << "." << endl;
+      return 0;
+    }
+
     // mede o tempo de leitura dos documentos
     cout << "Leitura dos documentos iniciada..." << endl;
     auto startRead = std::chrono::high_resolution_clock::now();
-    Doc **docs = readDocuments(n_docs, path);
+    Doc **docs = readDocuments(n_docs, path, [](int current, int total) {
+      displayProgressBar(current, total, "Lendo documentos");
+    });
+    cout << endl;
     auto endRead = std::chrono::high_resolution_clock::now();
     double readTime =
         std::chrono::duration<double, std::milli>(endRead - startRead).count();
@@ -133,15 +173,25 @@ int main(int argc, char *argv[]) {
     cout << "Comprimento do maior galho: " << s.treeHeight << endl;
     cout << "Comprimento do menor galho: " << s.minBranch << endl;
     cout << "Quantidade de palavras/nodes: " << s.numNodes << endl;
-    cout << "===========Palavras que Aparecem em Mais Documentos===========" << endl;
-    for (int i = 0; i < 15; ++i) {
-     const Node& node = s.mostFrequentNodes[i];
-     if (i == 0){
-          cout << i + 1 << " letra - " << node.word << " - " << node.documentIds.size() << " documentos;" << endl;
-     } else {
-          cout << i + 1 << " letras - " << node.word << " - " << node.documentIds.size() << " documentos;" << endl;
-     }
-     }
+    cout << "===========Palavras que Aparecem em Mais Documentos==========="
+         << endl;
+    size_t limit =
+        std::min(s.mostFrequentNodes.size(), static_cast<size_t>(20));
+    for (size_t i = 0; i < limit; ++i) {
+      const Node &node = s.mostFrequentNodes[i];
+      if (node.word.empty()) {
+        cout << i + 1 << " letras - (nenhuma palavra encontrada)" << endl;
+        continue;
+      }
+      cout << i + 1 << " letras - " << node.word << " - "
+           << node.documentIds.size() << " documentos;" << endl;
+    }
+    if (limit < 20) {
+      for (size_t i = limit; i < 20; ++i) {
+        cout << i + 1 << " letras - (nenhuma palavra encontrada)" << endl;
+      }
+    }
+
     // free memory
     deleteDocs(docs, n_docs);
   }
@@ -161,6 +211,22 @@ int main(int argc, char *argv[]) {
     int n_docs = stoi(n);
     string path = argv[3];
 
+    // Verifica se o número de documentos é válido
+    int max_docs = 0;
+    try {
+      max_docs = distance(filesystem::directory_iterator(path),
+                          filesystem::directory_iterator{});
+    } catch (const filesystem::filesystem_error &e) {
+      cout << "Erro ao acessar o diretorio: " << e.what() << endl;
+      return 1;
+    }
+
+    if (n_docs < 1 || n_docs > max_docs) {
+      cout << "Erro: O numero de documentos deve ser entre 1 e " << max_docs
+           << "." << endl;
+      return 0;
+    }
+
     // ler os documentos e cria a árvore
     cout << "Leitura dos documentos iniciada..." << endl;
     Doc **docs = readDocuments(n_docs, path);
@@ -172,7 +238,7 @@ int main(int argc, char *argv[]) {
         AVL::insert(avl, docs[i]->content->at(j), docs[i]->docID);
       }
     }
-  
+
     string print_type;
     cout << "Digite o que tu quer printar!" << endl
          << "1 para printar o index, 2 para printar a árvore: ";
@@ -188,6 +254,10 @@ int main(int argc, char *argv[]) {
     // free memory
     AVL::destroy(avl);
     deleteDocs(docs, n_docs);
+  } else {
+    cout << "Comando invalido. Estrutura esperada: ./<arvore> "
+            "<comando(search/stats/print)> <n_docs> <diretorio>"
+         << endl;
+    return 1;
   }
-
 }
