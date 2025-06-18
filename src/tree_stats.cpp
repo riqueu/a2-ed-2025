@@ -23,13 +23,19 @@ int main(int argc, char *argv[]) {
   int n_points = stoi(argv[3]);
   string path = argv[4];
 
-  // Lê documentos do diretório especificado
-  cout << "Leitura dos documentos iniciada..." << endl;
-  Doc **docs = readDocuments(n_max_docs, path);
-  if (docs == nullptr) {
-    cout << "Erro ao ler documentos do diretório: " << path << endl;
+  // Verifica se o tipo de árvore é válido antes de ler os dados
+  if (treeType != "bst" && treeType != "avl" && treeType != "rbt") {
+    cout << "Erro: Tipo de arvore invalido. Use 'bst', 'avl' ou 'rbt'." << endl;
     return 1;
   }
+
+  // Lê documentos do diretório especificado (callback para acompanhar
+  // progresso)
+  cout << "Leitura dos documentos iniciada..." << endl;
+  Doc **docs = readDocuments(n_max_docs, path, [](int current, int total) {
+    displayProgressBar(current, total, "Lendo documentos");
+  });
+  cout << endl;
 
   // Vetor para armazenar o número de documentos a serem inseridos
   std::vector<int> n_docs;
@@ -55,13 +61,18 @@ int main(int argc, char *argv[]) {
   if (treeType == "bst" || treeType == "avl" || treeType == "rbt") {
     // Cria as n_points árvores binária de busca
     cout << "Criando arvores binarias de busca (" << treeType << ")..." << endl;
-    for (int n : n_docs) {
+    for (size_t i = 0; i < n_docs.size(); ++i) {
+      int n = n_docs[i];
       // Cria a árvore de busca e gera as estatísticas
       stats::TreeStats s = stats::get_tree_stats(treeType, n, n_max_docs,
                                                  vector<Doc *>(docs, docs + n));
       // Armazena as estatísticas da árvore
       stats.push_back(s);
+
+      // Exibe progresso da criação das árvores
+      displayProgressBar(i + 1, n_docs.size(), "Criando árvores");
     }
+    cout << endl; // Move to the next line after progress bar
   } else {
     cout << "Erro: Tipo de arvore invalido. Use 'bst', 'avl' ou 'rbt'." << endl;
     return 1;

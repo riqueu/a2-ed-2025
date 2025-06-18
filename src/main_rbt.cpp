@@ -1,5 +1,7 @@
-#include "rbt.h"
 #include "data.h"
+#include "rbt.h"
+#include "tree_utils.h"
+#include <filesystem>
 #include <iostream>
 #include <ostream>
 
@@ -32,9 +34,28 @@ int main(int argc, char *argv[]) {
     int n_docs = stoi(n);
     string path = argv[3];
 
+    // Verifica se o número de documentos é válido
+    int max_docs = 0;
+    try {
+      max_docs = distance(filesystem::directory_iterator(path),
+                          filesystem::directory_iterator{});
+    } catch (const filesystem::filesystem_error &e) {
+      cout << "Erro ao acessar o diretório: " << e.what() << endl;
+      return 1;
+    }
+
+    if (n_docs < 1 || n_docs > max_docs) {
+      cout << "Erro: O número de documentos deve ser entre 1 e " << max_docs
+           << "." << endl;
+      return 0;
+    }
+
     // ler os documentos e cria a árvore
     cout << "Leitura dos documentos iniciada..." << endl;
-    Doc **docs = readDocuments(n_docs, path);
+    Doc **docs = readDocuments(n_docs, path, [](int current, int total) {
+      displayProgressBar(current, total, "Lendo documentos");
+    });
+    cout << endl;
     BinaryTree *rbt = RBT::create();
 
     // Itera sobre cada palavra no documento e insere ela na árvore
@@ -95,10 +116,29 @@ int main(int argc, char *argv[]) {
     int n_docs = stoi(n);
     string path = argv[3];
 
+    // Verifica se o número de documentos é válido
+    int max_docs = 0;
+    try {
+      max_docs = distance(filesystem::directory_iterator(path),
+                          filesystem::directory_iterator{});
+    } catch (const filesystem::filesystem_error &e) {
+      cout << "Erro ao acessar o diretório: " << e.what() << endl;
+      return 1;
+    }
+
+    if (n_docs < 1 || n_docs > max_docs) {
+      cout << "Erro: O número de documentos deve ser entre 1 e " << max_docs
+           << "." << endl;
+      return 0;
+    }
+
     // mede o tempo de leitura dos documentos
     cout << "Leitura dos documentos iniciada..." << endl;
     auto startRead = std::chrono::high_resolution_clock::now();
-    Doc **docs = readDocuments(n_docs, path);
+    Doc **docs = readDocuments(n_docs, path, [](int current, int total) {
+      displayProgressBar(current, total, "Lendo documentos");
+    });
+    cout << endl;
     auto endRead = std::chrono::high_resolution_clock::now();
     double readTime =
         std::chrono::duration<double, std::milli>(endRead - startRead).count();
@@ -133,15 +173,18 @@ int main(int argc, char *argv[]) {
     cout << "Comprimento do maior galho: " << s.treeHeight << endl;
     cout << "Comprimento do menor galho: " << s.minBranch << endl;
     cout << "Quantidade de palavras/nodes: " << s.numNodes << endl;
-    cout << "===========Palavras que Aparecem em Mais Documentos===========" << endl;
+    cout << "===========Palavras que Aparecem em Mais Documentos==========="
+         << endl;
     for (int i = 0; i < 15; ++i) {
-     const Node& node = s.mostFrequentNodes[i];
-     if (i == 0){
-          cout << i + 1 << " letra - " << node.word << " - " << node.documentIds.size() << " documentos;" << endl;
-     } else {
-          cout << i + 1 << " letras - " << node.word << " - " << node.documentIds.size() << " documentos;" << endl;
-     }
-     }
+      const Node &node = s.mostFrequentNodes[i];
+      if (i == 0) {
+        cout << i + 1 << " letra - " << node.word << " - "
+             << node.documentIds.size() << " documentos;" << endl;
+      } else {
+        cout << i + 1 << " letras - " << node.word << " - "
+             << node.documentIds.size() << " documentos;" << endl;
+      }
+    }
     // free memory
     deleteDocs(docs, n_docs);
   }

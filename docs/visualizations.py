@@ -10,23 +10,25 @@ def plot_graph(ax, col_name, title, ylabel):
     ax.plot(bst["N_docs"], bst[col_name], label="BST")
     ax.plot(avl["N_docs"], avl[col_name], label="AVL")
     ax.plot(rbt["N_docs"], rbt[col_name], label="RBT")
-    ax.set_xlabel("Número de documentos")
+    ax.set_xlabel("Número de Documentos")
     ax.set_ylabel(ylabel)
     ax.set_title(title)
     ax.legend()
 
 def save_branch_graph(col_name_1, col_name_2, title):
     _, axes = plt.subplots(1, 1, figsize=(6, 5)) 
-    plot_graph(axes, col_name_1, title, "Tamanaho do galho")
+    plot_graph(axes, col_name_1, title, "Tamanaho do Galho")
     axes.plot(avl["N_docs"], avl[col_name_2], color="#ff7f0e")
     axes.plot(bst["N_docs"], bst[col_name_2], color="#1f77b4")
     axes.plot(rbt["N_docs"], rbt[col_name_2], color="#2ca02c")
+    plt.tight_layout()
     plt.savefig(f'docs/graphs/grafico_branchs.png')
     plt.close()
     
 def save_simple_graph(col_name, title):
     _, axes = plt.subplots(1, 1, figsize=(6, 5)) 
     plot_graph(axes, col_name, title, title)
+    plt.tight_layout()
     plt.savefig(f'docs/graphs/grafico_{col_name}.png')
     plt.close()
 
@@ -34,16 +36,17 @@ def save_double_graph(col_name_1, col_name_2, pre, mid, title, path):
     _, axes = plt.subplots(1, 2, figsize=(12, 5))  
     if pre == "Tempo":
         plot_graph(axes[0], col_name_1, pre + " Médio " + title, "Tempo (em milissegundos)")
-        plot_graph(axes[1], col_name_2, pre + " " + mid + " " + title, "Tempo (em milissegundos)")
+        plot_graph(axes[1], col_name_2, pre + " " + mid + " " + title, "")
     elif pre == "Número":
-        plot_graph(axes[0], col_name_1, pre + " Médio " + title, "Número de comparações")
-        plot_graph(axes[1], col_name_2, pre + " " + mid + " " + title, "Número de comparações")
-    plt.tight_layout(rect=[0, 0, 1, 0.95])
+        plot_graph(axes[0], col_name_1, pre + " Médio " + title, "Número de Comparações")
+        plot_graph(axes[1], col_name_2, pre + " " + mid + " " + title, "")
+    # plt.tight_layout(rect=[0, 0, 1, 0.95])
+    plt.tight_layout()
     plt.savefig(f'docs/graphs/grafico_{path}.png')
     plt.close()
 
 save_double_graph(col_names[0], col_names[1], pre="Tempo", mid="Total", 
-                  title="de Inserção de uma Palavra", path="ExecutionTimeInsertion")
+                  title="de Inserção", path="ExecutionTimeInsertion")
 save_double_graph(col_names[2], col_names[3], pre="Tempo", mid="Máximo", 
                   title="de Busca de uma Palavra", path="ExecutionTimeSearch")
 save_double_graph(col_names[4], col_names[5], pre="Número", mid="Total", 
@@ -53,8 +56,8 @@ save_double_graph(col_names[6], col_names[7], pre="Número", mid="Máximo",
 
 save_simple_graph(col_names[8], title="Altura da Árvore")
 save_branch_graph(col_names[9], col_names[10], "Comparação maior e menor galho")
-save_simple_graph(col_names[11], title="Número de nós")
-save_simple_graph(col_names[12], title="Tamanho da árvore (kbytes)")
+save_simple_graph(col_names[11], title="Número de Nós")
+save_simple_graph(col_names[12], title="Tamanho da Arvore (bytes)")
 
 
 #Tamanho da arvore pelo numero de nós BST
@@ -64,9 +67,10 @@ plt.plot(bst['TreeHeight'], bst['NumNodes'], label="BST", color="green")
 plt.plot(bst['TreeHeight'], bst['TreeHeight'] + 1, label="min", linestyle="--", color="blue")
 plt.title("Comparação de número de nós pela altura da árvore BST")
 plt.xlabel("Altura da árvore")
-plt.ylabel("Número de nós (log)")
+plt.ylabel("Número de Nós (log)")
 plt.yscale("log")
 plt.legend()
+plt.tight_layout()
 plt.savefig(f'docs/graphs/grafico_height_node_bst.png')
 plt.close()
 
@@ -77,9 +81,10 @@ plt.plot(avl['TreeHeight'], avl['NumNodes'], label="AVL", color="green")
 plt.plot(avl['TreeHeight'], 2**(avl['TreeHeight']/1.44), label="min", linestyle="--", color="blue")
 plt.title("Comparação de número de nós pela altura da árvore AVL")
 plt.xlabel("Altura da árvore")
-plt.ylabel("Número de nós (log)")
+plt.ylabel("Número de Nós (log)")
 plt.yscale("log")
 plt.legend()
+plt.tight_layout()
 plt.savefig(f'docs/graphs/grafico_height_node_avl.png')
 plt.close()
 
@@ -90,8 +95,9 @@ plt.plot(rbt['TreeHeight'], rbt['NumNodes'], label="RBT", color="green")
 plt.plot(rbt['TreeHeight'], 2**(rbt['TreeHeight']/2) -1, label="min", linestyle="--", color="blue")
 plt.title("Comparação de número de nós pela altura da árvore RBT")
 plt.xlabel("Altura da árvore")
-plt.ylabel("Número de nós (log)")
+plt.ylabel("Número de Nós (log)")
 plt.yscale("log")
 plt.legend()
+plt.tight_layout()
 plt.savefig(f'docs/graphs/grafico_height_node_rbt.png')
 plt.close()

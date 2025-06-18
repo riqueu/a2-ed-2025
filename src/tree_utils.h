@@ -3,6 +3,7 @@
 
 #include "data.h"
 #include <chrono>
+#include <iomanip>
 #include <string>
 #include <vector>
 
@@ -63,13 +64,15 @@ void printIndex(BinaryTree *tree);
  *
  * @param node Ponteiro para o nó atual da árvore.
  * @param prefix Espaço acumulado para identação do nó na árvore.
- * @param linePrefix Símbolo usado antes do nó, fornecendo a informação se é um nó a esquerda (---) ou a direita (+--).
+ * @param linePrefix Símbolo usado antes do nó, fornecendo a informação se é um
+ nó a esquerda (---) ou a direita (+--).
  * @param NIL Ponteiro de parada para RBT, default = nullptr
 
  */
-void printTreeRec(Node *node, Node *NIL, std::string prefix, std::string linePrefix);
+void printTreeRec(Node *node, Node *NIL, std::string prefix,
+                  std::string linePrefix);
 
-/**    
+/**
  * @brief Imprime a estrutura visual da árvore fornecida.
  *
  * Esta função chama printTreeRec a partir da raiz da árvore, imprimindo a
@@ -78,6 +81,19 @@ void printTreeRec(Node *node, Node *NIL, std::string prefix, std::string linePre
  * @param tree Ponteiro para árvore que será impressa.
  */
 void printTree(BinaryTree *tree);
+
+/*
+ * @brief Exibe uma barra de progresso no console.
+ *
+ * Esta função exibe uma barra de progresso que indica o progresso de uma
+ * operação, como a leitura de documentos ou a inserção de palavras em uma
+ * árvore.
+ *
+ * @param current Número atual do progresso (ex: número de documentos lidos).
+ * @param total Número total de itens (ex: número total de documentos).
+ * @param message Mensagem opcional para exibir ao lado da barra de progresso.
+ */
+void displayProgressBar(int current, int total, const std::string &message);
 
 namespace stats {
 struct TreeStats {
@@ -100,22 +116,18 @@ struct TreeStats {
 
   int numComparisonsSearchMax; // Número máximo de comparações realizadas
                                // durante as buscas
-                                  // milissegundos
-  int treeHeight; // Altura da árvore após as inserções
-  
-  
+                               // milissegundos
+  int treeHeight;              // Altura da árvore após as inserções
+
   int minBranch; // Comprimento do menor galho
-  
-  
+
   int numNodes; // Número total de nós na árvore
-  
-  
+
   double executionTimeSearchMax; // Tempo máximo de execução das buscas em
                                  // milissegundos
 
   double executionTimeSearchMean; // teste
-  
-  
+
   size_t size; // tamanho em Bytes da árvore
 
   std::vector<Node> mostFrequentNodes; // Nós mais frequentes nos arquivos
@@ -126,7 +138,8 @@ struct TreeStats {
  *
  * Calcula a altura da árvore a partir de um nó dado, considerando que a altura
  *
- * @param node Nó raiz da árvore ou subárvore a partir do qual a altura será calculada.
+ * @param node Nó raiz da árvore ou subárvore a partir do qual a altura será
+ * calculada.
  * @param NIL Ponteiro de parada para RBT, default = nullptr
  * @return Altura da árvore a partir do nó raiz.
  */
@@ -172,8 +185,8 @@ void collect_words(Node *node, std::vector<std::string> &words, Node *NIL);
  * @param NIL Ponteiro de parada para RBT, default = nullptr
  * @return Ponteiro para o nó com maior ocorrência
  */
-void most_frequent_words(Node* node,std::vector<Node*>& mostFrequentNodes,
-      std::vector<int>& maxCounts, Node* NIL);
+void most_frequent_words(Node *node, std::vector<Node *> &mostFrequentNodes,
+                         std::vector<int> &maxCounts, Node *NIL);
 
 /**
  * @brief Calcula o tamanho de memória ocupada pela árvore:
@@ -184,7 +197,7 @@ void most_frequent_words(Node* node,std::vector<Node*>& mostFrequentNodes,
  * @param NIL Ponteiro de parada para RBT, default = nullptr
  * @return Tamanho da árvore em bytes
  */
-size_t get_tree_size(Node* node, Node* NIL);
+size_t get_tree_size(Node *node, Node *NIL);
 
 /**
  * @brief Obtém estatísticas de uma árvore binária de busca.

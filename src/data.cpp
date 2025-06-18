@@ -61,7 +61,8 @@ bool wordInDocumentCheck(Doc *document, string word) {
   return wordInDocument;
 };
 
-Doc **readDocuments(int numDocs, string dirPath) {
+Doc **readDocuments(int numDocs, string dirPath,
+                    function<void(int, int)> progressCallback) {
   // Inicializa o array de documentos
   Doc **Docs = new Doc *[numDocs];
 
@@ -112,6 +113,11 @@ Doc **readDocuments(int numDocs, string dirPath) {
 
     // Avanca um arquivo no diretorio
     ++dir;
+
+    // callback para atualizar o progresso (se fornecido)
+    if (progressCallback) {
+      progressCallback(i + 1, numDocs);
+    }
   }
 
   // Retorna os documentos

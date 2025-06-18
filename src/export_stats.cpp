@@ -1,10 +1,10 @@
 #include "export_stats.h"
 #include "tree_utils.h"
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <string>
 #include <vector>
-#include <filesystem>
 
 namespace fs = std::filesystem;
 
@@ -17,7 +17,7 @@ void exportToCSV(const std::vector<stats::TreeStats> &stats,
 
   fs::path final_path = fs::path(dir) / title;
   full_path = final_path.string();
-  
+
   // Cria o arquivo CSV
   ofstream arquivo(full_path);
 
@@ -33,13 +33,14 @@ void exportToCSV(const std::vector<stats::TreeStats> &stats,
 
   // Preenche as linhas
   for (const auto &s : stats) {
-    arquivo << s.n_docs << "," 
-            << s.executionTimeInsertionMean << "," << s.executionTimeInsertion << "," 
-            << s.executionTimeSearchMean << "," << s.executionTimeSearchMax << ","
-            << s.numComparisonsInsertionMean << "," << s.numComparisonsInsertion << "," 
-            << s.numComparisonsSearchMean << "," << s.numComparisonsSearchMax << ","  
-            << s.treeHeight << "," << s.treeHeight << "," << s.minBranch << "," 
-            << s.numNodes << "," << s.size << "\n";
+    arquivo << s.n_docs << "," << s.executionTimeInsertionMean << ","
+            << s.executionTimeInsertion << "," << s.executionTimeSearchMean
+            << "," << s.executionTimeSearchMax << ","
+            << s.numComparisonsInsertionMean << "," << s.numComparisonsInsertion
+            << "," << s.numComparisonsSearchMean << ","
+            << s.numComparisonsSearchMax << "," << s.treeHeight << ","
+            << s.treeHeight << "," << s.minBranch << "," << s.numNodes << ","
+            << s.size << "\n";
   }
 
   // Fecha o arquivo
