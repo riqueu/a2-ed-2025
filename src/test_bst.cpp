@@ -14,7 +14,18 @@ int testPrintTree() {
   BST::insert(tree, "cereja", 3);
   BST::insert(tree, "banana", 4);
   BST::insert(tree, "abobora", 5);
+  /* morango várias vezes de mesmo documentId
+  (para testar se o mesmo documentId é adicionado apenas uma vez)
+  (no código geral, essa filtragem é feita pelo leitor dos dados
+  mas a função BST::insert também deve lidar com isso, apesar de
+  ser mais custoso em termos de performance) */
   BST::insert(tree, "morango", 6);
+  BST::insert(tree, "morango", 6);
+  BST::insert(tree, "morango", 6);
+  BST::insert(tree, "morango", 6);
+  BST::insert(tree, "morango", 7);
+  BST::insert(tree, "morango", 8);
+  BST::insert(tree, "abobora", 8);
 
   // Testa funcao printTree
   std::cout << "=== Teste printTree ===" << std::endl;
