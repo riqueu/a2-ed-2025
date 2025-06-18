@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
   // verifica se foi passado um número suficiente de parâmetros
   if (argc < 2) {
     cout << "Erro: Nenhum comando fornecido. Estrutura esperada: ./<arvore> "
-            "<comando> <n_docs> <diretorio>"
+            "<comando(search/stats/print)> <n_docs> <diretorio>"
          << endl;
     return 1;
   }
@@ -210,6 +210,22 @@ int main(int argc, char *argv[]) {
     int n_docs = stoi(n);
     string path = argv[3];
 
+    // Verifica se o número de documentos é válido
+    int max_docs = 0;
+    try {
+      max_docs = distance(filesystem::directory_iterator(path),
+                          filesystem::directory_iterator{});
+    } catch (const filesystem::filesystem_error &e) {
+      cout << "Erro ao acessar o diretorio: " << e.what() << endl;
+      return 1;
+    }
+
+    if (n_docs < 1 || n_docs > max_docs) {
+      cout << "Erro: O numero de documentos deve ser entre 1 e " << max_docs
+           << "." << endl;
+      return 0;
+    }
+
     // ler os documentos e cria a árvore
     cout << "Leitura dos documentos iniciada..." << endl;
     Doc **docs = readDocuments(n_docs, path);
@@ -221,7 +237,7 @@ int main(int argc, char *argv[]) {
         RBT::insert(rbt, docs[i]->content->at(j), docs[i]->docID);
       }
     }
-  
+
     string print_type;
     cout << "Digite o que tu quer printar!" << endl
          << "1 para printar o index, 2 para printar a árvore: ";
@@ -237,7 +253,10 @@ int main(int argc, char *argv[]) {
     // free memory
     RBT::destroy(rbt);
     deleteDocs(docs, n_docs);
+  } else {
+    cout << "Comando invalido. Estrutura esperada: ./<arvore> "
+            "<comando(search/stats/print)> <n_docs> <diretorio>"
+         << endl;
+    return 1;
   }
-
-
 }

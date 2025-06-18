@@ -36,12 +36,14 @@ int main(int argc, char *argv[]) {
 
   if (n_max_docs < 1 || n_max_docs > max_docs) {
     cout << "Erro: O numero de documentos deve ser entre 1 e " << max_docs
-          << "." << endl;
+         << "." << endl;
     return 0;
   }
 
   if (n_points < 1 || n_points > n_max_docs) {
-    cout << "Erro: O numero de pontos deve ser pelo menos 1 e no maximo igual ao numero de documentos (" << n_max_docs << ")." << endl;
+    cout << "Erro: O numero de pontos deve ser pelo menos 1 e no maximo igual "
+            "ao numero de documentos ("
+         << n_max_docs << ")." << endl;
     return 0;
   }
 
