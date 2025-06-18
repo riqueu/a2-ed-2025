@@ -134,6 +134,15 @@ int main(int argc, char *argv[]) {
     cout << "Comprimento do maior galho: " << s.treeHeight << endl;
     cout << "Comprimento do menor galho: " << s.minBranch << endl;
     cout << "Quantidade de palavras/nodes: " << s.numNodes << endl;
+    cout << "===========Palavras que Aparecem em Mais Documentos===========" << endl;
+    for (int i = 0; i < 15; ++i) {
+     const Node& node = s.mostFrequentNodes[i];
+     if (i == 0){
+          cout << i + 1 << " letra - " << node.word << " - " << node.documentIds.size() << " documentos;" << endl;
+     } else {
+          cout << i + 1 << " letras - " << node.word << " - " << node.documentIds.size() << " documentos;" << endl;
+     }
+     }
 
     // free memory
     deleteDocs(docs, n_docs);

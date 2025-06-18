@@ -40,7 +40,7 @@ void printIndex(BinaryTree *tree) {
 
 void printTreeRec(Node* node, Node* NIL = nullptr, 
                   const std::string& prefix = "", bool left = false) {
-    if (node == nullptr || node == NIL) {
+    if (node == nullptr ||  node == NIL) {
         return;
     }
 
@@ -117,6 +117,36 @@ void collect_words(Node *node, std::vector<std::string> &words, Node *NIL = null
   collect_words(node->right, words, NIL);
 }
 
+void most_frequent_words(Node* node,
+                              std::vector<Node*>& mostFrequentNodes,
+                              std::vector<int>& maxCounts,
+                              Node* NIL = nullptr) {
+  if (node == nullptr || node == NIL) {
+    return;
+  }
+
+  // Visita esquerda
+  most_frequent_words(node->left, mostFrequentNodes, maxCounts, NIL);
+
+  // Verifica a palavra atual
+  int length = node->word.size();
+  int count = node->documentIds.size();
+
+  if (length >= 1 && length <= 15) {
+    int index = length - 1; // índice entre 0 e 14
+
+    if (count > maxCounts[index]) {
+      maxCounts[index] = count;
+      mostFrequentNodes[index] = node;
+    }
+  }
+
+  // Visita direita
+  most_frequent_words(node->right, mostFrequentNodes, maxCounts, NIL);
+}
+
+
+
 // calcula tamanho de memória ocupada pela árvore:
 size_t get_tree_size(Node* node, Node* NIL = nullptr) {
     if (node == nullptr || node == NIL) {
@@ -141,7 +171,7 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc
                          const std::vector<DocReading::Doc *> &docs) {
   BinaryTree *tree = nullptr;
   TreeStats s = {n_docs, 0,   0,   0.0, 0.0, 0,
-                 0,      0, 0, 0,   0,   0, 0}; // Inicializa as estatísticas
+                 0,      0, 0, 0,   0,   0, 0, {}}; // Inicializa as estatísticas
 
   if (tree_type == "bst") {
     tree = BST::create();
@@ -191,13 +221,13 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc
 
     int j = 0; // Contador de tentativas
     int j_max = (n_docs < 800) ? 50 : 1; 
-    // Se o número de documentos for menor que 700, repete
-    // a busca 10 vezes, caso contrário, apenas uma vez
+    // Se o número de documentos for menor que 800, repete
+    // a busca 50 vezes, caso contrário, apenas uma vez
     int totalComparisons = 0;
     double totalTime = 0.0;
 
-    // Realiza a busca na árvore, repetindo até 10 vezes para cada palavra com
-    // menos 700 documentos
+    // Realiza a busca na árvore, repetindo até 50 vezes para cada palavra com
+    // menos 800 documentos
     for (int i = 0; i < j_max; ++i) {
       // Realiza a busca na árvore, dependendo do tipo de árvore
       if (tree_type == "bst") {
@@ -252,6 +282,23 @@ TreeStats get_tree_stats(const std::string &tree_type, int n_docs, int n_max_doc
   // Calcula o comprimento do menor galho e coloca na estrutura
   get_min_branch(tree->root, 0, &minBranch, tree->NIL);
   s.minBranch = minBranch;
+
+  std::vector<Node*> mostFrequentNodes(15, nullptr);
+  std::vector<int> maxCounts(15, -1);  
+
+  if (tree_type == "rbt") {
+      most_frequent_words(tree->root, mostFrequentNodes, maxCounts, tree->NIL);
+  } else {
+      most_frequent_words(tree->root, mostFrequentNodes, maxCounts, nullptr);
+  }
+
+  for (int i = 0; i < 15; ++i) {
+    if (mostFrequentNodes[i]) {
+      s.mostFrequentNodes.push_back(*mostFrequentNodes[i]);
+    } else {
+      s.mostFrequentNodes.push_back(Node()); // node vazio
+    }
+  }
 
   // Libera a memória da árvore atual
   if (tree_type == "bst") {
