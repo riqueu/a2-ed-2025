@@ -6,14 +6,9 @@ Este repositório é um refúgio para o projeto final da disciplina de Estrutura
 * **Professor orientador**: Matheus Telles Werner.
 
 ---
-### Observação
-
-Optou-se por remover palavras duplicadas durante a leitura dos documentos, garantindo que cada palavra fosse inserida apenas uma vez na árvore BST por documento. Como resultado, a lista de palavras que serão inseridas na árvore contém apenas palavras únicas por documento.
-
----
 
 ### Resumo
-Este trabalho detalha a implementação e a avaliação de desempenho de um índice invertido utilizando três estruturas de dados baseadas em árvores: a Árvore Binária de Busca (BST), a Árvore AVL e a Árvore Rubro-Negra (RBT). O objetivo foi comparar a eficiência de cada estrutura em operações de inserção e busca, aplicadas a um corpus de aproximadamente 10.000 documentos de texto. As métricas analisadas, como tempo de execução, número de comparações e altura da árvore, demonstraram a superioridade das árvores auto-balanceadas (AVL e RBT) sobre a BST, que se mostrou suscetível à degeneração. Os resultados indicaram que a RBT ofereceu o melhor tempo de inserção, enquanto a AVL se destacou por buscas ligeiramente mais rápidas e estáveis. Conclui-se que a RBT representa a escolha mais equilibrada para aplicações dinâmicas com operações frequentes de inserção e busca, e a AVL é ideal para cenários onde a velocidade de consulta é a prioridade máxima.
+Este trabalho detalha a implementação e a avaliação de desempenho de um índice invertido utilizando três estruturas de dados baseadas em árvores: a Árvore Binária de Busca (BST), a Árvore AVL e a Árvore Rubro-Negra (RBT). O objetivo foi comparar a eficiência de cada estrutura em operações de inserção e busca, aplicadas a um corpus de aproximadamente 10.000 documentos de texto. As métricas analisadas, como tamanhos dos galhos, número de comparações e altura da árvore, demonstraram a superioridade das árvores balanceadas (AVL e RBT) sobre a BST, que se mostrou suscetível à degeneração. Os resultados indicaram que a RBT ofereceu o melhor tempo de inserção e um tempo de busca tão bom quanto a AVL, que se destacou por buscas ligeiramente mais rápidas e estáveis. Conclui-se que a RBT representa a escolha mais equilibrada pois além de ser a melhor para operações de inserção, apresenta um desempenho satisfatório na funções de busca.
 
 ---
 ### Relatório
