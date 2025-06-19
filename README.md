@@ -6,12 +6,18 @@ Este repositório é um refúgio para o projeto final da disciplina de Estrutura
 * **Professor orientador**: Matheus Telles Werner.
 
 ---
-### Resumo
+### Observação
+
 Optou-se por remover palavras duplicadas durante a leitura dos documentos, garantindo que cada palavra fosse inserida apenas uma vez na árvore BST por documento. Como resultado, a lista de palavras que serão inseridas na árvore contém apenas palavras únicas por documento.
 
 ---
+
+### Resumo
+Este trabalho detalha a implementação e a avaliação de desempenho de um índice invertido utilizando três estruturas de dados baseadas em árvores: a Árvore Binária de Busca (BST), a Árvore AVL e a Árvore Rubro-Negra (RBT). O objetivo foi comparar a eficiência de cada estrutura em operações de inserção e busca, aplicadas a um corpus de aproximadamente 10.000 documentos de texto. As métricas analisadas, como tempo de execução, número de comparações e altura da árvore, demonstraram a superioridade das árvores auto-balanceadas (AVL e RBT) sobre a BST, que se mostrou suscetível à degeneração. Os resultados indicaram que a RBT ofereceu o melhor tempo de inserção, enquanto a AVL se destacou por buscas ligeiramente mais rápidas e estáveis. Conclui-se que a RBT representa a escolha mais equilibrada para aplicações dinâmicas com operações frequentes de inserção e busca, e a AVL é ideal para cenários onde a velocidade de consulta é a prioridade máxima.
+
+---
 ### Relatório
-Leia também o [Relatório Completo](docs/relatorio.md).
+Leia também o [Relatório Completo](docs/relatorio.md). [(versão pdf)](docs/relatorio.pdf)
 
 ---
 ### Instruções para Execução
@@ -80,6 +86,7 @@ make src\output\main_bst.exe
 src\output\main_bst.exe <comando> <n_docs> <diretório>
 ```
 
+
 #### 3. Geração de Estatísticas (CSV):
 #### Geração dos arquivos CSV com as estatísticas para cada árvore
 ```sh
@@ -112,34 +119,72 @@ make clean
 ```
 
 #### 6. Exemplo de Fluxos de compilação e execução:
-#### Exemplo de fluxo completo (Linux/macOS)
+
+#### Exemplo de uso das mains (Linux/macOS)
 ```sh
 make clean
 make
-# busca com 100 arquivos no diretório data/ com a AVL
-./src/output/main_avl search 100 data/
+# busca com 100 arquivos no diretório data/ para a BST
+./src/output/main_bst search 100 data/
 ... # execução/output do programa
+# estatísticas com 100 arquivos no diretório data/ para a AVL
+./src/output/main_avl stats 100 data/
+... # execução/output do programa
+# print da árvore com 100 arquivos no diretório data/ para a RBT
+./src/output/main_rbt print 100 data/
+... # execução/output do programa
+make clean
+```
+
+#### Exemplo de uso das mains (Windows)
+```sh
+make clean
+make
+# busca com 100 arquivos no diretório data\ para a BST
+src\output\main_bst.exe search 100 data\
+... # execução/output do programa
+# estatísticas com 100 arquivos no diretório data\ para a AVL
+src\output\main_avl.exe stats 100 data\
+... # execução/output do programa
+# print da árvore com 100 arquivos no diretório data\ para a RBT
+src\output\main_rbt.exe print 100 data\
+... # execução/output do programa
+make clean
+```
+
+
+#### Exemplo de geração dos gráficos (Linux/macOS)
+```sh
+make clean
+make
 # geração do CSV de estatísticas usando a BST para a leitura de 1000 arquivos, com 25 pontos igualmente espaçados
 ./src/output/tree_stats bst 1000 25 data/
 ... # execução/output do programa
 # geração do CSV de estatísticas usando a AVL para a leitura de 1000 arquivos, com 25 pontos igualmente espaçados
 ./src/output/tree_stats avl 1000 25 data/
 ... # execução/output do programa
+# geração do CSV de estatísticas usando a RBT para a leitura de 1000 arquivos, com 25 pontos igualmente espaçados
+./src/output/tree_stats rbt 1000 25 data/
+... # execução/output do programa
+# geração dos gráficos, visíveis no relatório
+python3 docs/visualizations.py
 make clean
 ```
 
-#### Exemplo de fluxo completo (Windows)
+#### Exemplo de geração dos gráficos (Windows)
 ```sh
 make clean
 make
-# stats com 1000 arquivos no diretório data\ com a BST
-src\output\main_bst.exe stats 1000 data\
-... # execução/output do programa
 # geração do CSV de estatísticas usando a BST para a leitura de 1000 arquivos, com 25 pontos igualmente espaçados
 src\output\tree_stats bst 1000 25 data\
 ... # execução/output do programa
 # geração do CSV de estatísticas usando a AVL para a leitura de 1000 arquivos, com 25 pontos igualmente espaçados
 src\output\tree_stats avl 1000 25 data\
 ... # execução/output do programa
+# geração do CSV de estatísticas usando a RBT para a leitura de 1000 arquivos, com 25 pontos igualmente espaçados
+src\output\tree_stats rbt 1000 25 data\
+... # execução/output do programa
+# geração dos gráficos, visíveis no relatório
+python docs\visualizations.py
 make clean
 ```
